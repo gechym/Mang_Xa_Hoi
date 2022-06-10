@@ -12,8 +12,8 @@ const request = axios.create({
     baseURL: process.env.REACT_APP_BASE_URL,
 });
 
-export const get = async (path, opt = {}) => {
-    const res = await request.get(path, opt);
+export const get = async (path, query = {}) => {
+    const res = await request.get(path, query);
     return res.data;
 };
 

@@ -20,6 +20,15 @@ import { Server } from 'socket.io';
 const app = express();
 
 //config
+
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', `${process.env.HOST_CLIENT}`);
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+});
+
 app.use(cors());
 app.options('*', cors());
 app.use(express.json({ limit: '10kb' }));
@@ -45,7 +54,7 @@ app.use(
 // MIDDLEWARE
 app.use(mongoSanitize()); // chặn những mã try vấn đến db từ text của người dùng
 
-// app.use(morgan('dev'));
+app.use(morgan('dev'));
 
 app.use(xss()); // chặng người dùng chằn những mã html vs <script/> ...
 
@@ -84,7 +93,7 @@ app.use('/api/', limiter);
 app.use((req, res, next) => {
     console.log('hello middleware 😘');
     req.requestTime = new Date().toISOString();
-    // console.log(req.headers);
+    console.log(req.headers);
     next();
 });
 

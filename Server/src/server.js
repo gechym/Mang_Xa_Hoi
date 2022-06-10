@@ -9,7 +9,7 @@ let usersCurrentInServer = [];
 
 const io = new Server(app, {
     cors: {
-        origin: 'http://localhost:3000',
+        origin: process.env.HOST_CLIENT,
     },
 });
 
