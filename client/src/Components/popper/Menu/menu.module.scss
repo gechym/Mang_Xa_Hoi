@@ -1,52 +1,52 @@
 //menu item
 
 .menu-list {
-    width: 224px;
+  width: 224px;
 
-    .menu-item {
-        margin-left: 0px;
-        width: 100%;
-        justify-content: flex-start;
-        border-radius: 0;
-        padding: 11px 16px;
-        line-height: 1.8rem;
+  .menu-item {
+    margin-left: 0px;
+    width: 100%;
+    justify-content: flex-start;
+    border-radius: 0;
+    padding: 11px 16px;
+    line-height: 1.8rem;
 
-        &:hover {
-            background-color: rgba(22, 24, 35, 0.03);
-        }
-
-        &.separate {
-            border-top: 1px solid rgba(22, 24, 35, 0.12);
-        }
+    &:hover {
+      background-color: rgba(22, 24, 35, 0.03);
     }
+
+    &.separate {
+      border-top: 1px solid rgba(22, 24, 35, 0.12);
+    }
+  }
 }
 
 .menu-popper {
-    padding-bottom: 8px;
+  padding-bottom: 8px;
 }
 
 .menu-body {
-    overflow-y: overlay;
+  overflow-y: overlay;
 }
 
 //
 .header {
-    margin-top: -8px;
-    position: relative;
-    height: 50px;
-    flex-shrink: 0;
+  margin-top: -8px;
+  position: relative;
+  height: 50px;
+  flex-shrink: 0;
 }
 
 .back {
-    width: 50px;
-    height: 100%;
-    background-color: transparent;
-    cursor: pointer;
+  width: 50px;
+  height: 100%;
+  background-color: transparent;
+  cursor: pointer;
 }
 
 .header-title {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

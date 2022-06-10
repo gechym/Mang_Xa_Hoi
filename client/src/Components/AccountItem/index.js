@@ -9,23 +9,22 @@ import styles from './accountItem.modle.scss';
 const cx = classNames.bind(styles);
 
 function AccountItem({ data, onClick }) {
-    return (
-        <Link onClick={onClick} to={`/@${data.nickname}`} className={cx('wrapper')}>
-            <Image className={cx('avatar')} src={data.avatar} alt={data.full_name} />
-            <div className={cx('info')}>
-                <h4 className={cx('name')}>
-                    {data.full_name}
-                    {data.tick && <FontAwesomeIcon className={cx('check')} icon={faCheckCircle} />}
-                </h4>
-                <span className={cx('username')}>{data.nickname}</span>
-            </div>
-        </Link>
-    );
+  return (
+    <Link onClick={onClick} to={`/@${data.nickname}`} className={cx('wrapper')}>
+      <Image className={cx('avatar')} src={data.avatar} alt={data.full_name} />
+      <div className={cx('info')}>
+        <h4 className={cx('name')}>
+          {data.full_name}
+          {data.tick && <FontAwesomeIcon className={cx('check')} icon={faCheckCircle} />}
+        </h4>
+        <span className={cx('username')}>{data.nickname}</span>
+      </div>
+    </Link>
+  );
 }
-
 
 AccountItem.propTypes = {
-    data : PropTypes.object.isRequired,
-}
+  data: PropTypes.object.isRequired,
+};
 
 export default AccountItem;
