@@ -25,9 +25,8 @@ const User = sequelize.define(
             allowNull: false,
             validate: {
                 isEmail: {
-                    msg: 'Email không phù h',
+                    msg: 'Email không phù hợp',
                 },
-
                 // async isUnique(value) {
                 //     const user = await User.findOne({ where: { email: value } });
 
@@ -74,7 +73,7 @@ const User = sequelize.define(
         nickname: {
             type: Sequelize.DataTypes.VIRTUAL(Sequelize.STRING, ['name']),
             get() {
-                return this.name + '20IT432';
+                return `${this.name}${this.id}`;
             },
         },
     },
