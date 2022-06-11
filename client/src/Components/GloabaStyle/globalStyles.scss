@@ -24,7 +24,7 @@
 }
 
 :root {
-  --primary: #101010;
+  --primary: #2aa4f4;
   --black: #050505;
   --text-color: #101010;
   --text-grey: #65676b;
@@ -32,6 +32,7 @@
   --background-header-dark-mode: #242526;
   --background-dark-mode: #18191a;
   --text-color-dark-mode: #ffffff;
+  --background-input-and-icon: #3a3b3c;
 
   --background-header: #ffffff;
   --background: #f0f2f5;
@@ -56,24 +57,9 @@ html *::-webkit-scrollbar {
   width: 8px;
 }
 
-html *::-webkit-scrollbar {
-  border-radius: 0;
-  width: 8px;
-}
-
 html *::-webkit-scrollbar-thumb {
   border-radius: 4px;
   background-color: rgba(0, 0, 0, 0.15);
-}
-
-html *::-webkit-scrollbar-thumb {
-  border-radius: 4px;
-  background-color: rgba(0, 0, 0, 0.15);
-}
-
-html *::-webkit-scrollbar-track {
-  border-radius: 0;
-  background-color: rgba(0, 0, 0, 0);
 }
 
 html *::-webkit-scrollbar-track {
@@ -99,7 +85,7 @@ input,
   color: var(--text-color);
 }
 
-a[href] {
+a {
   color: var(--text-color);
   text-decoration: none;
 }
@@ -144,7 +130,7 @@ body {
   }
 
   .search {
-    background-color: #f0f2f5;
+    background-color: var(--background);
     color: var(--text-color);
     caret-color: var(--text-color);
 
@@ -173,6 +159,11 @@ body {
   background-color: var(--background-dark-mode);
   color: var(--text-color-dark-mode);
 
+  .btnIcon {
+    background-color: var(--background-input-and-icon);
+    color: #ffffffb9;
+  }
+
   .header {
     background-color: var(--background-header-dark-mode);
     color: var(--text-color-dark-mode);
@@ -185,7 +176,7 @@ body {
   }
 
   .search {
-    background-color: #3a3b3c;
+    background-color: var(--background-input-and-icon);
     caret-color: var(--text-color-dark-mode);
 
     input {
@@ -193,7 +184,7 @@ body {
     }
 
     button {
-      color: #fff;
+      color: #ffffffb9;
 
       &:hover {
         cursor: pointer;

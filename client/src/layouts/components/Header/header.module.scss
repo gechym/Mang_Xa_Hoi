@@ -22,8 +22,35 @@
 
   .wrapper-icon {
     height: 100%;
+    display: flex;
+    align-items: center;
+
     .icon {
-      color: #65676b;
+      height: 100%;
+      color: var(--text-grey);
+      margin: 0px 20px;
+
+      &:hover {
+        background-color: #18181845;
+      }
+
+      &.active {
+        color: var(--primary);
+        border-bottom: 3px solid var(--primary);
+      }
+    }
+  }
+
+  .wrapper-menu-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 350px;
+
+    .avt-user {
+      width: 35px;
+      height: 35px;
+      border-radius: 90px;
     }
   }
 }

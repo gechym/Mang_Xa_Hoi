@@ -31,9 +31,10 @@
     }
 
     .check {
+      background-color: white;
       margin-left: 6px;
       font-size: 1.2rem;
-      color: rgb(32, 213, 236);
+      color: var(--primary);
     }
   }
 }
@@ -72,6 +73,8 @@
     }
 
     .check {
+      border-radius: 100px;
+      background-color: white;
       margin-left: 6px;
       font-size: 1.2rem;
       color: rgb(32, 213, 236);
