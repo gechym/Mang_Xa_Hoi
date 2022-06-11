@@ -2,6 +2,7 @@
   display: flex;
   position: fixed;
   z-index: 10;
+  justify-content: space-between;
   height: var(--default-layout-header-height);
   width: 100%;
   padding: 0px 16px;
@@ -13,8 +14,16 @@
     height: 100%;
   }
 
-  .wrapper {
+  .wrapper-menu-left {
+    width: 350px;
     display: flex;
     align-items: center;
+  }
+
+  .wrapper-icon {
+    height: 100%;
+    .icon {
+      color: #65676b;
+    }
   }
 }
