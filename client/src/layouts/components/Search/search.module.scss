@@ -1,0 +1,31 @@
+.search {
+  --search-border-radius: 92px;
+  --search-height: 35px;
+  --search-top-spacer: 9px;
+  --search-button-width: 52px;
+
+  margin-left: 1.2rem;
+  height: var(--search-height);
+  width: 240px;
+  padding-left: 10px;
+  border-radius: var(--search-border-radius);
+  display: flex;
+  align-items: center;
+
+  input {
+    flex: 1;
+    height: 100%;
+    background-color: transparent;
+    font-size: 1.6rem;
+  }
+}
+
+.search-btn {
+  height: 35px;
+  width: 35px;
+  border-radius: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+}

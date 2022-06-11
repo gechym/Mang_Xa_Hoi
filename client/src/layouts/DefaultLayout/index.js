@@ -9,7 +9,6 @@ const cx = classNames.bind(style);
 function DefaultLayout({ children }) {
   return (
     <div className={cx('container')}>
-      DefaultLayout
       <Header />
       <div className={cx('body')}>
         <SiderBar />

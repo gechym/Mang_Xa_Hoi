@@ -24,13 +24,20 @@
 }
 
 :root {
-  --primary: #fe2c55;
-  --black: #000;
-  --text-color: #161823;
-  --white: #fff;
+  --primary: #101010;
+  --black: #050505;
+  --text-color: #101010;
+  --text-grey: #65676b;
+
+  --background-header-dark-mode: #242526;
+  --background-dark-mode: #18191a;
+  --text-color-dark-mode: #ffffff;
+
+  --background-header: #ffffff;
+  --background: #f0f2f5;
 
   // Default layout
-  --default-layout-header-height: 60px;
+  --default-layout-header-height: 56px;
   --default-layout-width: 1150px;
   --default-layout-horizontal-spacer: 24px;
   --font-family: 'ProximaNova', sans-serif;
@@ -119,5 +126,75 @@ body {
 
   .tippy-content {
     padding: 8px 9px;
+  }
+}
+
+#Light {
+  background-color: var(--background);
+  color: var(--text-color);
+
+  .header {
+    background-color: var(--background-header);
+    color: var(--text-color);
+  }
+
+  .search {
+    background-color: #f0f2f5;
+    color: var(--text-color);
+    caret-color: var(--text-color);
+
+    input {
+      color: var(--text-color);
+    }
+
+    button {
+      color: #101010;
+
+      &:hover {
+        cursor: pointer;
+        background-color: rgba(22, 24, 35, 0.03);
+        color: #101010b2;
+      }
+
+      &:active {
+        background-color: rgba(22, 24, 35, 0.06);
+        color: #101010b2;
+      }
+    }
+  }
+}
+
+#Dark {
+  background-color: var(--background-dark-mode);
+  color: var(--text-color-dark-mode);
+
+  .header {
+    background-color: var(--background-header-dark-mode);
+    color: var(--text-color-dark-mode);
+    border: 1px solid #363738;
+  }
+
+  .search {
+    background-color: #3a3b3c;
+    caret-color: var(--text-color-dark-mode);
+
+    input {
+      color: var(--text-color-dark-mode);
+    }
+
+    button {
+      color: #fff;
+
+      &:hover {
+        cursor: pointer;
+        background-color: rgba(22, 24, 35, 0.03);
+        color: rgba(255, 255, 255, 0.555);
+      }
+
+      &:active {
+        background-color: rgba(22, 24, 35, 0.06);
+        color: rgba(255, 255, 255, 0.555);
+      }
+    }
   }
 }

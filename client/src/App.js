@@ -1,12 +1,14 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { publicRouters } from '~/routers';
 import { DefaultLayout } from '~/layouts/';
 
 function App() {
+  const [mode, setMode] = useState('Light');
+
   return (
-    <div className="App">
+    <div className="App" id={mode}>
       <Router>
         <Routes>
           {publicRouters.map((route, index) => {
@@ -34,6 +36,7 @@ function App() {
           })}
         </Routes>
       </Router>
+      <button onClick={() => setMode((prev) => (prev === 'Light' ? 'Dark' : 'Light'))}>Toggle</button>
     </div>
   );
 }

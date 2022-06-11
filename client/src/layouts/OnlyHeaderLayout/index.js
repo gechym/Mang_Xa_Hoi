@@ -7,7 +7,6 @@ const cx = classNames.bind(style);
 function OnlyHeaderLayput({ children }) {
   return (
     <div className={cx('container')}>
-      OnlyHeaderLayput
       <Header />
       <div className={cx('body')}>
         <SiderBar width={500} />

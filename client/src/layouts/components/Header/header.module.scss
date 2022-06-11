@@ -1,8 +1,20 @@
 .header {
-  height: 56px;
-  padding: 0px 16px;
-  border: solid 1px red;
   display: flex;
-  justify-content: space-between;
-  text-align: center;
+  position: fixed;
+  z-index: 10;
+  height: var(--default-layout-header-height);
+  width: 100%;
+  padding: 0px 16px;
+  align-items: center;
+  box-shadow: 0px 1px 1px rgb(0 0 0 / 12%);
+  .logo-header {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
+  .wrapper {
+    display: flex;
+    align-items: center;
+  }
 }
