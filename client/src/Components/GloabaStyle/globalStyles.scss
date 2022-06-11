@@ -138,6 +138,11 @@ body {
     color: var(--text-color);
   }
 
+  .wrapper {
+    background-color: var(--background-header);
+    color: var(--text-color);
+  }
+
   .search {
     background-color: #f0f2f5;
     color: var(--text-color);
@@ -172,6 +177,11 @@ body {
     background-color: var(--background-header-dark-mode);
     color: var(--text-color-dark-mode);
     border: 1px solid #363738;
+  }
+
+  .wrapper {
+    background-color: var(--background-header-dark-mode);
+    color: var(--text-color-dark-mode);
   }
 
   .search {

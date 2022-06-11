@@ -1,7 +1,8 @@
 .container {
-  border: solid 1px blue;
 }
 .body {
   display: flex;
-  padding: 20px 130px;
+  padding: 70px 130px;
+  justify-content: space-between;
+  min-height: 100vh;
 }

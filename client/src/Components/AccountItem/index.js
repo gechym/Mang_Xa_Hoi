@@ -4,13 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import Image from '../Image';
-import styles from './accountItem.modle.scss';
+import style from './accountItem.modle.scss';
 
-const cx = classNames.bind(styles);
+const cx = classNames.bind(style);
 
 function AccountItem({ data, onClick }) {
   return (
-    <Link onClick={onClick} to={`/@${data.nickname}`} className={cx('wrapper')}>
+    <Link onClick={onClick} to={`/@${data.nickname}`} className={cx('wrapper-item')}>
       <Image className={cx('avatar')} src={data.avatar} alt={data.full_name} />
       <div className={cx('info')}>
         <h4 className={cx('name')}>
