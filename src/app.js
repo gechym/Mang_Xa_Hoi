@@ -1,10 +1,6 @@
 require('dotenv').config({ path: './config.env' });
 import express from 'express';
 import morgan from 'morgan';
-import handleError from './controller/HandleError';
-
-import { userRouter, tourRouter } from './routes';
-import AppError from './util/AppError';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
@@ -12,10 +8,11 @@ import xss from 'xss-clean';
 import hpp from 'hpp';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-
-// st up socket.io
 import { createServer } from 'http';
-import { Server } from 'socket.io';
+
+import handleError from './controller/HandleError';
+import { userRouter } from './routes';
+import AppError from './util/AppError';
 
 const app = express();
 
@@ -98,7 +95,6 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/v1/users', userRouter);
-app.use('/api/v1/tours', tourRouter);
 
 app.use('*', (req, res, next) => {
   return next(new AppError('404', 404));
