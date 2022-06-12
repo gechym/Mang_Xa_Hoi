@@ -102,7 +102,6 @@ export const protect = catchAsync(async (req, res, next) => {
   if (authorization && authorization.startsWith('Bearer')) {
     token = authorization.split(' ')[1];
   }
-
   if (!token) return next(new AppError('Bạn chưa đăng nhập', 404));
 
   // verify token

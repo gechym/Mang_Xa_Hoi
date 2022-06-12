@@ -8,6 +8,7 @@ export const sequelize = new Sequelize('social_network', 'root', '', {
   difine: {
     freezeTableName: true,
   },
+  // logging: false,
   // sync: { alert: true },
   // query: { raw: true },
 });
