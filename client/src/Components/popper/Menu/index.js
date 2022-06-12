@@ -14,6 +14,26 @@ function Menu({ children, items, onChange = () => {} }) {
   const [history, setHistory] = useState([{ data: items }]);
   const current = history[history.length - 1];
 
+  const renderResult = (attrs) => {
+    return (
+      <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
+        <WrapperPopper className={cx('menu-popper')}>
+          {history.length > 1 && (
+            <Header
+              title={current.title}
+              onBack={() => {
+                setHistory(
+                  (prev) => prev.splice(0, prev.length - 1), // cắt một cấp menu trong mảng history
+                );
+              }}
+            />
+          )}
+          <div className={cx('menu-body')}>{renderDataItems(current)}</div>
+        </WrapperPopper>
+      </div>
+    );
+  };
+
   const renderDataItems = (current) => {
     return current.data.map((item, index) => {
       let isParent = !!item.children;
@@ -38,35 +58,19 @@ function Menu({ children, items, onChange = () => {} }) {
     });
   };
 
+  const handleResetMenu = () => {
+    setHistory((prev) => prev.splice(0, 1));
+  };
+
   return (
     <Tippy
       interactive
-      onHidden={() => {
-        setHistory((prev) => prev.splice(0, 1));
-      }}
+      onHidden={handleResetMenu}
       hideOnClick="toggle"
       delay={[0, 400]}
       offset={[20, 20]}
       placement="bottom-end"
-      render={(attrs) => {
-        return (
-          <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
-            <WrapperPopper className={cx('menu-popper')}>
-              {history.length > 1 && (
-                <Header
-                  title={current.title}
-                  onBack={() => {
-                    setHistory(
-                      (prev) => prev.splice(0, prev.length - 1), // cắt một cấp menu trong mảng history
-                    );
-                  }}
-                />
-              )}
-              <div className={cx('menu-body')}>{renderDataItems(current)}</div>
-            </WrapperPopper>
-          </div>
-        );
-      }}
+      render={renderResult}
     >
       {children}
     </Tippy>
