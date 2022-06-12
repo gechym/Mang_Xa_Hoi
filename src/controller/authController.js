@@ -13,7 +13,7 @@ const createToken = (newUser) => {
   return jwt.sign(
     {
       id: newUser.id,
-      name: newUser.name,
+      email: newUser.email,
     },
     process.env.JWT_SECRET_KEY,
     {
@@ -78,7 +78,7 @@ export const login = catchAsync(async (req, res, next) => {
   res.status(200).json({
     message: 'success',
     user: {
-      name: user.name,
+      id: user.id,
       email: user.email,
       rule: user.rule,
     },
@@ -129,7 +129,7 @@ export const protect = catchAsync(async (req, res, next) => {
     },
     where: {
       id: decode.id,
-      name: decode.name,
+      email: decode.email,
     },
   });
   if (!currentUser) {
@@ -195,7 +195,7 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
   res.status(200).json({
     message: 'success',
     user: {
-      name: user.name,
+      id: user.id,
       email: user.email,
       rule: user.rule,
     },
@@ -254,7 +254,7 @@ export const resetPassword = catchAsync(async (req, res, next) => {
     message: 'success',
     token: token,
     user: {
-      name: user.name,
+      id: user.id,
       email: user.email,
       rule: user.rule,
     },
@@ -308,7 +308,7 @@ export const changePassword = catchAsync(async (req, res, next) => {
   res.status(200).json({
     message: 'success',
     user: {
-      name: user.name,
+      id: user.id,
       email: user.email,
       rule: user.rule,
     },

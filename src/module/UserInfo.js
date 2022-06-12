@@ -46,30 +46,30 @@ const UserInfo = sequelize.define('tb_userInfo', {
     type: Sequelize.DataTypes.TEXT,
     allowNull: true,
     get: function () {
-      return JSON.parse(this.getDataValue('images'));
+      return JSON.parse(this.getDataValue('listFriend'));
     },
     set: function (val) {
-      return this.setDataValue('images', JSON.stringify(val));
+      return this.setDataValue('listFriend', JSON.stringify(val));
     },
   },
   followers: {
     type: Sequelize.DataTypes.TEXT,
     allowNull: true,
     get: function () {
-      return JSON.parse(this.getDataValue('images'));
+      return JSON.parse(this.getDataValue('followers'));
     },
     set: function (val) {
-      return this.setDataValue('images', JSON.stringify(val));
+      return this.setDataValue('followers', JSON.stringify(val));
     },
   },
   following: {
     type: Sequelize.DataTypes.TEXT,
     allowNull: true,
     get: function () {
-      return JSON.parse(this.getDataValue('images'));
+      return JSON.parse(this.getDataValue('following'));
     },
     set: function (val) {
-      return this.setDataValue('images', JSON.stringify(val));
+      return this.setDataValue('following', JSON.stringify(val));
     },
   },
 });

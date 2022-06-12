@@ -1,4 +1,5 @@
 import User from '../module/User';
+import UserInfo from '../module/UserInfo';
 import catchAsync from '../util/catchAsync';
 
 export const getUsers = catchAsync(async (req, res, next) => {
@@ -6,6 +7,7 @@ export const getUsers = catchAsync(async (req, res, next) => {
     attributes: {
       exclude: [`password`, `passwordChangeAt`, `passwordResetToken`, `passwordResetExpires`],
     },
+    include: [UserInfo],
   });
   res.status(200).json({
     message: 'success',
