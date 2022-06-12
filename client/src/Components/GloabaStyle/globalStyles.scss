@@ -1,13 +1,13 @@
 //font
 @font-face {
   font-family: ProximaNova;
-  src: url('/assets/font/Proxima-Nova-Regular.woff2');
+  src: url('/assets/font/Proxima-Nova-Regular.woff');
   font-weight: 400;
 }
 
 @font-face {
   font-family: ProximaNova;
-  src: url('/assets/font/ProximaNova-Semibold.woff2');
+  src: url('/assets/font/ProximaNova-Semibold.woff');
   font-weight: 600;
 }
 
@@ -95,8 +95,8 @@ a {
 body {
   .tippy-box {
     border-radius: 8px;
-    font-weight: 600;
-    font-size: 1.6rem;
+    font-weight: 400;
+    font-size: 1.4rem;
     line-height: 2.2rem;
     background-color: rgba(84, 84, 84, 0.92);
     color: white;
