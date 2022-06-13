@@ -14,14 +14,14 @@ const connectDatabase = async () => {
     User.hasMany(UserRelationship, { as: 'userReciver', foreignKey: 'user_reciver' });
     UserRelationship.belongsTo(User, { as: 'userReciver', foreignKey: 'user_reciver' });
 
-    sequelize
-      .sync({ force: true })
-      .then((result) => {
-        console.log('\n\n\n👉 Đồng bộ server thành công \n\n\n');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // sequelize
+    //   .sync({ force: true })
+    //   .then((result) => {
+    //     console.log('\n\n\n👉 Đồng bộ server thành công \n\n\n');
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
 
     await sequelize.authenticate();
     console.log('Connection has been established successfully.');

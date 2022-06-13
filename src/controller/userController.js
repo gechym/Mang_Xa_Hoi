@@ -86,6 +86,9 @@ const checkCurrentUserAndFriend = async (userId, friendId, next) => {
   if (!friend) return next(new AppError(`người bạn này không tồn tại`, 404));
 
   const user = await UserInfo.findOne({
+    attributes: {
+      exclude: [`password`, `passwordChangeAt`, `passwordResetToken`, `passwordResetExpires`],
+    },
     where: { id: userId },
   });
 
@@ -104,12 +107,32 @@ export const getUsers = catchAsync(async (req, res, next) => {
     include: [{ model: UserInfo, as: 'userInfor' }],
   });
 
+  const userRelationship = await UserRelationship.findAll({
+    include: [
+      {
+        model: User,
+        as: 'userSend',
+        attributes: {
+          exclude: [`password`, `passwordChangeAt`, `passwordResetToken`, `passwordResetExpires`],
+        },
+      },
+      {
+        model: User,
+        as: 'userReciver',
+        attributes: {
+          exclude: [`password`, `passwordChangeAt`, `passwordResetToken`, `passwordResetExpires`],
+        },
+      },
+    ],
+  });
+
   const userInfor = await UserInfo.findAll();
   res.status(200).json({
     message: 'success',
     requestTime: req.requestTime,
     user: req.user,
     data: {
+      userRelationship: userRelationship,
       userInfor: userInfor,
       user: user,
     },
@@ -199,7 +222,12 @@ export const acceptAddFriend = catchAsync(async (req, res, next) => {
   });
 
   if (isHadRequestAddFriend)
-    return next(new AppError('Bạn đã gửi lời mời đến người này rồi, không thể gửi lại', 404));
+    return next(
+      new AppError(
+        'Bạn đã gửi lời mời đến người này rồi, Không thể vừa gửi kết bạn rồi tự đồng ý kết bạn',
+        404,
+      ),
+    );
 
   // check friendId have request addFriend with me
   const checkRequestAddFriendFromFriend = await UserRelationship.findOne({
