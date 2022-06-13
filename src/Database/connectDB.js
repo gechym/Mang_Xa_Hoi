@@ -4,7 +4,10 @@ import { sequelize } from './serviceDatabase';
 
 const connectDatabase = async () => {
   try {
-    User.hasOne(UserInfo, { foreignKey: 'id_user' });
+    User.hasOne(UserInfo, { as: 'userInfor', foreignKey: 'id_user' });
+    UserInfo.belongsTo(User, { foreignKey: 'id_user' });
+
+    User.hasOne(UserInfo, { as: 'userInfor2', foreignKey: 'id_user' });
     UserInfo.belongsTo(User, { foreignKey: 'id_user' });
 
     // sequelize

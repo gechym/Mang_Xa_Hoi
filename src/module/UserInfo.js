@@ -1,7 +1,7 @@
 import { sequelize } from '../Database/serviceDatabase';
 import Sequelize from 'sequelize';
 
-const UserInfo = sequelize.define('tb_userInfo', {
+const UserInfo = sequelize.define('tb_user_info', {
   id: {
     type: Sequelize.DataTypes.INTEGER,
     autoIncrement: true,

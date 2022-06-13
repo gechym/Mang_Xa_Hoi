@@ -8,7 +8,10 @@ export const getUsers = catchAsync(async (req, res, next) => {
     attributes: {
       exclude: [`password`, `passwordChangeAt`, `passwordResetToken`, `passwordResetExpires`],
     },
-    include: [UserInfo],
+    include: [
+      { model: UserInfo, as: 'userInfor' },
+      { model: UserInfo, as: 'userInfor2' },
+    ],
   });
   res.status(200).json({
     message: 'success',
@@ -20,6 +23,7 @@ export const getUsers = catchAsync(async (req, res, next) => {
   });
 });
 
+// User case User
 export const addFriend = catchAsync(async (req, res, next) => {
   const { friendId } = req.params;
 
