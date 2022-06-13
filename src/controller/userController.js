@@ -102,7 +102,15 @@ const checkCurrentUserAndFriend = async (userId, friendId, next) => {
 export const getUsers = catchAsync(async (req, res, next) => {
   const user = await User.findAll({
     attributes: {
-      exclude: [`password`, `passwordChangeAt`, `passwordResetToken`, `passwordResetExpires`],
+      exclude: [
+        `password`,
+        `passwordChangeAt`,
+        `passwordResetToken`,
+        'createdAt',
+        'updatedAt',
+        'deletedAt',
+        `passwordResetExpires`,
+      ],
     },
     include: [{ model: UserInfo, as: 'userInfor' }],
   });
@@ -113,14 +121,30 @@ export const getUsers = catchAsync(async (req, res, next) => {
         model: User,
         as: 'userSend',
         attributes: {
-          exclude: [`password`, `passwordChangeAt`, `passwordResetToken`, `passwordResetExpires`],
+          exclude: [
+            `password`,
+            `passwordChangeAt`,
+            `passwordResetToken`,
+            'createdAt',
+            'updatedAt',
+            'deletedAt',
+            `passwordResetExpires`,
+          ],
         },
       },
       {
         model: User,
         as: 'userReciver',
         attributes: {
-          exclude: [`password`, `passwordChangeAt`, `passwordResetToken`, `passwordResetExpires`],
+          exclude: [
+            `password`,
+            `passwordChangeAt`,
+            `passwordResetToken`,
+            'createdAt',
+            'updatedAt',
+            'deletedAt',
+            `passwordResetExpires`,
+          ],
         },
       },
     ],
