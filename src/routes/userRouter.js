@@ -8,7 +8,8 @@ import {
   forgotPassword,
   resetPassword,
   changePassword,
-  addFriend,
+  requestAddFriend,
+  acceptAddFriend,
 } from '../controller';
 
 const userRouter = express.Router();
@@ -18,7 +19,8 @@ userRouter.route('/login').post(login);
 userRouter.route('/forgotPassword').patch(forgotPassword);
 userRouter.route('/resetPassword/:resetToken').patch(resetPassword);
 userRouter.route('/changepassword').patch(protect, changePassword);
-userRouter.route('/friends/:friendId').patch(protect, addFriend);
+userRouter.route('/requestAddFriend/:friendId').post(protect, requestAddFriend);
+userRouter.route('/acceptAddFriend/:friendId').patch(protect, acceptAddFriend);
 
 userRouter.route('/').get(protect, checkRules('admin'), getUsers);
 

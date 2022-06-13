@@ -56,12 +56,6 @@ const User = sequelize.define(
       type: Sequelize.DataTypes.BOOLEAN,
       defaultValue: true,
     },
-    // nickname: {
-    //   type: Sequelize.DataTypes.VIRTUAL(Sequelize.STRING, ['name']),
-    //   get() {
-    //     return `${this.name}${this.id}`;
-    //   },
-    // },
   },
   {
     paranoid: true,

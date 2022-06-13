@@ -9,7 +9,7 @@ function OnlyHeaderLayput({ children }) {
     <div className={cx('container')}>
       <Header />
       <div className={cx('body')}>
-        <SiderBar width={500} />
+        <SiderBar width={400} />
         {children}
       </div>
     </div>

@@ -1,14 +1,12 @@
 import UserInfo from '../module/UserInfo';
 import User from '../module/User';
 import { sequelize } from './serviceDatabase';
+import UserRelationship from '../module/UserRelationship';
 
 const connectDatabase = async () => {
   try {
     User.hasOne(UserInfo, { as: 'userInfor', foreignKey: 'id_user' });
-    UserInfo.belongsTo(User, { foreignKey: 'id_user' });
-
-    User.hasOne(UserInfo, { as: 'userInfor2', foreignKey: 'id_user' });
-    UserInfo.belongsTo(User, { foreignKey: 'id_user' });
+    UserInfo.belongsTo(User, { as: 'user', foreignKey: 'id_user' });
 
     // sequelize
     //   .sync({ force: true })
