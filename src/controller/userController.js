@@ -5,6 +5,97 @@ import AppError from '../util/AppError';
 import UserRelationship from '../module/UserRelationship';
 import { Op } from 'sequelize';
 
+const handleAddFriend = async (idUser, idFriend, next) => {
+  const userInfor = await UserInfo.findOne({
+    where: { id: Number(idUser) },
+  });
+
+  const userInfoFriend = await UserInfo.findOne({
+    where: { id: Number(idFriend) },
+  });
+
+  if (userInfoFriend.listFriend) {
+    const checkFriend = userInfoFriend.listFriend.find((user) => {
+      return user.id === Number(idUser);
+    });
+
+    if (!checkFriend) {
+      await UserInfo.update(
+        {
+          listFriend: [
+            ...userInfoFriend.listFriend,
+            { id: userInfor.id, name: userInfor.name, avatar: userInfor.avatar },
+          ],
+        },
+        {
+          where: { id: userInfoFriend.id },
+        },
+      );
+    } else {
+      return next(new AppError(`Bạn đã kết bạn với người này rồi`, 404));
+    }
+  } else {
+    await UserInfo.update(
+      {
+        listFriend: [{ id: userInfor.id, name: userInfor.name, avatar: userInfor.avatar }],
+      },
+      {
+        where: { id: userInfoFriend.id },
+      },
+    );
+  }
+
+  if (userInfor.listFriend) {
+    const checkFriend = userInfor.listFriend.find((user) => {
+      return user.id === Number(idFriend);
+    });
+
+    if (!checkFriend) {
+      await UserInfo.update(
+        {
+          listFriend: [
+            ...userInfor.listFriend,
+            { id: userInfoFriend.id, name: userInfoFriend.name, avatar: userInfoFriend.avatar },
+          ],
+        },
+        {
+          where: { id: userInfor.id },
+        },
+      );
+    } else {
+      return next(new AppError(`Bạn đã kết bạn với người này rồi`, 404));
+    }
+  } else {
+    await UserInfo.update(
+      {
+        listFriend: [{ id: userInfoFriend.id, name: userInfoFriend.name, avatar: userInfoFriend.avatar }],
+      },
+      {
+        where: { id: userInfor.id },
+      },
+    );
+  }
+};
+
+const checkCurrentUserAndFriend = async (userId, friendId, next) => {
+  // check friendId is already exists
+  const friend = await UserInfo.findOne({
+    where: { id: friendId },
+  });
+
+  if (!friend) return next(new AppError(`Id người bạn này không tồn tại`, 404));
+
+  const user = await UserInfo.findOne({
+    where: { id: userId },
+  });
+
+  if (!user) {
+    return next(new AppError(`User not found`, 404));
+  }
+
+  return { user: user, friend: friend };
+};
+
 export const getUsers = catchAsync(async (req, res, next) => {
   const user = await User.findAll({
     attributes: {
@@ -44,21 +135,7 @@ export const requestAddFriend = catchAsync(async (req, res, next) => {
 
   if (isFriend) return next(new AppError(`Bạn đã kết bạn với người dùng này rồi`, 404));
 
-  // check if friend already exists
-  const friend = await UserInfo.findOne({
-    where: { id: friendId },
-  });
-  if (!friend) return next(new AppError(`User not found`, 404));
-
-  // Check if user already exists
-  const user = await User.findOne({
-    where: { id: req.user.id },
-    include: [{ model: UserInfo, as: 'userInfor' }],
-  });
-
-  if (!user) {
-    return next(new AppError(`User not found`, 404));
-  }
+  const { user, friend } = await checkCurrentUserAndFriend(req.user.id, friendId, next);
 
   const checkRequestFromFriend = await UserRelationship.findOne({
     where: {
@@ -98,19 +175,7 @@ export const acceptAddFriend = catchAsync(async (req, res, next) => {
   // check friendId
   if (Number(friendId) === req.user.id) return next(new AppError(`Id ko hợp lệ`, 404));
 
-  // check friendId is already exists
-  const friend = await UserInfo.findOne({
-    where: { id: friendId },
-  });
-  if (!friend) return next(new AppError(`User not found`, 404));
-
-  const user = await UserInfo.findOne({
-    where: { id: req.user.id },
-  });
-
-  if (!user) {
-    return next(new AppError(`User not found`, 404));
-  }
+  const { user, friend } = await checkCurrentUserAndFriend(req.user.id, friendId, next);
 
   //check is Friend already added
   const isFriend = await UserRelationship.findOne({
@@ -156,61 +221,7 @@ export const acceptAddFriend = catchAsync(async (req, res, next) => {
     where: { id: Number(friendId) },
   });
 
-  if (userInfoFriend.listFriend) {
-    const checkFriend = userInfoFriend.listFriend.find((user) => {
-      return user.id === Number(friendId);
-    });
-
-    if (!checkFriend) {
-      await UserInfo.update(
-        {
-          listFriend: [...userInfoFriend.listFriend, { id: user.id, name: user.name, avatar: user.avatar }],
-        },
-        {
-          where: { id: userInfoFriend.id },
-        },
-      );
-    } else {
-      return next(new AppError(`Bạn đã kết bạn với người này rồi`, 404));
-    }
-  } else {
-    await UserInfo.update(
-      {
-        listFriend: [{ id: user.id, name: user.name, avatar: user.avatar }],
-      },
-      {
-        where: { id: userInfoFriend.id },
-      },
-    );
-  }
-
-  if (userInfor.listFriend) {
-    const checkFriend = userInfor.listFriend.find((user) => {
-      return user.id === Number(friendId);
-    });
-
-    if (!checkFriend) {
-      await UserInfo.update(
-        {
-          listFriend: [...userInfor.listFriend, { id: friend.id, name: friend.name, avatar: friend.avatar }],
-        },
-        {
-          where: { id: userInfor.id },
-        },
-      );
-    } else {
-      return next(new AppError(`Bạn đã kết bạn với người này rồi`, 404));
-    }
-  } else {
-    await UserInfo.update(
-      {
-        listFriend: [{ id: friend.id, name: friend.name, avatar: friend.avatar }],
-      },
-      {
-        where: { id: userInfor.id },
-      },
-    );
-  }
+  await handleAddFriend(req.user.id, friendId, next);
 
   // Update user relationship status friend
   await UserRelationship.update(
