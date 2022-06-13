@@ -8,14 +8,20 @@ const connectDatabase = async () => {
     User.hasOne(UserInfo, { as: 'userInfor', foreignKey: 'id_user' });
     UserInfo.belongsTo(User, { as: 'user', foreignKey: 'id_user' });
 
-    // sequelize
-    //   .sync({ force: true })
-    //   .then((result) => {
-    //     console.log('\n\n\n👉 Đồng bộ server thành công \n\n\n');
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    User.hasMany(UserRelationship, { as: 'userSend', foreignKey: 'user_send' });
+    UserRelationship.belongsTo(User, { as: 'userSend', foreignKey: 'user_send' });
+
+    User.hasMany(UserRelationship, { as: 'userReciver', foreignKey: 'user_reciver' });
+    UserRelationship.belongsTo(User, { as: 'userReciver', foreignKey: 'user_reciver' });
+
+    sequelize
+      .sync({ force: true })
+      .then((result) => {
+        console.log('\n\n\n👉 Đồng bộ server thành công \n\n\n');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     await sequelize.authenticate();
     console.log('Connection has been established successfully.');

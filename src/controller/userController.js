@@ -242,9 +242,3 @@ export const acceptAddFriend = catchAsync(async (req, res, next) => {
     message: 'success',
   });
 });
-
-export const test = catchAsync(async (req, res, next) => {
-  res.status(200).json({
-    message: 'Success',
-  });
-});
