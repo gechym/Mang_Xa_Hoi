@@ -83,14 +83,14 @@ const checkCurrentUserAndFriend = async (userId, friendId, next) => {
     where: { id: friendId },
   });
 
-  if (!friend) return next(new AppError(`Id người bạn này không tồn tại`, 404));
+  if (!friend) return next(new AppError(`người bạn này không tồn tại`, 404));
 
   const user = await UserInfo.findOne({
     where: { id: userId },
   });
 
   if (!user) {
-    return next(new AppError(`User not found`, 404));
+    return next(new AppError(`Không thể tự kết bạn chính mình`, 404));
   }
 
   return { user: user, friend: friend };
@@ -121,7 +121,7 @@ export const requestAddFriend = catchAsync(async (req, res, next) => {
   const { friendId } = req.params;
 
   // check friendId
-  if (Number(friendId) === req.user.id) return next(new AppError(`User not found`, 404));
+  if (Number(friendId) === req.user.id) return next(new AppError(`Không thể tự kết bạn chính mình`, 404));
 
   //check is Friend already added
   const isFriend = await UserRelationship.findOne({
@@ -149,7 +149,7 @@ export const requestAddFriend = catchAsync(async (req, res, next) => {
   if (checkRequestFromFriend) {
     return next(
       new AppError(
-        `${friend.name} đã gửi lời mời kết bạn hoặc bạn đã gửi lời mời này cho ${friend.name} rồi`,
+        `${friend.name} đã gửi lời mời kết bạn đến bạn, hoặc bạn đã gửi lời mời này cho ${friend.name} rồi`,
         404,
       ),
     );
