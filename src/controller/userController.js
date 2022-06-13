@@ -118,34 +118,12 @@ export const getUsers = catchAsync(async (req, res, next) => {
   const userRelationship = await UserRelationship.findAll({
     include: [
       {
-        model: User,
+        model: UserInfo,
         as: 'userSend',
-        attributes: {
-          exclude: [
-            `password`,
-            `passwordChangeAt`,
-            `passwordResetToken`,
-            'createdAt',
-            'updatedAt',
-            'deletedAt',
-            `passwordResetExpires`,
-          ],
-        },
       },
       {
-        model: User,
+        model: UserInfo,
         as: 'userReciver',
-        attributes: {
-          exclude: [
-            `password`,
-            `passwordChangeAt`,
-            `passwordResetToken`,
-            'createdAt',
-            'updatedAt',
-            'deletedAt',
-            `passwordResetExpires`,
-          ],
-        },
       },
     ],
   });

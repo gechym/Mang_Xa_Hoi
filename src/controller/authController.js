@@ -8,6 +8,7 @@ import AppError from '../util/AppError';
 import catchAsync from '../util/catchAsync';
 import emailService from '../util/email';
 import { Op } from 'sequelize';
+import UserInfo from '../module/UserInfo';
 
 const createToken = (newUser) => {
   return jwt.sign(
@@ -23,8 +24,8 @@ const createToken = (newUser) => {
 };
 
 export const signUp = catchAsync(async (req, res, next) => {
-  const { email, password, passwordConfig } = req.body;
-  if (!email || !password || !passwordConfig) {
+  const { email, password, passwordConfig, name, avatar, imageCover, introduce, address, phone } = req.body;
+  if (!email || !password || !passwordConfig || !name) {
     return next(new AppError('Vui lòng điền đầy đủ thông tin', 404));
   }
 
@@ -39,6 +40,16 @@ export const signUp = catchAsync(async (req, res, next) => {
     password,
   });
 
+  const userInfo = await UserInfo.create({
+    name,
+    avatar,
+    image_cover: imageCover,
+    introduce,
+    address,
+    phone,
+    id_user: user.id,
+  });
+
   const token = createToken(user);
 
   res.cookie('jwt', token, {
@@ -49,6 +60,8 @@ export const signUp = catchAsync(async (req, res, next) => {
   res.status(200).json({
     message: 'success',
     token: token,
+    userInfo,
+    user,
   });
 });
 

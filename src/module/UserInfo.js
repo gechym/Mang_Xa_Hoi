@@ -8,6 +8,10 @@ const UserInfo = sequelize.define('tb_user_info', {
     primaryKey: true,
     allowNull: false,
   },
+  id_user: {
+    type: Sequelize.DataTypes.INTEGER,
+    allowNull: false,
+  },
   name: {
     type: Sequelize.DataTypes.STRING(255),
     allowNull: false,
@@ -25,12 +29,12 @@ const UserInfo = sequelize.define('tb_user_info', {
     default:
       'https://i.pinimg.com/236x/dc/ef/3a/dcef3abedf0e0761203aaeb85886a6f3--jedi-knight-open-source.jpg',
   },
-  Image_cover: {
+  image_cover: {
     type: Sequelize.DataTypes.STRING(100000),
     allowNull: true,
     default: 'https://www.capturelandscapes.com/wp-content/uploads/2019/04/Desert-Nights.jpg',
   },
-  Introduce: {
+  introduce: {
     type: Sequelize.DataTypes.STRING,
     allowNull: true,
   },

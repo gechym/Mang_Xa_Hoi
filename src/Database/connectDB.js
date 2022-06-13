@@ -8,11 +8,11 @@ const connectDatabase = async () => {
     User.hasOne(UserInfo, { as: 'userInfor', foreignKey: 'id_user' });
     UserInfo.belongsTo(User, { as: 'user', foreignKey: 'id_user' });
 
-    User.hasMany(UserRelationship, { as: 'userSend', foreignKey: 'user_send' });
-    UserRelationship.belongsTo(User, { as: 'userSend', foreignKey: 'user_send' });
+    UserInfo.hasMany(UserRelationship, { as: 'userSend', foreignKey: 'user_send' });
+    UserRelationship.belongsTo(UserInfo, { as: 'userSend', foreignKey: 'user_send' });
 
-    User.hasMany(UserRelationship, { as: 'userReciver', foreignKey: 'user_reciver' });
-    UserRelationship.belongsTo(User, { as: 'userReciver', foreignKey: 'user_reciver' });
+    UserInfo.hasMany(UserRelationship, { as: 'userReciver', foreignKey: 'user_reciver' });
+    UserRelationship.belongsTo(UserInfo, { as: 'userReciver', foreignKey: 'user_reciver' });
 
     // sequelize
     //   .sync({ force: true })
