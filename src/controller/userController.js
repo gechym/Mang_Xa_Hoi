@@ -24,7 +24,7 @@ const handleAddFriend = async (idUser, idFriend, next) => {
         {
           listFriend: [
             ...userInfoFriend.listFriend,
-            { id: userInfor.id, name: userInfor.name, avatar: userInfor.avatar },
+            { id: userInfor.id_user, name: userInfor.name, avatar: userInfor.avatar },
           ],
         },
         {
@@ -37,7 +37,7 @@ const handleAddFriend = async (idUser, idFriend, next) => {
   } else {
     await UserInfo.update(
       {
-        listFriend: [{ id: userInfor.id, name: userInfor.name, avatar: userInfor.avatar }],
+        listFriend: [{ id: userInfor.id_user, name: userInfor.name, avatar: userInfor.avatar }],
       },
       {
         where: { id: userInfoFriend.id },
@@ -79,7 +79,7 @@ const handleAddFriend = async (idUser, idFriend, next) => {
 
 const checkCurrentUserAndFriend = async (userId, friendId, next) => {
   console.log(`👉👉👉👉👉 ${userId}`);
-  // check friendId is already exists
+  //TODO: check friendId is already exists
   const friend = await UserInfo.findOne({
     where: { id_user: friendId },
   });
@@ -142,11 +142,11 @@ export const getUsers = catchAsync(async (req, res, next) => {
   });
 });
 
-// User case User
+//TODO: User case User
 export const requestAddFriend = catchAsync(async (req, res, next) => {
   const { friendId } = req.params;
 
-  // check friendId
+  //TODO: check friendId
   if (Number(friendId) === req.user.id) return next(new AppError(`Không thể tự kết bạn chính mình`, 404));
 
   //check is Friend already added
@@ -189,16 +189,12 @@ export const requestAddFriend = catchAsync(async (req, res, next) => {
 
   return res.status(200).json({
     message: 'success',
-    checkRequestFromFriend,
-    data: {
-      user: user,
-    },
   });
 });
 
 export const acceptAddFriend = catchAsync(async (req, res, next) => {
   const { friendId } = req.params;
-  // check friendId
+  //TODO: check friendId
   if (Number(friendId) === req.user.id) return next(new AppError(`Id ko hợp lệ`, 404));
 
   const { user, friend } = await checkCurrentUserAndFriend(req.user.id, friendId, next);
@@ -215,7 +211,7 @@ export const acceptAddFriend = catchAsync(async (req, res, next) => {
 
   if (isFriend) return next(new AppError(`Bạn đã kết bạn với người dùng này rồi`, 404));
 
-  // check you have requestAddFriend to friendId
+  //TODO: check you have requestAddFriend to friendId
   const isHadRequestAddFriend = await UserRelationship.findOne({
     where: {
       user_send: req.user.id,
@@ -232,7 +228,7 @@ export const acceptAddFriend = catchAsync(async (req, res, next) => {
       ),
     );
 
-  // check friendId have request addFriend with me
+  //TODO: check friendId have request addFriend with me
   const checkRequestAddFriendFromFriend = await UserRelationship.findOne({
     where: {
       user_send: Number(friendId),
@@ -244,17 +240,9 @@ export const acceptAddFriend = catchAsync(async (req, res, next) => {
   if (!checkRequestAddFriendFromFriend)
     return next(new AppError('Người bạn này chưa gửi lời mời kết bạn đến bạn'));
 
-  const userInfor = await UserInfo.findOne({
-    where: { id: req.user.id },
-  });
-
-  const userInfoFriend = await UserInfo.findOne({
-    where: { id: Number(friendId) },
-  });
-
   await handleAddFriend(req.user.id, friendId, next);
 
-  // Update user relationship status friend
+  //TODO: Update user relationship status friend
   await UserRelationship.update(
     {
       status: 'friend',
@@ -267,9 +255,6 @@ export const acceptAddFriend = catchAsync(async (req, res, next) => {
   );
 
   return res.status(200).json({
-    friend,
-    userInfoFriend,
-    checkRequestAddFriendFromFriend,
     message: 'success',
   });
 });
@@ -281,7 +266,7 @@ export const removeFriend = catchAsync(async (req, res, next) => {
 
   const { user, friend } = await checkCurrentUserAndFriend(req.user.id, friendId, next);
 
-  // check friendId and user have friend
+  //TODO: check friendId and user have friend
   const checkFriend = await UserRelationship.findOne({
     where: {
       [Op.or]: [
@@ -293,7 +278,7 @@ export const removeFriend = catchAsync(async (req, res, next) => {
 
   if (!checkFriend) return next(new AppError(`Bạn chưa kết bạn với người bạn này`, 404));
 
-  // update List friend
+  //TODO: update List friend
   await UserInfo.update(
     {
       listFriend: friend.listFriend.filter((user) => user.id !== Number(req.user.id)),
@@ -303,7 +288,7 @@ export const removeFriend = catchAsync(async (req, res, next) => {
     },
   );
 
-  // update List currentUser
+  //TODO: update List currentUser
   await UserInfo.update(
     {
       listFriend: user.listFriend.filter((user) => user.id !== Number(friendId)),
@@ -313,7 +298,7 @@ export const removeFriend = catchAsync(async (req, res, next) => {
     },
   );
 
-  // delete Relationship friend with current user
+  //TODO: delete Relationship friend with current user
   await UserRelationship.destroy({
     where: {
       id: checkFriend.id,
@@ -323,4 +308,8 @@ export const removeFriend = catchAsync(async (req, res, next) => {
   res.status(200).json({
     message: 'success',
   });
+});
+
+export const getFriend = catchAsync(async (req, res, next) => {
+  res.status(200).json({ message: 'success' });
 });
