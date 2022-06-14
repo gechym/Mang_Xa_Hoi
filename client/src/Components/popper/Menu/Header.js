@@ -11,7 +11,7 @@ const cx = classNames.bind(styles);
 function Header({ title, onBack }) {
   return (
     <header className={cx('header')}>
-      <button className={cx('back')} onClick={onBack}>
+      <button className={`back ${cx('back')}`} onClick={onBack}>
         <BackIcon width="2rem" height="2rem" />
       </button>
       <h4 className={cx('header-title')}>{title}</h4>

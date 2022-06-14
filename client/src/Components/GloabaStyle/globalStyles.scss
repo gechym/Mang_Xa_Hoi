@@ -132,6 +132,10 @@ body {
   .wrapper {
     background-color: var(--background-header);
     color: var(--text-color);
+
+    .back {
+      color: var(--text-color);
+    }
   }
 
   .search {
@@ -179,6 +183,10 @@ body {
   .wrapper {
     background-color: var(--background-header-dark-mode);
     color: var(--text-color-dark-mode);
+
+    .back {
+      color: var(--text-color-dark-mode);
+    }
   }
 
   .search {
