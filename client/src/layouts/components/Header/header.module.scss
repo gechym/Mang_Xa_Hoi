@@ -27,7 +27,7 @@
 
     .icon {
       height: 100%;
-      color: var(--text-grey);
+      color: var(--text-grey) !important;
       margin: 0px 20px;
 
       &:hover {
@@ -36,7 +36,13 @@
 
       &.active {
         color: var(--primary);
+        border-radius: 0px;
         border-bottom: 3px solid var(--primary);
+        span {
+          svg {
+            fill: var(--primary);
+          }
+        }
       }
     }
   }

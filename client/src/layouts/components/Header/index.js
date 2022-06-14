@@ -25,7 +25,6 @@ const cx = classNames.bind(style);
 
 function Header() {
   const { pathname } = useLocation();
-
   const userMenu = [
     {
       icon: <HomeIcon width="2rem" height="2rem" />,

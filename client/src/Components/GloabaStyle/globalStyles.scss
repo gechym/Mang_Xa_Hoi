@@ -26,7 +26,7 @@
 :root {
   --primary: #2aa4f4;
   --black: #050505;
-  --text-color: #101010;
+  --text-color: #050505;
   --text-grey: #65676b;
 
   --background-header-dark-mode: #242526;
@@ -119,6 +119,11 @@ body {
   background-color: var(--background);
   color: var(--text-color);
 
+  .btnIcon {
+    background-color: var(--background);
+    color: var(--text-color);
+  }
+
   .header {
     background-color: var(--background-header);
     color: var(--text-color);
@@ -158,6 +163,7 @@ body {
 #Dark {
   background-color: var(--background-dark-mode);
   color: var(--text-color-dark-mode);
+  fill: var(--text-color-dark-mode);
 
   .btnIcon {
     background-color: var(--background-input-and-icon);
@@ -184,7 +190,7 @@ body {
     }
 
     button {
-      color: #ffffffb9;
+      color: #65676b;
 
       &:hover {
         cursor: pointer;

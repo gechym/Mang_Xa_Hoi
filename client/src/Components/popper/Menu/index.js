@@ -10,13 +10,15 @@ import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 
-function Menu({ children, items, onChange = () => {} }) {
+const defaultFn = () => {};
+
+function Menu({ children, items, hideOnClick = false, onChange = defaultFn }) {
   const [history, setHistory] = useState([{ data: items }]);
   const current = history[history.length - 1];
 
-  const renderDataItems = (current) => {
+  const renderItems = () => {
     return current.data.map((item, index) => {
-      let isParent = !!item.children;
+      const isParent = !!item.children;
 
       return (
         <MenuItem
@@ -24,12 +26,8 @@ function Menu({ children, items, onChange = () => {} }) {
           data={item}
           onClick={() => {
             if (isParent) {
-              // Check itm có lớp con ko
-              // console.log(item.children);
-
               setHistory((prev) => [...prev, item.children]);
             } else {
-              // sử ly logic từ lớp cha
               onChange(item);
             }
           }}
@@ -38,48 +36,41 @@ function Menu({ children, items, onChange = () => {} }) {
     });
   };
 
-  const renderResult = (attrs) => {
-    return (
-      <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
-        <WrapperPopper className={cx('menu-popper')}>
-          {history.length > 1 && (
-            <Header
-              title={current.title}
-              onBack={() => {
-                setHistory(
-                  (prev) => prev.splice(0, prev.length - 1), // cắt một cấp menu trong mảng history
-                );
-              }}
-            />
-          )}
-          <div className={cx('menu-body')}>{renderDataItems(current)}</div>
-        </WrapperPopper>
-      </div>
-    );
+  const handleBack = () => {
+    setHistory((prev) => prev.slice(0, prev.length - 1));
   };
-
-  const handleResetMenu = () => {
-    setHistory((prev) => prev.splice(0, 1));
+  // Reset to first page
+  const handleReset = () => {
+    setHistory((prev) => prev.slice(0, 1));
   };
+  const renderResult = (attrs) => (
+    <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
+      <WrapperPopper className={cx('menu-popper')}>
+        {history.length > 1 && <Header title={current.title} onBack={handleBack} />}
+        <div className={cx('menu-body')}>{renderItems()}</div>
+      </WrapperPopper>
+    </div>
+  );
 
   return (
     <Tippy
       interactive
-      onHidden={handleResetMenu}
-      hideOnClick="toggle"
-      delay={[0, 400]}
-      offset={[20, 20]}
+      delay={[0, 700]}
+      offset={[12, 8]}
+      hideOnClick={hideOnClick}
       placement="bottom-end"
       render={renderResult}
+      onHide={handleReset}
     >
       {children}
     </Tippy>
   );
 }
 
-Menu.propsTypes = {
+Menu.propTypes = {
   children: PropTypes.node.isRequired,
-  items: PropTypes.array.isRequired,
+  items: PropTypes.array,
+  hideOnClick: PropTypes.bool,
   onChange: PropTypes.func,
 };
 

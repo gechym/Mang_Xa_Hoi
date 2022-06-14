@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome/';
 import classNames from 'classnames/bind';
 
 import styles from './menu.module.scss';
+import { BackIcon } from '~/Components/icons';
 
 const cx = classNames.bind(styles);
 
@@ -11,7 +12,7 @@ function Header({ title, onBack }) {
   return (
     <header className={cx('header')}>
       <button className={cx('back')} onClick={onBack}>
-        <FontAwesomeIcon icon={faChevronLeft} />
+        <BackIcon width="2rem" height="2rem" />
       </button>
       <h4 className={cx('header-title')}>{title}</h4>
     </header>

@@ -45,7 +45,7 @@ function Button({
     });
   }
 
-  const classes = cx('wrapper', {
+  const classes = `wrapper ${cx('wrapper', {
     primary,
     outline,
     text,
@@ -54,7 +54,7 @@ function Button({
     disabled,
     rounded,
     [className]: className,
-  });
+  })}`;
   return (
     <Comp className={classes} {...props}>
       {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
