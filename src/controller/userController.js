@@ -78,7 +78,6 @@ const handleAddFriend = async (idUser, idFriend, next) => {
 };
 
 const checkCurrentUserAndFriend = async (userId, friendId, next) => {
-  console.log(`👉👉👉👉👉 ${userId}`);
   //TODO: check friendId is already exists
   const friend = await UserInfo.findOne({
     where: { id_user: friendId },
@@ -311,5 +310,59 @@ export const removeFriend = catchAsync(async (req, res, next) => {
 });
 
 export const getFriend = catchAsync(async (req, res, next) => {
-  res.status(200).json({ message: 'success' });
+  const { friendId } = req.params;
+
+  if (Number(friendId) === req.user.id) return next(new AppError('Id không được trùng', 400));
+
+  await checkCurrentUserAndFriend(req.user.id, friendId, next);
+
+  let status = 1;
+  let message = 'Đang là bạn bè';
+
+  const checkFriend = await UserRelationship.findOne({
+    where: {
+      [Op.or]: [
+        { user_send: Number(friendId), user_reciver: req.user.id, status: 'friend' },
+        { user_send: req.user.id, user_reciver: Number(friendId), status: 'friend' },
+      ],
+    },
+  });
+
+  if (!checkFriend) {
+    status = 0;
+    message = 'Chưa kết bạn';
+  }
+
+  const checkFriendSendRequestAddFriend = await UserRelationship.findOne({
+    where: {
+      user_send: Number(friendId),
+      user_reciver: req.user.id,
+      status: 'pending',
+    },
+    include: [{ model: UserInfo, as: 'userSend' }],
+  });
+
+  if (checkFriendSendRequestAddFriend) {
+    status = 2;
+    message = `[pending] ${checkFriendSendRequestAddFriend.userSend?.name} đã gửi lời mời đến bạn`;
+  }
+
+  const checkCurrentUserSendRequestAddFriend = await UserRelationship.findOne({
+    where: {
+      user_send: req.user.id,
+      user_reciver: Number(friendId),
+      status: 'pending',
+    },
+    include: [{ model: UserInfo, as: 'userReciver' }],
+  });
+
+  if (checkCurrentUserSendRequestAddFriend) {
+    status = 3;
+    message = `[pending]bạn đã gửi lời mời kết bạn đến ${checkCurrentUserSendRequestAddFriend.userReciver.name}`;
+  }
+
+  res.status(200).json({
+    message: message,
+    status,
+  });
 });
