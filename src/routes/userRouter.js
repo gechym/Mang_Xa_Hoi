@@ -10,6 +10,7 @@ import {
   changePassword,
   requestAddFriend,
   acceptAddFriend,
+  removeFriend,
 } from '../controller';
 
 const userRouter = express.Router();
@@ -21,6 +22,7 @@ userRouter.route('/resetPassword/:resetToken').patch(resetPassword);
 userRouter.route('/changepassword').patch(protect, changePassword);
 userRouter.route('/requestAddFriend/:friendId').post(protect, requestAddFriend);
 userRouter.route('/acceptAddFriend/:friendId').patch(protect, acceptAddFriend);
+userRouter.route('/removeFriend/:friendId').patch(protect, removeFriend);
 
 userRouter.route('/').get(protect, checkRules('admin'), getUsers);
 

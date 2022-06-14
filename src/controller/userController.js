@@ -78,9 +78,10 @@ const handleAddFriend = async (idUser, idFriend, next) => {
 };
 
 const checkCurrentUserAndFriend = async (userId, friendId, next) => {
+  console.log(`👉👉👉👉👉 ${userId}`);
   // check friendId is already exists
   const friend = await UserInfo.findOne({
-    where: { id: friendId },
+    where: { id_user: friendId },
   });
 
   if (!friend) return next(new AppError(`người bạn này không tồn tại`, 404));
@@ -89,7 +90,7 @@ const checkCurrentUserAndFriend = async (userId, friendId, next) => {
     attributes: {
       exclude: [`password`, `passwordChangeAt`, `passwordResetToken`, `passwordResetExpires`],
     },
-    where: { id: userId },
+    where: { id_user: userId },
   });
 
   if (!user) {
@@ -269,6 +270,57 @@ export const acceptAddFriend = catchAsync(async (req, res, next) => {
     friend,
     userInfoFriend,
     checkRequestAddFriendFromFriend,
+    message: 'success',
+  });
+});
+
+export const removeFriend = catchAsync(async (req, res, next) => {
+  const { friendId } = req.params;
+
+  if (Number(friendId) === req.user.id) return next(new AppError('Id không được trùng', 400));
+
+  const { user, friend } = await checkCurrentUserAndFriend(req.user.id, friendId, next);
+
+  // check friendId and user have friend
+  const checkFriend = await UserRelationship.findOne({
+    where: {
+      [Op.or]: [
+        { user_send: Number(friendId), user_reciver: req.user.id, status: 'friend' },
+        { user_send: req.user.id, user_reciver: Number(friendId), status: 'friend' },
+      ],
+    },
+  });
+
+  if (!checkFriend) return next(new AppError(`Bạn chưa kết bạn với người bạn này`, 404));
+
+  // update List friend
+  await UserInfo.update(
+    {
+      listFriend: friend.listFriend.filter((user) => user.id !== Number(req.user.id)),
+    },
+    {
+      where: { id_user: Number(friendId) },
+    },
+  );
+
+  // update List currentUser
+  await UserInfo.update(
+    {
+      listFriend: user.listFriend.filter((user) => user.id !== Number(friendId)),
+    },
+    {
+      where: { id_user: Number(req.user.id) },
+    },
+  );
+
+  // delete Relationship friend with current user
+  await UserRelationship.destroy({
+    where: {
+      id: checkFriend.id,
+    },
+  });
+
+  res.status(200).json({
     message: 'success',
   });
 });
