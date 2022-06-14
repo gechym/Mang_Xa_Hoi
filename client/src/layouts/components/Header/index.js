@@ -19,11 +19,163 @@ import Search from '../Search';
 import Button from '~/Components/Button';
 import BtnIcon from '~/Components/BtnIcon/BtnIcon';
 import Image from '~/Components/Image';
+import Menu from '~/Components/popper/Menu';
 
 const cx = classNames.bind(style);
 
 function Header() {
   const { pathname } = useLocation();
+
+  const userMenu = [
+    {
+      icon: <HomeIcon width="2rem" height="2rem" />,
+      title: 'English',
+      children: {
+        title: 'Language',
+        data: [
+          {
+            type: 'language',
+            code: 'en',
+            title: 'english',
+            icon: <HomeIcon width="2rem" height="2rem" />,
+            to: '/language',
+          },
+          {
+            type: 'language',
+            code: 'vi',
+            title: 'việt nam',
+            icon: <HomeIcon width="2rem" height="2rem" />,
+            href: '/language',
+          },
+          {
+            type: 'language',
+            code: 'en',
+            title: 'english',
+            icon: <HomeIcon width="2rem" height="2rem" />,
+            to: '/language',
+          },
+          {
+            type: 'language',
+            code: 'vi',
+            title: 'việt nam',
+            icon: <HomeIcon width="2rem" height="2rem" />,
+            href: '/language',
+          },
+          {
+            type: 'language',
+            code: 'en',
+            title: 'english',
+            icon: <HomeIcon width="2rem" height="2rem" />,
+            to: '/language',
+          },
+          {
+            type: 'language',
+            code: 'vi',
+            title: 'việt nam',
+            icon: <HomeIcon width="2rem" height="2rem" />,
+            href: '/language',
+          },
+          {
+            type: 'language',
+            code: 'en',
+            title: 'english',
+            icon: <HomeIcon width="2rem" height="2rem" />,
+            to: '/language',
+          },
+          {
+            type: 'language',
+            code: 'vi',
+            title: 'việt nam',
+            icon: <HomeIcon width="2rem" height="2rem" />,
+            href: '/language',
+          },
+          {
+            type: 'language',
+            code: 'en',
+            title: 'english',
+            icon: <HomeIcon width="2rem" height="2rem" />,
+            to: '/language',
+          },
+          {
+            type: 'language',
+            code: 'vi',
+            title: 'việt nam',
+            icon: <HomeIcon width="2rem" height="2rem" />,
+            href: '/language',
+          },
+          {
+            type: 'language',
+            code: 'en',
+            title: 'english',
+            icon: <HomeIcon width="2rem" height="2rem" />,
+            to: '/language',
+          },
+          {
+            type: 'language',
+            code: 'vi',
+            title: 'việt nam',
+            icon: <HomeIcon width="2rem" height="2rem" />,
+            href: '/language',
+          },
+          {
+            type: 'language',
+            code: 'en',
+            title: 'english',
+            icon: <HomeIcon width="2rem" height="2rem" />,
+            to: '/language',
+          },
+          {
+            type: 'language',
+            code: 'vi',
+            title: 'việt nam',
+            icon: <HomeIcon width="2rem" height="2rem" />,
+            href: '/language',
+          },
+          {
+            type: 'language',
+            code: 'en',
+            title: 'english',
+            icon: <HomeIcon width="2rem" height="2rem" />,
+            to: '/language',
+          },
+          {
+            type: 'language',
+            code: 'vi',
+            title: 'việt nam',
+            icon: <HomeIcon width="2rem" height="2rem" />,
+            href: '/language',
+          },
+          {
+            title: 'Menu cấp 3',
+            icon: <HomeIcon width="2rem" height="2rem" />,
+            separate: true,
+            children: {
+              title: 'Menu 3',
+              data: [
+                {
+                  type: 'language',
+                  code: 'en',
+                  title: 'english',
+                  icon: <HomeIcon width="2rem" height="2rem" />,
+                  to: '/language',
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      icon: <HomeIcon width="2rem" height="2rem" />,
+      title: 'Keyboard shortcuts',
+      to: '/upload',
+    },
+    {
+      icon: <HomeIcon width="2rem" height="2rem" />,
+      title: 'Feedback and help',
+      to: '/following',
+    },
+  ];
 
   return (
     <header className={`header ${cx('header')}`}>
@@ -63,6 +215,14 @@ function Header() {
         >
           <IconGroup width="3.1rem" height="3.1rem" />
         </Button>
+      </div>
+
+      <div>
+        <Menu items={userMenu}>
+          <div>
+            <IconGroup width="3.1rem" height="3.1rem" />
+          </div>
+        </Menu>
       </div>
 
       <div className={cx('wrapper-menu-right')}>

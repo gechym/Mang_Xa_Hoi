@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import style from './btnIcon.module.scss';
 import Tippy from '@tippyjs/react';
-// import 'tippy.js/dist/tippy.css';
+import 'tippy.js/dist/tippy.css';
 
 const cx = classNames.bind(style);
 
