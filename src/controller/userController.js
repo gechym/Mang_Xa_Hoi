@@ -109,49 +109,6 @@ const checkCurrentUserAndFriend = async (userId, friendId, next) => {
   return { user: user, friend: friend };
 };
 
-export const getFriend = catchAsync(async (req, res, next) => {
-  const { friendId } = req.params;
-
-  if (Number(friendId) === req.user.id) return next(new AppError('Id không được trùng', 400));
-
-  await checkCurrentUserAndFriend(req.user.id, friendId, next);
-
-  let status = 1;
-  let message = 'Đang là bạn bè';
-
-  const checkFriend = await UserRelationship.findOne({
-    where: {
-      [Op.or]: [
-        { user_send: Number(friendId), user_reciver: req.user.id, status: 'friend' },
-        { user_send: req.user.id, user_reciver: Number(friendId), status: 'friend' },
-      ],
-    },
-  });
-
-  if (!checkFriend) {
-    status = 0;
-    message = 'Chưa kết bạn';
-  }
-
-  const { checkFriendSendRequestAddFriend, checkCurrentUserSendRequestAddFriend } =
-    await checkRequestAddFriend(req.user.id, friendId);
-
-  if (checkFriendSendRequestAddFriend) {
-    status = 2;
-    message = `[pending] ${checkFriendSendRequestAddFriend.userSend?.name} đã gửi lời mời đến bạn`;
-  }
-
-  if (checkCurrentUserSendRequestAddFriend) {
-    status = 3;
-    message = `[pending]bạn đã gửi lời mời kết bạn đến ${checkCurrentUserSendRequestAddFriend.userReciver.name}`;
-  }
-
-  res.status(200).json({
-    message: message,
-    status,
-  });
-});
-
 const checkRequestAddFriend = async (friendId, userId) => {
   const checkFriendSendRequestAddFriend = await UserRelationship.findOne({
     where: {
@@ -175,50 +132,8 @@ const checkRequestAddFriend = async (friendId, userId) => {
     checkCurrentUserSendRequestAddFriend,
   };
 };
-
-export const getUsers = catchAsync(async (req, res, next) => {
-  const user = await User.findAll({
-    attributes: {
-      exclude: [
-        `password`,
-        `passwordChangeAt`,
-        `passwordResetToken`,
-        'createdAt',
-        'updatedAt',
-        'deletedAt',
-        `passwordResetExpires`,
-      ],
-    },
-    include: [{ model: UserInfo, as: 'userInfor' }],
-  });
-
-  const userRelationship = await UserRelationship.findAll({
-    include: [
-      {
-        model: UserInfo,
-        as: 'userSend',
-      },
-      {
-        model: UserInfo,
-        as: 'userReciver',
-      },
-    ],
-  });
-
-  const userInfor = await UserInfo.findAll();
-  res.status(200).json({
-    message: 'success',
-    requestTime: req.requestTime,
-    user: req.user,
-    data: {
-      userRelationship: userRelationship,
-      userInfor: userInfor,
-      user: user,
-    },
-  });
-});
-
 //TODO: User case User
+
 export const requestAddFriend = catchAsync(async (req, res, next) => {
   const { friendId } = req.params;
 
@@ -368,5 +283,90 @@ export const removeFriend = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     message: 'success',
+  });
+});
+
+export const getUsers = catchAsync(async (req, res, next) => {
+  const user = await User.findAll({
+    attributes: {
+      exclude: [
+        `password`,
+        `passwordChangeAt`,
+        `passwordResetToken`,
+        'createdAt',
+        'updatedAt',
+        'deletedAt',
+        `passwordResetExpires`,
+      ],
+    },
+    include: [{ model: UserInfo, as: 'userInfor' }],
+  });
+
+  const userRelationship = await UserRelationship.findAll({
+    include: [
+      {
+        model: UserInfo,
+        as: 'userSend',
+      },
+      {
+        model: UserInfo,
+        as: 'userReciver',
+      },
+    ],
+  });
+
+  const userInfor = await UserInfo.findAll();
+  res.status(200).json({
+    message: 'success',
+    requestTime: req.requestTime,
+    user: req.user,
+    data: {
+      userRelationship: userRelationship,
+      userInfor: userInfor,
+      user: user,
+    },
+  });
+});
+
+export const getFriend = catchAsync(async (req, res, next) => {
+  const { friendId } = req.params;
+
+  if (Number(friendId) === req.user.id) return next(new AppError('Id không được trùng', 400));
+
+  await checkCurrentUserAndFriend(req.user.id, friendId, next);
+
+  let status = 1;
+  let message = 'Đang là bạn bè';
+
+  const checkFriend = await UserRelationship.findOne({
+    where: {
+      [Op.or]: [
+        { user_send: Number(friendId), user_reciver: req.user.id, status: 'friend' },
+        { user_send: req.user.id, user_reciver: Number(friendId), status: 'friend' },
+      ],
+    },
+  });
+
+  if (!checkFriend) {
+    status = 0;
+    message = 'Chưa kết bạn';
+  }
+
+  const { checkFriendSendRequestAddFriend, checkCurrentUserSendRequestAddFriend } =
+    await checkRequestAddFriend(req.user.id, friendId);
+
+  if (checkFriendSendRequestAddFriend) {
+    status = 2;
+    message = `[pending] ${checkFriendSendRequestAddFriend.userSend?.name} đã gửi lời mời đến bạn`;
+  }
+
+  if (checkCurrentUserSendRequestAddFriend) {
+    status = 3;
+    message = `[pending]bạn đã gửi lời mời kết bạn đến ${checkCurrentUserSendRequestAddFriend.userReciver.name}`;
+  }
+
+  res.status(200).json({
+    message: message,
+    status,
   });
 });
