@@ -4,6 +4,7 @@ import catchAsync from '../util/catchAsync';
 import AppError from '../util/AppError';
 import UserRelationship from '../module/UserRelationship';
 import { Op } from 'sequelize';
+import APIFeature from '../util/APIfeature';
 
 const handleAddFriend = async (idUser, idFriend, next) => {
   const userInfor = await UserInfo.findOne({
@@ -287,6 +288,7 @@ export const removeFriend = catchAsync(async (req, res, next) => {
 });
 
 export const getUsers = catchAsync(async (req, res, next) => {
+  const { queryWhere, querySort, queryLimit, queryPage, offset } = APIFeature(req.query);
   const user = await User.findAll({
     attributes: {
       exclude: [
@@ -315,15 +317,26 @@ export const getUsers = catchAsync(async (req, res, next) => {
     ],
   });
 
-  const userInfor = await UserInfo.findAll();
+  const userInfor = await UserInfo.findAll({
+    where: {
+      ...queryWhere,
+    },
+    order: [...querySort],
+    offset,
+    limit: queryLimit,
+  });
+
   res.status(200).json({
     message: 'success',
-    requestTime: req.requestTime,
-    user: req.user,
+    totalUser: await UserInfo.count(),
+    result: userInfor.length,
+    currentUser: req.user,
     data: {
-      userRelationship: userRelationship,
-      userInfor: userInfor,
-      user: user,
+      users: userInfor,
+    },
+    more: {
+      user,
+      userRelationship,
     },
   });
 });
