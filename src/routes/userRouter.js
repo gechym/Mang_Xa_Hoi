@@ -12,6 +12,8 @@ import {
   acceptAddFriend,
   removeFriend,
   getFriend,
+  deleteAcceptAddFriend,
+  disagreeAddFriend,
 } from '../controller';
 
 const userRouter = express.Router();
@@ -24,6 +26,8 @@ userRouter.route('/changepassword').patch(protect, changePassword);
 
 userRouter.route('/requestAddFriend/:friendId').post(protect, requestAddFriend);
 userRouter.route('/acceptAddFriend/:friendId').patch(protect, acceptAddFriend);
+userRouter.route('/disagreeAddFriend/:friendId').delete(protect, disagreeAddFriend);
+userRouter.route('/deleteRequestAddFriend/:friendId').delete(protect, deleteAcceptAddFriend);
 userRouter.route('/removeFriend/:friendId').patch(protect, removeFriend);
 userRouter.route('/getFriend/:friendId').get(protect, getFriend);
 

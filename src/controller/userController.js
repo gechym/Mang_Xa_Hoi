@@ -236,6 +236,30 @@ export const acceptAddFriend = catchAsync(async (req, res, next) => {
   });
 });
 
+export const deleteAcceptAddFriend = catchAsync(async (req, res, next) => {
+  const { friendId } = req.params;
+  //TODO: check friendId
+  if (Number(friendId) === req.user.id) return next(new AppError(`Id ko hợp lệ`, 404));
+
+  await checkCurrentUserAndFriend(req.user.id, friendId, next);
+
+  const { checkCurrentUserSendRequestAddFriend } = await checkRequestAddFriend(friendId, req.user.id);
+
+  if (!checkCurrentUserSendRequestAddFriend) {
+    return next(new AppError('Bạn chưa gửi lời mời kết bạn đến người này', 404));
+  }
+
+  await UserRelationship.destroy({
+    where: {
+      id: checkCurrentUserSendRequestAddFriend.id,
+    },
+  });
+
+  return res.status(200).json({
+    message: 'success',
+  });
+});
+
 export const removeFriend = catchAsync(async (req, res, next) => {
   const { friendId } = req.params;
 
@@ -285,6 +309,24 @@ export const removeFriend = catchAsync(async (req, res, next) => {
   res.status(200).json({
     message: 'success',
   });
+});
+
+export const disagreeAddFriend = catchAsync(async (req, res, next) => {
+  const { friendId } = req.params;
+  if (Number(friendId) === req.user.id) return next(new AppError('Id không được trùng', 400));
+  const { user, friend } = await checkCurrentUserAndFriend(req.user.id, friendId, next);
+
+  const { checkFriendSendRequestAddFriend } = await checkRequestAddFriend(friendId, req.user.id);
+  if (!checkFriendSendRequestAddFriend)
+    return next(new AppError('người bạn này chưa gửi lời mời kết bạn', 404));
+
+  await UserRelationship.destroy({
+    where: {
+      id: checkFriendSendRequestAddFriend.id,
+    },
+  });
+
+  return res.status(200).json({ message: 'success' });
 });
 
 export const getUsers = catchAsync(async (req, res, next) => {
