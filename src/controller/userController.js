@@ -117,7 +117,10 @@ const checkRequestAddFriend = async (friendId, userId) => {
       user_reciver: userId,
       status: 'pending',
     },
-    include: [{ model: UserInfo, as: 'userSend' }],
+    include: [
+      { model: UserInfo, as: 'userSend' },
+      { model: UserInfo, as: 'userReciver' },
+    ],
   });
   const checkCurrentUserSendRequestAddFriend = await UserRelationship.findOne({
     where: {
@@ -125,7 +128,10 @@ const checkRequestAddFriend = async (friendId, userId) => {
       user_reciver: Number(friendId),
       status: 'pending',
     },
-    include: [{ model: UserInfo, as: 'userReciver' }],
+    include: [
+      { model: UserInfo, as: 'userReciver' },
+      { model: UserInfo, as: 'userSend' },
+    ],
   });
 
   return {
@@ -408,16 +414,16 @@ export const getFriend = catchAsync(async (req, res, next) => {
   }
 
   const { checkFriendSendRequestAddFriend, checkCurrentUserSendRequestAddFriend } =
-    await checkRequestAddFriend(req.user.id, friendId);
+    await checkRequestAddFriend(friendId, req.user.id);
 
   if (checkFriendSendRequestAddFriend) {
     status = 2;
-    message = `[pending] ${checkFriendSendRequestAddFriend.userSend?.name} đã gửi lời mời đến bạn`;
+    message = `[pending]${checkFriendSendRequestAddFriend.userSend?.name} đã gửi lời mời kết bạn đến bạn`;
   }
 
   if (checkCurrentUserSendRequestAddFriend) {
     status = 3;
-    message = `[pending]bạn đã gửi lời mời kết bạn đến ${checkCurrentUserSendRequestAddFriend.userReciver.name}`;
+    message = `[pending] bạn đã gửi lời mời đến ${checkCurrentUserSendRequestAddFriend.userReciver?.name} `;
   }
 
   res.status(200).json({
