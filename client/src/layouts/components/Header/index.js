@@ -6,9 +6,13 @@ import style from './header.module.scss';
 import {
   LogoHeader,
   HomeIcon,
+  HomeIconActive,
   TiviIcon,
+  TiviIconActice,
   IconMarket,
+  IconMarketActive,
   IconGroup,
+  IconGroupActive,
   IconMenu,
   IconBell,
   IconMessage,
@@ -40,28 +44,44 @@ function Header() {
           className={cx('icon', { active: pathname === config.router.home })}
           small
         >
-          <HomeIcon width="3.1rem" height="3.1rem" />
+          {pathname === config.router.home ? (
+            <HomeIconActive width="3.1rem" height="3.1rem" />
+          ) : (
+            <HomeIcon width="3.1rem" height="3.1rem" />
+          )}
         </Button>
         <Button
           to={config.router.watch}
           className={cx('icon', { active: pathname === config.router.watch })}
           small
         >
-          <TiviIcon width="3.1rem" height="3.1rem" />
+          {pathname === config.router.watch ? (
+            <TiviIconActice width="3.1rem" height="3.1rem" />
+          ) : (
+            <TiviIcon width="3.1rem" height="3.1rem" />
+          )}
         </Button>
         <Button
           to={config.router.marketplace}
           className={cx('icon', { active: pathname === config.router.marketplace })}
           small
         >
-          <IconMarket width="3.1rem" height="3.1rem" />
+          {pathname === config.router.marketplace ? (
+            <IconMarketActive width="3.1rem" height="3.1rem" />
+          ) : (
+            <IconMarket width="3.1rem" height="3.1rem" />
+          )}
         </Button>
         <Button
           to={config.router.groups}
           className={cx('icon', { active: pathname === config.router.groups })}
           small
         >
-          <IconGroup width="3.1rem" height="3.1rem" />
+          {pathname === config.router.groups ? (
+            <IconGroupActive width="3.1rem" height="3.1rem" />
+          ) : (
+            <IconGroup width="3.1rem" height="3.1rem" />
+          )}
         </Button>
       </div>
 

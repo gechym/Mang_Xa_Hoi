@@ -148,7 +148,7 @@ body {
     }
 
     button {
-      color: #101010;
+      color: var(--text-color);
 
       &:hover {
         cursor: pointer;
