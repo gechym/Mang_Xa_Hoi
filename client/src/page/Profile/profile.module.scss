@@ -1,6 +1,5 @@
 .wrapper {
   flex: 1;
-  border: 1px solid yellow;
 
   .header-profile {
     background-color: #242526;
@@ -20,8 +19,10 @@
     .user-content {
       padding: 0px 250px;
       height: 140px;
+      display: flex;
+
       .content-left {
-        display: flex;
+        flex: 1;
         .avatar {
           position: relative;
 
@@ -36,7 +37,27 @@
         }
         .info {
           margin-left: 185px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          height: 140px;
         }
+      }
+    }
+
+    .content-right {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      flex: 1;
+
+      .btn-edit {
+        margin-bottom: 20px;
+        border-radius: 4px;
+        font-size: 1.4rem;
+        font-weight: 500;
+        height: 36px;
+        padding: 0px 12px;
       }
     }
   }

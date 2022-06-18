@@ -24,8 +24,9 @@
 }
 
 :root {
-  --primary: #2aa4f4;
+  --primary: #1b74e4;
   --black: #050505;
+  --white: #fff;
   --text-color: #050505;
   --text-grey: #65676b;
 
@@ -119,6 +120,27 @@ body {
   background-color: var(--background);
   color: var(--text-color);
 
+  .content-left {
+    border-bottom: 1px solid #cdcfd3;
+  }
+  .content-right {
+    border-bottom: 1px solid #cdcfd3;
+  }
+
+  .btn {
+    background-color: #e4e6eb;
+    color: var(--text-color);
+
+    &:hover {
+      background-color: #f0f3fb;
+    }
+  }
+
+  .box-content {
+    background-color: var(--background-header);
+    color: var(--text-color);
+  }
+
   .btnIcon {
     background-color: var(--background);
     color: var(--text-color);
@@ -168,6 +190,22 @@ body {
   background-color: var(--background-dark-mode);
   color: var(--text-color-dark-mode);
   fill: var(--text-color-dark-mode);
+
+  .content-left {
+    border-bottom: 1px solid #343536;
+  }
+  .content-right {
+    border-bottom: 1px solid #343536;
+  }
+
+  .btn {
+    background-color: #3a3b3c;
+    color: var(--text-color-dark-mode);
+
+    &:hover {
+      background-color: #494a4a;
+    }
+  }
 
   .btnIcon {
     background-color: var(--background-input-and-icon);

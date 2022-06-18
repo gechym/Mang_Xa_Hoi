@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import style from './profile.module.scss';
+import Button from '~/Components/Button';
 
 const cx = classNames.bind(style);
 
@@ -16,7 +17,7 @@ function Profile() {
           />
         </div>
         <div className={cx('user-content')}>
-          <div className={cx('content-left')}>
+          <div className={`content-left ${cx('content-left')}`}>
             <div className={cx('avatar')}>
               <img
                 alt=""
@@ -28,7 +29,9 @@ function Profile() {
               <h5>345 Bạn bè</h5>
             </div>
           </div>
-          <div className={cx('content-right')}></div>
+          <div className={`content-right ${cx('content-right')}`}>
+            <button className={`btn ${cx('btn-edit')}`}>Chỉnh sửa trang cá nhân</button>
+          </div>
         </div>
       </header>
     </div>
