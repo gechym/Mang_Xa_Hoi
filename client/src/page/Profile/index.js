@@ -1,7 +1,6 @@
 import { useParams } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import style from './profile.module.scss';
-import Button from '~/Components/Button';
 
 const cx = classNames.bind(style);
 

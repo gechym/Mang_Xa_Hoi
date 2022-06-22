@@ -1,0 +1,47 @@
+{
+    post : {
+        id : 1,
+        content : "hello cả nhà",
+        user_id : {
+            .......
+        }
+    },
+    cmts : [
+        {
+            cmt : {
+                id : 1, 
+                content : "abc",
+            },
+            use_cmt {
+                ......
+            },
+            reply_cmt_parent : null
+        },
+        {
+            cmt : {
+                id : 2, 
+                content : "abc",
+            },
+            use_cmt {
+                ......
+            },
+            reply_cmt_parent : {
+                id : 1, 
+                content : "abc",
+            }
+        },
+        {
+            cmt : {
+                id : 3, 
+                content : "cc",
+            },
+            use_cmt {
+                ......
+            },
+            reply_cmt_parent : {
+                id : 2, 
+                content : "abc",
+            }
+        }
+    ]
+}
