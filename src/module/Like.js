@@ -18,6 +18,9 @@ const Like = sequelize.define('tb_likes', {
   comment_id: {
     type: Sequelize.DataTypes.INTEGER,
   },
+  reply_comment_id: {
+    type: Sequelize.DataTypes.INTEGER,
+  },
 });
 
 export default Like;

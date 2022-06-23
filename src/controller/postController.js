@@ -52,6 +52,17 @@ export const getPost = catchAsync(async (req, res, next) => {
                 as: 'userReplyComment',
                 attributes: ['id_user', 'name', 'avatar', 'createdAt', 'updatedAt'],
               },
+              {
+                model: Like,
+                as: 'repLyCommentLike',
+                include: [
+                  {
+                    model: UserInfo,
+                    as: 'userLike',
+                    attributes: ['id_user', 'name', 'avatar', 'createdAt', 'updatedAt'],
+                  },
+                ],
+              },
             ],
           },
         ],
@@ -102,6 +113,14 @@ export const getPost = catchAsync(async (req, res, next) => {
               nameUserReplyComment: reply.userReplyComment.name,
               avatarUserReplyComment: reply.userReplyComment.avatar,
               contentReplyComment: reply.content,
+              likeReplyComment: reply.repLyCommentLike.map((likeReplyComment) => {
+                return {
+                  idLikeReplyComment: likeReplyComment.id,
+                  idUserLikeReplyComment: likeReplyComment.userLike.id,
+                  nameUserLikeReplyComment: likeReplyComment.userLike.name,
+                  avatarUserLikeReplyComment: likeReplyComment.userLike.avatar,
+                };
+              }),
               createdAt: reply.createdAt,
               updatedAt: reply.updatedAt,
             };
@@ -124,6 +143,6 @@ export const getPost = catchAsync(async (req, res, next) => {
   return res.status(200).json({
     message: 'success',
     result,
-    post_Comments_like,
+    // post_Comments_like,
   });
 });

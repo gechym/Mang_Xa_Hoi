@@ -36,20 +36,23 @@ const connectDatabase = async () => {
     Comment.hasMany(Like, { as: 'likedComments', foreignKey: 'comment_id' });
     Like.belongsTo(Comment, { as: 'likedComments', foreignKey: 'comment_id' });
 
-    UserInfo.hasMany(Like, { as: 'userLike', foreignKey: 'user_id' });
-    Like.belongsTo(UserInfo, { as: 'userLike', foreignKey: 'user_id' });
-
     Post.hasMany(Like, { as: 'postLike', foreignKey: 'post_id' });
     Like.belongsTo(Post, { as: 'postLike', foreignKey: 'post_id' });
 
-    // await sequelize
-    //   .sync({ force: true })
-    //   .then((result) => {
-    //     console.log('\n\n\n👉 Đồng bộ server thành công \n\n\n');
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    RepLyComment.hasMany(Like, { as: 'repLyCommentLike', foreignKey: 'reply_comment_id' });
+    Like.belongsTo(RepLyComment, { as: 'repLyCommentLike', foreignKey: 'reply_comment_id' });
+
+    UserInfo.hasMany(Like, { as: 'userLike', foreignKey: 'user_id' });
+    Like.belongsTo(UserInfo, { as: 'userLike', foreignKey: 'user_id' });
+
+    await sequelize
+      .sync({ force: true })
+      .then((result) => {
+        console.log('\n\n\n👉 Đồng bộ server thành công \n\n\n');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     await sequelize.authenticate();
     console.log('Connection has been established successfully.');
