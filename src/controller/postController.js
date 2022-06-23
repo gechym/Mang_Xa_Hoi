@@ -1,4 +1,3 @@
-import User from '../module/User';
 import AppError from '../util/AppError';
 import catchAsync from '../util/catchAsync';
 import { Op } from 'sequelize';
@@ -26,11 +25,34 @@ export const getPost = catchAsync(async (req, res, next) => {
       {
         model: Comment,
         as: 'commentsPost',
+
         include: [
+          {
+            model: Like,
+            as: 'likedComments',
+            include: [
+              {
+                model: UserInfo,
+                as: 'userLike',
+                attributes: ['id_user', 'name', 'avatar', 'createdAt', 'updatedAt'],
+              },
+            ],
+          },
           {
             model: UserInfo,
             as: 'comments',
             attributes: ['id_user', 'name', 'avatar', 'createdAt', 'updatedAt'],
+          },
+          {
+            model: RepLyComment,
+            as: 'replyComments',
+            include: [
+              {
+                model: UserInfo,
+                as: 'userReplyComment',
+                attributes: ['id_user', 'name', 'avatar', 'createdAt', 'updatedAt'],
+              },
+            ],
           },
         ],
       },
@@ -65,6 +87,25 @@ export const getPost = catchAsync(async (req, res, next) => {
           contentComment: comment.content,
           createdAt: comment.createdAt,
           updatedAt: comment.updatedAt,
+          likeComments: comment.likedComments.map((likeComment) => {
+            return {
+              idLikeComment: likeComment.id,
+              idUserLikeComment: likeComment.userLike.id,
+              nameUserLikeComment: likeComment.userLike.name,
+              avatarUserLikeComment: likeComment.userLike.avatar,
+            };
+          }),
+          replyComments: comment.replyComments.map((reply) => {
+            return {
+              idReplyComment: reply.id,
+              idUserReplyComment: reply.userReplyComment.id_user,
+              nameUserReplyComment: reply.userReplyComment.name,
+              avatarUserReplyComment: reply.userReplyComment.avatar,
+              contentReplyComment: reply.content,
+              createdAt: reply.createdAt,
+              updatedAt: reply.updatedAt,
+            };
+          }),
         };
       }),
       likes: post.postLike.map((like) => {
@@ -83,5 +124,6 @@ export const getPost = catchAsync(async (req, res, next) => {
   return res.status(200).json({
     message: 'success',
     result,
+    post_Comments_like,
   });
 });
