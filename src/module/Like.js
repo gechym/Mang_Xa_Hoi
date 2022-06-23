@@ -10,7 +10,6 @@ const Like = sequelize.define('tb_likes', {
   },
   post_id: {
     type: Sequelize.DataTypes.INTEGER,
-    allowNull: false,
   },
   user_id: {
     type: Sequelize.DataTypes.INTEGER,
@@ -18,7 +17,6 @@ const Like = sequelize.define('tb_likes', {
   },
   comment_id: {
     type: Sequelize.DataTypes.INTEGER,
-    allowNull: false,
   },
 });
 
