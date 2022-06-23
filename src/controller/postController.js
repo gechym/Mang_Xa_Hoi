@@ -7,10 +7,21 @@ import Comment from '../module/Comment';
 import RepLyComment from '../module/RepComments';
 import Like from '../module/Like';
 import UserInfo from '../module/UserInfo';
+import APIFeature from '../util/APIfeature';
 
 export const getPost = catchAsync(async (req, res, next) => {
+  const { queryWhere, querySort, queryLimit, queryPage, offset } = APIFeature(req.query);
+
   let post_Comments_like = await Post.findAll({
     //TODO: Xuất các bài post kèm Các Comment , thông tin người đăng , số người like
+
+    where: {
+      ...queryWhere,
+    },
+    order: [...querySort],
+    offset,
+    limit: queryLimit,
+
     include: [
       {
         model: Comment,
