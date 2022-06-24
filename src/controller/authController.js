@@ -131,7 +131,6 @@ export const protect = catchAsync(async (req, res, next) => {
     attributes: {
       exclude: [
         'password',
-        'passwordChangeAt',
         'passwordResetToken',
         'passwordResetExpires',
         'createdAt',

@@ -45,14 +45,14 @@ const connectDatabase = async () => {
     UserInfo.hasMany(Like, { as: 'userLike', foreignKey: 'user_id' });
     Like.belongsTo(UserInfo, { as: 'userLike', foreignKey: 'user_id' });
 
-    await sequelize
-      .sync({ force: true })
-      .then((result) => {
-        console.log('\n\n\n👉 Đồng bộ server thành công \n\n\n');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // await sequelize
+    //   .sync({ force: true })
+    //   .then((result) => {
+    //     console.log('\n\n\n👉 Đồng bộ server thành công \n\n\n');
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
 
     await sequelize.authenticate();
     console.log('Connection has been established successfully.');
