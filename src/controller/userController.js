@@ -389,7 +389,7 @@ export const getUsers = catchAsync(async (req, res, next) => {
   });
 });
 
-export const getFriend = catchAsync(async (req, res, next) => {
+export const getStatusFriend = catchAsync(async (req, res, next) => {
   const { friendId } = req.params;
 
   if (Number(friendId) === req.user.id) return next(new AppError('Id không được trùng', 400));

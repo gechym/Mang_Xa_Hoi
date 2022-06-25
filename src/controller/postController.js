@@ -8,6 +8,21 @@ import Like from '../module/Like';
 import UserInfo from '../module/UserInfo';
 import APIFeature from '../util/APIfeature';
 
+const checkLike = async (idUer, idChek, fieldName) => {
+  // post_id, comment_id, reply_comment_id:
+  const dataLike = await Like.findOne({
+    where: { user_id: idUer, [fieldName]: idChek },
+    include: [
+      { model: Post, as: 'postLike' },
+      { model: Comment, as: 'likedComments' },
+      { model: RepLyComment, as: 'repLyCommentLike' },
+      { model: UserInfo, as: 'userLike' },
+    ],
+  });
+
+  return dataLike;
+};
+
 export const getPost = catchAsync(async (req, res, next) => {
   const { queryWhere, querySort, queryLimit, queryPage, offset } = APIFeature(req.query);
 
@@ -143,6 +158,5 @@ export const getPost = catchAsync(async (req, res, next) => {
   return res.status(200).json({
     message: 'success',
     result,
-    // post_Comments_like,
   });
 });
