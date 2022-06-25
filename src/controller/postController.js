@@ -160,3 +160,22 @@ export const getPost = catchAsync(async (req, res, next) => {
     result,
   });
 });
+
+export const like = catchAsync(async (req, res, next) => {
+  const { id, checkId, fieldName } = req.params;
+
+  let data = await checkLike(id, checkId, fieldName);
+
+  if (!data) {
+    try {
+      data = await Like.create({
+        user_id: id,
+        [fieldName]: checkId,
+      });
+    } catch (error) {
+      return next(new AppError('Nội dung không tồn tại'));
+    }
+  }
+
+  return res.status(200).json({ message: 'success', data });
+});
