@@ -11,7 +11,7 @@ import cors from 'cors';
 import { createServer } from 'http';
 
 import handleError from './controller/HandleError';
-import { userRouter, postRouter } from './routes';
+import { userRouter, postRouter, commentRouter } from './routes';
 import AppError from './util/AppError';
 
 const app = express();
@@ -95,6 +95,7 @@ app.use((req, res, next) => {
 
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/posts', postRouter);
+app.use('/api/v1/comments', commentRouter);
 
 app.use('*', (req, res, next) => {
   return next(new AppError('404', 404));

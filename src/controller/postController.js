@@ -257,6 +257,8 @@ export const getPostById = (req, res, next) => {
 export const getComment = catchAsync(async (req, res, next) => {
   const { queryWhere, querySort, queryLimit, queryPage, offset } = APIFeature(req.query);
 
+  console.log(req.query);
+
   let Comment_like_reply_user = await Comment.findAll({
     //TODO: Xuất các bài post kèm Các Comment , thông tin người đăng , số người like
 
@@ -351,6 +353,30 @@ export const getComment = catchAsync(async (req, res, next) => {
     message: 'success',
     result,
   });
+});
+
+export const createComment = catchAsync(async (req, res, next) => {
+  const { content } = req.body;
+  const { postId } = req.params;
+
+  if (!content?.trim()) {
+    return next(new AppError('Không để trống nội dung', 404));
+  }
+
+  if (!Number(postId)) {
+    return next(new AppError('Id không được để trống', 404));
+  }
+
+  try {
+    const comment = await Comment.create({
+      user_id: req.user.id,
+      post_id: postId,
+      content: content,
+    });
+    return res.status(200).json({ message: 'success', comment });
+  } catch (error) {
+    return next(new AppError('Người dùng này hoặc bài post này không tồn tại', 404));
+  }
 });
 
 export const like = catchAsync(async (req, res, next) => {
