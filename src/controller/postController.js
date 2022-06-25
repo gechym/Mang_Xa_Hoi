@@ -1,6 +1,6 @@
+import { Op } from 'sequelize';
 import AppError from '../util/AppError';
 import catchAsync from '../util/catchAsync';
-import { Op } from 'sequelize';
 import Post from '../module/Post';
 import Comment from '../module/Comment';
 import RepLyComment from '../module/RepComments';
@@ -168,14 +168,25 @@ export const like = catchAsync(async (req, res, next) => {
 
   if (!data) {
     try {
-      data = await Like.create({
+      await Like.create({
         user_id: id,
         [fieldName]: checkId,
       });
     } catch (error) {
-      return next(new AppError('Nội dung không tồn tại'));
+      return next(new AppError('Thao tác nội dung không tồn tại', 404));
+    }
+  } else {
+    try {
+      await Like.destroy({
+        where: {
+          user_id: id,
+          [fieldName]: checkId,
+        },
+      });
+    } catch (error) {
+      return next(new AppError('Thao tác nội dung không tồn tại', 404));
     }
   }
 
-  return res.status(200).json({ message: 'success', data });
+  return res.status(200).json({ message: 'success', status: `${data ? 'Đã hủy like' : 'Đã Like'}` });
 });

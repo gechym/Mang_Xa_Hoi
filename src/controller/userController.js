@@ -221,7 +221,7 @@ export const acceptAddFriend = catchAsync(async (req, res, next) => {
     );
 
   if (!checkFriendSendRequestAddFriend)
-    return next(new AppError(`Người bạn này chưa gửi lời mời kết bạn đến bạn`));
+    return next(new AppError(`Người bạn này chưa gửi lời mời kết bạn đến bạn`, 404));
 
   await handleAddFriend(req.user.id, friendId, next);
 

@@ -220,7 +220,7 @@ export const resetPassword = catchAsync(async (req, res, next) => {
 
   const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
 
-  if (!password || !passwordConfig) return next(new AppError('Vui lòng cung cấp đầy đủ thông tin'));
+  if (!password || !passwordConfig) return next(new AppError('Vui lòng cung cấp đầy đủ thông tin', 404));
 
   const user = await User.findOne({
     where: {
