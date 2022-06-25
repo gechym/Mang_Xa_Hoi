@@ -23,6 +23,7 @@ const checkLike = async (idUer, idChek, fieldName) => {
   return dataLike;
 };
 
+//TODO: CRUD Post
 export const getPost = catchAsync(async (req, res, next) => {
   const { queryWhere, querySort, queryLimit, queryPage, offset } = APIFeature(req.query);
 
@@ -152,6 +153,197 @@ export const getPost = catchAsync(async (req, res, next) => {
       }),
       createdAt: post.createdAt,
       updatedAt: post.updatedAt,
+    };
+  });
+
+  return res.status(200).json({
+    message: 'success',
+    result,
+  });
+});
+
+export const createPost = catchAsync(async (req, res, next) => {
+  const { content, images } = req.body;
+
+  if (!content?.trim()) {
+    return next(new AppError('Không để trống nội dung', 404));
+  }
+
+  const post = await Post.create({
+    user_id: req.user.id,
+    content: content,
+  });
+
+  return res.status(200).json({ message: 'success', post });
+});
+
+export const deletePost = catchAsync(async (req, res, next) => {
+  const { postId } = req.params;
+
+  if (!postId || !Number(postId) > 0) {
+    return next(new AppError('Id không phù hợp', 404));
+  }
+
+  const postPrev = await Post.destroy({
+    where: { id: postId, user_id: req.user.id },
+  });
+
+  if (!postPrev) {
+    return next(new AppError('bài post không tồn tại', 404));
+  }
+
+  return res.status(200).json({ message: 'success', post: postPrev });
+});
+
+export const updatePost = catchAsync(async (req, res, next) => {
+  const { postId } = req.params;
+  const { content, images } = req.body;
+
+  if (!Number(postId) > 0) {
+    return next(new AppError('Id không phù hợp', 404));
+  }
+
+  if (!content?.trim()) {
+    return next(new AppError('Nội dung không được để trống', 404));
+  }
+
+  const post = await Post.findOne({
+    where: {
+      user_id: req.user.id,
+      id: postId,
+    },
+  });
+
+  if (!post) {
+    return next(new AppError('Post này không tồn tại', 404));
+  }
+
+  if (post.content === content?.trim()) {
+    return next(new AppError('Vui lòng cung cấp nội dung mới để cập nhật', 404));
+  }
+
+  await Post.update(
+    {
+      content: content,
+    },
+    {
+      where: {
+        user_id: req.user.id,
+        id: postId,
+      },
+      returning: true,
+    },
+  );
+
+  const postUpdated = await Post.findOne({
+    where: {
+      user_id: req.user.id,
+      id: postId,
+    },
+  });
+
+  return res.status(200).json({ message: 'success', post: postUpdated });
+});
+
+export const getPostById = (req, res, next) => {
+  const postId = req.params.postId;
+
+  req.query.id = postId;
+
+  next();
+};
+
+//TODO: CRUD Comment
+export const getComment = catchAsync(async (req, res, next) => {
+  const { queryWhere, querySort, queryLimit, queryPage, offset } = APIFeature(req.query);
+
+  let Comment_like_reply_user = await Comment.findAll({
+    //TODO: Xuất các bài post kèm Các Comment , thông tin người đăng , số người like
+
+    where: {
+      ...queryWhere,
+    },
+    order: [...querySort],
+    offset,
+    limit: queryLimit,
+    include: [
+      {
+        model: Like,
+        as: 'likedComments',
+        include: [
+          {
+            model: UserInfo,
+            as: 'userLike',
+            attributes: ['id_user', 'name', 'avatar', 'createdAt', 'updatedAt'],
+          },
+        ],
+      },
+      {
+        model: UserInfo,
+        as: 'comments',
+        attributes: ['id_user', 'name', 'avatar', 'createdAt', 'updatedAt'],
+      },
+      {
+        model: RepLyComment,
+        as: 'replyComments',
+        include: [
+          {
+            model: UserInfo,
+            as: 'userReplyComment',
+            attributes: ['id_user', 'name', 'avatar', 'createdAt', 'updatedAt'],
+          },
+          {
+            model: Like,
+            as: 'repLyCommentLike',
+            include: [
+              {
+                model: UserInfo,
+                as: 'userLike',
+                attributes: ['id_user', 'name', 'avatar', 'createdAt', 'updatedAt'],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  });
+
+  let result = Comment_like_reply_user.map((comment) => {
+    return {
+      idComment: comment.id,
+      idUserComent: comment.comments.id_user,
+      nameComment: comment.comments.name,
+      avatarComment: comment.comments.avatar,
+      contentComment: comment.content,
+      createdAt: comment.createdAt,
+      updatedAt: comment.updatedAt,
+      likeComments: comment.likedComments.map((likeComment) => {
+        return {
+          idLikeComment: likeComment.id,
+          idUserLikeComment: likeComment.userLike.id,
+          nameUserLikeComment: likeComment.userLike.name,
+          avatarUserLikeComment: likeComment.userLike.avatar,
+        };
+      }),
+      replyComments: comment.replyComments.map((reply) => {
+        return {
+          idReplyComment: reply.id,
+          idUserReplyComment: reply.userReplyComment.id_user,
+          nameUserReplyComment: reply.userReplyComment.name,
+          avatarUserReplyComment: reply.userReplyComment.avatar,
+          contentReplyComment: reply.content,
+          likeReplyComment: reply.repLyCommentLike.map((likeReplyComment) => {
+            return {
+              idLikeReplyComment: likeReplyComment.id,
+              idUserLikeReplyComment: likeReplyComment.userLike.id,
+              nameUserLikeReplyComment: likeReplyComment.userLike.name,
+              avatarUserLikeReplyComment: likeReplyComment.userLike.avatar,
+            };
+          }),
+          createdAt: reply.createdAt,
+          updatedAt: reply.updatedAt,
+        };
+      }),
     };
   });
 
