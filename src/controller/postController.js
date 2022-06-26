@@ -158,7 +158,12 @@ export const getPost = catchAsync(async (req, res, next) => {
 
   return res.status(200).json({
     message: 'success',
-    result,
+    totalPost: await Post.count(),
+    result: result.length,
+    currentUser: req.user,
+    data: {
+      posts: result,
+    },
   });
 });
 
