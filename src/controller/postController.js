@@ -231,7 +231,6 @@ export const updatePost = catchAsync(async (req, res, next) => {
         user_id: req.user.id,
         id: postId,
       },
-      returning: true,
     },
   );
 
@@ -253,132 +252,7 @@ export const getPostById = (req, res, next) => {
   next();
 };
 
-//TODO: CRUD Comment
-export const getComment = catchAsync(async (req, res, next) => {
-  const { queryWhere, querySort, queryLimit, queryPage, offset } = APIFeature(req.query);
-
-  console.log(req.query);
-
-  let Comment_like_reply_user = await Comment.findAll({
-    //TODO: Xuất các bài post kèm Các Comment , thông tin người đăng , số người like
-
-    where: {
-      ...queryWhere,
-    },
-    order: [...querySort],
-    offset,
-    limit: queryLimit,
-    include: [
-      {
-        model: Like,
-        as: 'likedComments',
-        include: [
-          {
-            model: UserInfo,
-            as: 'userLike',
-            attributes: ['id_user', 'name', 'avatar', 'createdAt', 'updatedAt'],
-          },
-        ],
-      },
-      {
-        model: UserInfo,
-        as: 'comments',
-        attributes: ['id_user', 'name', 'avatar', 'createdAt', 'updatedAt'],
-      },
-      {
-        model: RepLyComment,
-        as: 'replyComments',
-        include: [
-          {
-            model: UserInfo,
-            as: 'userReplyComment',
-            attributes: ['id_user', 'name', 'avatar', 'createdAt', 'updatedAt'],
-          },
-          {
-            model: Like,
-            as: 'repLyCommentLike',
-            include: [
-              {
-                model: UserInfo,
-                as: 'userLike',
-                attributes: ['id_user', 'name', 'avatar', 'createdAt', 'updatedAt'],
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  });
-
-  let result = Comment_like_reply_user.map((comment) => {
-    return {
-      idComment: comment.id,
-      idUserComent: comment.comments.id_user,
-      nameComment: comment.comments.name,
-      avatarComment: comment.comments.avatar,
-      contentComment: comment.content,
-      createdAt: comment.createdAt,
-      updatedAt: comment.updatedAt,
-      likeComments: comment.likedComments.map((likeComment) => {
-        return {
-          idLikeComment: likeComment.id,
-          idUserLikeComment: likeComment.userLike.id,
-          nameUserLikeComment: likeComment.userLike.name,
-          avatarUserLikeComment: likeComment.userLike.avatar,
-        };
-      }),
-      replyComments: comment.replyComments.map((reply) => {
-        return {
-          idReplyComment: reply.id,
-          idUserReplyComment: reply.userReplyComment.id_user,
-          nameUserReplyComment: reply.userReplyComment.name,
-          avatarUserReplyComment: reply.userReplyComment.avatar,
-          contentReplyComment: reply.content,
-          likeReplyComment: reply.repLyCommentLike.map((likeReplyComment) => {
-            return {
-              idLikeReplyComment: likeReplyComment.id,
-              idUserLikeReplyComment: likeReplyComment.userLike.id,
-              nameUserLikeReplyComment: likeReplyComment.userLike.name,
-              avatarUserLikeReplyComment: likeReplyComment.userLike.avatar,
-            };
-          }),
-          createdAt: reply.createdAt,
-          updatedAt: reply.updatedAt,
-        };
-      }),
-    };
-  });
-
-  return res.status(200).json({
-    message: 'success',
-    result,
-  });
-});
-
-export const createComment = catchAsync(async (req, res, next) => {
-  const { content } = req.body;
-  const { postId } = req.params;
-
-  if (!content?.trim()) {
-    return next(new AppError('Không để trống nội dung', 404));
-  }
-
-  if (!Number(postId)) {
-    return next(new AppError('Id không được để trống', 404));
-  }
-
-  try {
-    const comment = await Comment.create({
-      user_id: req.user.id,
-      post_id: postId,
-      content: content,
-    });
-    return res.status(200).json({ message: 'success', comment });
-  } catch (error) {
-    return next(new AppError('Người dùng này hoặc bài post này không tồn tại', 404));
-  }
-});
-
+// TODO: Handle like
 export const like = catchAsync(async (req, res, next) => {
   const { id, checkId, fieldName } = req.params;
 
@@ -386,6 +260,7 @@ export const like = catchAsync(async (req, res, next) => {
 
   if (!data) {
     try {
+      //TODO: handle case các trường hợp nhập id người dùng hoặc post ko có thì xuất log
       await Like.create({
         user_id: id,
         [fieldName]: checkId,

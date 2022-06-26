@@ -1,10 +1,10 @@
 import express from 'express';
-import { protect, getComment, createComment } from '../controller';
+import { protect, getComment, createComment, deleteComment, updateComment } from '../controller';
 
 const commentRouter = express.Router();
 commentRouter.route('/').get(protect, getComment);
 commentRouter.route('/:postId/create').post(protect, createComment);
-// .post(protect, createPost);
-// commentRouter.route('/:postId').get(getPostById, getPost).delete(protect, deletePost).patch(protect, updatePost);
+commentRouter.route('/:commentId/delete').delete(protect, deleteComment);
+commentRouter.route('/:commentId/update').patch(protect, updateComment);
 
 export default commentRouter;
