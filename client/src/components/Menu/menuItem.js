@@ -2,7 +2,7 @@ import Button from '../Button';
 
 const MenuItem = ({ data, onClick }) => {
   return (
-    <div>
+    <div className={`${data.separate && 'border-t-2 border-[#ced0d4] dark:border-[#3e4042] '} `}>
       <Button
         to={data.to ? data.to : ''}
         href={data.href ? data.href : undefined}
@@ -15,5 +15,9 @@ const MenuItem = ({ data, onClick }) => {
     </div>
   );
 };
+
+// #ced0d4
+
+//#3e4042
 
 export default MenuItem;

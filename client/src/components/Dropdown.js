@@ -1,5 +1,5 @@
 import { Menu, Transition } from '@headlessui/react';
-import { Fragment } from 'react';
+import { Fragment, memo } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import { Link } from 'react-router-dom';
 
@@ -87,4 +87,4 @@ function Dropdown({ items }) {
   );
 }
 
-export default Dropdown;
+export default memo(Dropdown);

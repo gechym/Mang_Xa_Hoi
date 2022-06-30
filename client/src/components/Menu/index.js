@@ -1,6 +1,6 @@
 import { ChevronLeftIcon } from '@heroicons/react/solid';
 import TippyHeadless from '@tippyjs/react/headless';
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import 'tippy.js/dist/tippy.css';
 import MenuItem from './menuItem';
 import Wrapper from './wrapper';
@@ -8,6 +8,7 @@ import Wrapper from './wrapper';
 function Menu({ children, items, onChange = () => {} }) {
   const [history, setHistory] = useState([{ data: items }]);
   const current = history[history.length - 1];
+  console.log('render Menu');
 
   const renderDataItems = () => {
     return current.data.map((item, index) => {
@@ -40,7 +41,7 @@ function Menu({ children, items, onChange = () => {} }) {
           }}
           className="h-7 w-7 cursor-pointer "
         />
-        <span>{current.title}</span>
+        <span className="relative -translate-x-1/2">{current.title}</span>
       </div>
     );
   };
@@ -77,4 +78,4 @@ function Menu({ children, items, onChange = () => {} }) {
   );
 }
 
-export default Menu;
+export default memo(Menu);

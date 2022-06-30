@@ -1,5 +1,3 @@
-import { useSelector } from 'react-redux';
-import { themeSelecter } from '~/redux/selecter';
 import { useDispatch } from 'react-redux';
 import { toggleTheme } from '~/redux/thunk/themeThunk';
 import Button from '~/components/Button';
@@ -13,23 +11,11 @@ import {
 } from '@heroicons/react/solid';
 import Dropdown from '~/components/Dropdown';
 import Menu from '~/components/Menu';
+import { useCallback, useState } from 'react';
 
 function TestComponent() {
-  const theme = useSelector(themeSelecter);
   const dispatch = useDispatch();
-
-  const handleToggleTheme = () => {
-    dispatch(toggleTheme());
-  };
-
-  const classTheme = (theme) => {
-    if (theme === 'dark') {
-      return 'dark:bg-dark dark:text-textPrimaryDark';
-    } else {
-      return 'bg-light text-textPrimaryLight';
-    }
-  };
-  const menuItem = [
+  const [menuItem] = useState([
     {
       icon: <SearchIcon className="h-5 w-5" />,
       title: 'English',
@@ -87,8 +73,8 @@ function TestComponent() {
       title: 'Feedback and help',
       to: '/following',
     },
-  ];
-  const items = [
+  ]);
+  const [items] = useState([
     { lable: 'Search', icon: SearchIcon, to: '/search' },
     { lable: 'Home', icon: HomeIcon, href: '/home', target: '_blank' },
     {
@@ -98,9 +84,12 @@ function TestComponent() {
         alert('hello');
       },
     },
-  ];
+  ]);
+  const handleToggleTheme = useCallback(() => {
+    dispatch(toggleTheme());
+  }, [dispatch]);
 
-  const handleOnChang = (item) => {
+  const handleOnChang = useCallback((item) => {
     switch (item.type) {
       case 'language':
         alert('Đổi ngôn ngữ');
@@ -109,10 +98,10 @@ function TestComponent() {
       default:
         break;
     }
-  };
+  }, []);
 
   return (
-    <div className={`min-h-screen p-2 ${classTheme(theme)}`}>
+    <div className={`min-h-screen p-2 bg-light text-textPrimaryLight dark:bg-dark dark:text-textPrimaryDark`}>
       <Dropdown items={items} />
       <Button icon={<MoonIcon className="w-5 h-5" />} onClick={handleToggleTheme}></Button>
       <Button leftIcon={<SunIcon className="w-5 h-5" />} onClick={handleToggleTheme}>
@@ -124,7 +113,6 @@ function TestComponent() {
       <Button leftIcon={<ArrowDownIcon className="animate-bounce  w-4 h-4" />} onClick={handleToggleTheme}>
         MoonIcon
       </Button>
-
       <Menu items={menuItem} onChange={handleOnChang}>
         <Button icon={<MoonIcon className="w-5 h-5" />}></Button>
       </Menu>
