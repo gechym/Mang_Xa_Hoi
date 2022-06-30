@@ -17,6 +17,7 @@
         "nodemon": "^2.0.16"
     },
     "dependencies": {
+        "@material-tailwind/react": "^1.0.6",
         "axios": "^0.27.2",
         "bcryptjs": "^2.4.3",
         "cookie-parser": "^1.4.6",
@@ -36,6 +37,11 @@
         "mysql2": "^2.3.3",
         "ndb": "^1.1.5",
         "nodemailer": "^6.7.5",
+        "react-redux": "^8.0.2",
+        "redux": "^4.2.0",
+        "redux-devtools-extension": "^2.13.9",
+        "redux-thunk": "^2.4.1",
+        "reselect": "^4.1.6",
         "sequelize": "^6.20.1",
         "slug": "^5.3.0",
         "slugify": "^1.6.5",
