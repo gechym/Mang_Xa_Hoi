@@ -50,7 +50,7 @@ function Dropdown({ items }) {
           <Menu.Button
             className="
               inline-flex w-full justify-center rounded-md 
-             bg-lightBtn text-textPrimaryLight
+              bg-lightBtn text-textPrimaryLight
               dark:bg-darkBtn px-4 py-2 text-sm font-medium  dark:text-textPrimaryDark 
               hover:bg-lightHoverIcon dark:hover:bg-darkHoverIcon
              "

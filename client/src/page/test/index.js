@@ -9,6 +9,7 @@ import {
   SearchIcon,
   MoonIcon,
   MusicNoteIcon,
+  LoginIcon,
 } from '@heroicons/react/solid';
 
 import Button from '~/components/Button';
@@ -81,7 +82,7 @@ function TestComponent() {
     },
   ]);
   const [items] = useState([
-    { lable: 'Search', icon: SearchIcon, to: '/search' },
+    { lable: 'Login', icon: LoginIcon, to: '/login' },
     { lable: 'Home', icon: HomeIcon, href: '/home', target: '_blank' },
     {
       lable: 'anno',
