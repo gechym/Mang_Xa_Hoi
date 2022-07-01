@@ -6,6 +6,7 @@ import { publicRouters } from '~/routers';
 import DefaultLayout from '~/layout/defaultLayout';
 
 import './app.css';
+import Toaster from '~/components/Toaster';
 
 axios.defaults.baseURL = process.env.URL_BACKEND;
 
@@ -32,6 +33,7 @@ function App() {
                 element={
                   <Layout>
                     <Page />
+                    <Toaster />
                   </Layout>
                 }
               />

@@ -37,6 +37,7 @@
         "mysql2": "^2.3.3",
         "ndb": "^1.1.5",
         "nodemailer": "^6.7.5",
+        "react-hot-toast": "^2.2.0",
         "react-redux": "^8.0.2",
         "redux": "^4.2.0",
         "redux-devtools-extension": "^2.13.9",

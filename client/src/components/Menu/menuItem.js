@@ -1,8 +1,10 @@
 import Button from '../Button';
 
 const MenuItem = ({ data, onClick }) => {
+  const getClassBoder = () => 'border-[#ced0d4] dark:border-[#3e4042]';
+
   return (
-    <div className={`${data.separate && 'border-t-2 border-[#ced0d4] dark:border-[#3e4042] '} `}>
+    <div className={`${data.separate && `border-t-2 ${getClassBoder}`}`}>
       <Button
         to={data.to ? data.to : ''}
         href={data.href ? data.href : undefined}

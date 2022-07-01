@@ -30,9 +30,13 @@ function Menu({ children, items, onChange = () => {} }) {
     });
   };
 
+  const getClassTextTheme = () => 'text-textPrimaryLight dark:text-textPrimaryDark';
+
+  const getClassBgTheme = () => 'bg-lightBtn text-textPrimaryLight dark:bg-darkBtn dark:text-textPrimaryDark';
+
   const renderHeader = () => {
     return (
-      <div className="w-full h-8 flex px-1 items-center justify-between text-textPrimaryLight dark:text-textPrimaryDark ">
+      <div className={`w-full h-8 flex px-1 items-center justify-between ${getClassTextTheme()}`}>
         <ChevronLeftIcon
           onClick={() => {
             setHistory(
@@ -48,10 +52,7 @@ function Menu({ children, items, onChange = () => {} }) {
 
   const renderResult = (atrts) => {
     return (
-      <div
-        {...atrts}
-        className="bg-lightBtn text-textPrimaryLight dark:bg-darkBtn dark:text-textPrimaryDark  rounded-md p-1 min-w-[180px]"
-      >
+      <div {...atrts} className={`${getClassBgTheme()}  rounded-md p-1 min-w-[180px]`}>
         {history.length > 1 && renderHeader()}
 
         <Wrapper>{renderDataItems()}</Wrapper>
@@ -64,17 +65,19 @@ function Menu({ children, items, onChange = () => {} }) {
   };
 
   return (
-    <TippyHeadless
-      hideOnClick="toggle"
-      placement="top-end"
-      delay={[0, 400]}
-      offset={[10, 5]}
-      interactive
-      onHidden={handleResetMenu}
-      render={renderResult}
-    >
-      {children}
-    </TippyHeadless>
+    <>
+      <TippyHeadless
+        hideOnClick="toggle"
+        placement="top-end"
+        delay={[0, 400]}
+        offset={[10, 5]}
+        interactive
+        onHidden={handleResetMenu}
+        render={renderResult}
+      >
+        {children}
+      </TippyHeadless>
+    </>
   );
 }
 
