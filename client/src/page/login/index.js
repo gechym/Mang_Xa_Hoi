@@ -50,12 +50,9 @@ function Login() {
                 </div>
               </>
               <div className="flex justify-center mt-2">
-                <a
-                  href="#"
-                  className="text-base text-gray-400 focus:text-primary hover:text-primary hover:underline"
-                >
+                <span className="text-base text-gray-400 focus:text-primary hover:text-primary hover:underline">
                   Forgot password?
-                </a>
+                </span>
               </div>
               <p className="mt-6 text-base text-center text-gray-400">
                 Don&#x27;t have an account yet?{' '}

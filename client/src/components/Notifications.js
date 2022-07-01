@@ -44,7 +44,7 @@ const ToastNotification = ({ t, content, image, to }) => {
       </div>
       <div
         className={`
-          flex  gap-2 mt-2 p-2 
+          flex  gap-2 mt-2 p-2 items-center 
           rounded-lg cursor-pointer
           ${getClassHoverTheme()}`}
       >

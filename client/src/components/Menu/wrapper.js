@@ -4,9 +4,9 @@ function Wrapper({ children, className }) {
       style={{ overflowY: 'overlay' }}
       className={`
         max-h-[500px]
-        w-full h-full rounded-md
-        bg-lightBtn text-textPrimaryLight
-        dark:bg-darkBtn
+        w-full h-full rounded-lg
+        bg-lightSecondary text-textPrimaryLight
+        dark:bg-darkSecondary 
         dark:text-textPrimaryDark  ${className}`}
     >
       {children}

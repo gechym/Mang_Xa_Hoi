@@ -48,9 +48,7 @@ function Register() {
         </Button>
       </div>
       <div class="flex justify-center items-center mt-6">
-        <a
-          href="#"
-          target="_blank"
+        <span
           class="
         inline-flex
         items-center
@@ -65,7 +63,7 @@ function Register() {
               Login here
             </Link>
           </span>
-        </a>
+        </span>
       </div>
     </div>
   );

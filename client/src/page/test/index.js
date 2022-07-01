@@ -18,6 +18,7 @@ import Menu from '~/components/Menu';
 import { toggleTheme } from '~/redux/thunk/themeThunk';
 import { pushToast } from '~/components/Notifications';
 import Modal from '~/components/Modal';
+import SearchHeader from '~/components/SearchHeader';
 
 function TestComponent() {
   const dispatch = useDispatch();
@@ -107,7 +108,7 @@ function TestComponent() {
     }
   }, []);
 
-  let [isOpen, setIsOpen] = useState(true);
+  let [isOpen, setIsOpen] = useState(false);
 
   function openModal() {
     setIsOpen(true);
@@ -115,6 +116,7 @@ function TestComponent() {
 
   return (
     <div className={`min-h-screen p-2 bg-light text-textPrimaryLight dark:bg-dark dark:text-textPrimaryDark`}>
+      <SearchHeader className={'mt-5'} />
       <Dropdown items={items} />
       <Menu items={menuItem} onChange={handleOnChang}>
         <Button icon={<MoonIcon className="w-5 h-5" />}></Button>
@@ -123,7 +125,16 @@ function TestComponent() {
         MoonIcon
       </Button>
 
-      <Button leftIcon={<MusicNoteIcon className="animate-bounce  w-5 h-5" />} onClick={() => pushToast()}>
+      <Button
+        leftIcon={<MusicNoteIcon className="animate-bounce  w-5 h-5" />}
+        onClick={() =>
+          pushToast(
+            'Bạn vừa nhận mời tin nhắn từ Nguyễn Đức Bảo',
+            'https://scontent.fdad3-4.fna.fbcdn.net/v/t1.6435-9/194808274_1386494815059778_930409726896657162_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=9ilBJZa790oAX80mCeq&_nc_ht=scontent.fdad3-4.fna&oh=00_AT8AovGgjG7weDLxNnW5kV361dU2AdaAs6JE0kK4LGGA4w&oe=62E3954E',
+            '/@nguyenducbao',
+          )
+        }
+      >
         ToastNotification
       </Button>
 
@@ -153,17 +164,6 @@ function TestComponent() {
 
         <Modal isOpen={isOpen} setIsOpen={setIsOpen} titel="Hello Modal">
           <h1>Hello</h1>
-          <div className="mt-4">
-            <button
-              type="button"
-              className="inline-flex justify-center rounded-md border border-transparent 
-                            bg-blue-100 px-4 py-2 text-sm font-medium text-primary hover:bg-blue-200 
-                            focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-              onClick={() => setIsOpen(false)}
-            >
-              Got it, thanks!
-            </button>
-          </div>
         </Modal>
       </>
     </div>

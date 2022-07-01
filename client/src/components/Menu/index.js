@@ -32,7 +32,8 @@ function Menu({ children, items, onChange = () => {} }) {
 
   const getClassTextTheme = () => 'text-textPrimaryLight dark:text-textPrimaryDark';
 
-  const getClassBgTheme = () => 'bg-lightBtn text-textPrimaryLight dark:bg-darkBtn dark:text-textPrimaryDark';
+  const getClassBgTheme = () =>
+    'bg-lightSecondary text-textPrimaryLight dark:bg-darkSecondary dark:text-textPrimaryDark';
 
   const renderHeader = () => {
     return (

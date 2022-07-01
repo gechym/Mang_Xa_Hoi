@@ -8,7 +8,7 @@ import DefaultLayout from '~/layout/defaultLayout';
 import './app.css';
 import Toaster from '~/components/Toaster';
 
-axios.defaults.baseURL = process.env.URL_BACKEND;
+axios.defaults.baseURL = 'http://localhost:8080';
 
 function App() {
   return (
