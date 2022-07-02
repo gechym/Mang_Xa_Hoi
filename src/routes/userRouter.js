@@ -18,8 +18,8 @@ import {
 
 const userRouter = express.Router();
 
-userRouter.route('/').get(getUsers);
-// userRouter.route('/').get(protect, checkRules('admin'), getUsers);
+// userRouter.route('/').get(getUsers);
+userRouter.route('/').get(protect, checkRules('admin'), getUsers);
 userRouter.route('/signup').post(signUp);
 userRouter.route('/login').post(login);
 userRouter.route('/forgotPassword').patch(forgotPassword);

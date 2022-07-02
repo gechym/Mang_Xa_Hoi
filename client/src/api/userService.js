@@ -1,4 +1,5 @@
 import axios from 'axios';
+import httpsResquest from './configService';
 
 export const handleError = (error) => {
   if (error.response?.data.message) {
@@ -10,7 +11,7 @@ export const handleError = (error) => {
 
 export const searchUser = async (name) => {
   try {
-    const res = await axios.get('/api/v1/users/', {
+    const res = await httpsResquest.get('/api/v1/users/', {
       params: {
         limit: '6',
         name: name,
