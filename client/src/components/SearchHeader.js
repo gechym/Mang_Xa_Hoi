@@ -41,6 +41,9 @@ const SearchHeader = ({ className }) => {
   const handleHideResult = () => setShowResult(false);
   const handleShowResult = () => setShowResult(true);
 
+  const getClassTheme = () =>
+    'bg-lightSecondary text-textPrimaryLight dark:bg-darkSecondary dark:text-textPrimaryDark';
+
   const renderUser = () => {
     return (
       <div className="w-[320px]">
@@ -48,14 +51,11 @@ const SearchHeader = ({ className }) => {
           <>
             <Wrapper className={'p-2 relative'}>
               <h4
-                className="
-                text-sm
+                className={`text-sm
                 pt-2
                 px-2
                 rounded-t-lg
-                fixed z-10 top-0 left-0 right-0 bg-lightSecondary text-textPrimaryLight
-                dark:bg-darkSecondary 
-                dark:text-textPrimaryDark"
+                fixed z-10 top-0 left-0 right-0 ${getClassTheme()}`}
               >
                 Search current
               </h4>

@@ -1,13 +1,15 @@
 function Wrapper({ children, className }) {
+  const getClassTheme = () => {
+    return `text-textPrimaryLight dark:bg-darkSecondary dark:text-textPrimaryDark`;
+  };
+
   return (
     <div
       style={{ overflowY: 'overlay' }}
       className={`
         max-h-[500px]
         w-full h-full rounded-lg
-        bg-lightSecondary text-textPrimaryLight
-        dark:bg-darkSecondary 
-        dark:text-textPrimaryDark  ${className}`}
+        bg-lightSecondary ${getClassTheme()} ${className}`}
     >
       {children}
     </div>
