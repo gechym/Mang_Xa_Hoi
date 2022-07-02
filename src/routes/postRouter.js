@@ -3,7 +3,11 @@ import { getPost, like, protect, createPost, getPostById, deletePost, updatePost
 
 const postRoute = express.Router();
 postRoute.route('/').get(protect, getPost).post(protect, createPost);
-postRoute.route('/:postId').get(getPostById, getPost).delete(protect, deletePost).patch(protect, updatePost);
+postRoute
+  .route('/:postId')
+  .get(protect, getPostById, getPost)
+  .delete(protect, deletePost)
+  .patch(protect, updatePost);
 
 postRoute.route('/like/:id/:checkId/:fieldName').get(protect, like);
 

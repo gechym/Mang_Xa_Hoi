@@ -376,9 +376,10 @@ export const getUsers = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     message: 'success',
+    currentUser: req.user,
     totalUser: await UserInfo.count(),
     result: userInfor.length,
-    currentUser: req.user,
+    page: queryPage,
     data: {
       users: userInfor,
     },
@@ -429,5 +430,24 @@ export const getStatusFriend = catchAsync(async (req, res, next) => {
   res.status(200).json({
     message: message,
     status,
+  });
+});
+
+export const getListFriend = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  if (!Number(id)) return next(new AppError('id không phù hợp', 400));
+
+  await checkCurrentUserAndFriend(req.user.id, id, next);
+
+  const user = await UserInfo.findOne({
+    where: { id_user: Number(id) },
+  });
+
+  return res.status(200).json({
+    message: 'success',
+    data: {
+      user: user,
+      listFriend: user.listFriend ? user.listFriend : [],
+    },
   });
 });

@@ -63,10 +63,10 @@ export const getComment = catchAsync(async (req, res, next) => {
     ],
   });
 
-  let result = Comment_like_reply_user.map((comment) => {
+  let data = Comment_like_reply_user.map((comment) => {
     return {
-      idComment: comment.id,
-      idUserComent: comment.comments.id_user,
+      commentId: comment.id,
+      userComentId: comment.comments.id_user,
       nameComment: comment.comments.name,
       avatarComment: comment.comments.avatar,
       contentComment: comment.content,
@@ -74,23 +74,23 @@ export const getComment = catchAsync(async (req, res, next) => {
       updatedAt: comment.updatedAt,
       likeComments: comment.likedComments.map((likeComment) => {
         return {
-          idLikeComment: likeComment.id,
-          idUserLikeComment: likeComment.userLike.id,
+          likeCommentId: likeComment.id,
+          userLikeCommentId: likeComment.userLike.id,
           nameUserLikeComment: likeComment.userLike.name,
           avatarUserLikeComment: likeComment.userLike.avatar,
         };
       }),
       replyComments: comment.replyComments.map((reply) => {
         return {
-          idReplyComment: reply.id,
-          idUserReplyComment: reply.userReplyComment.id_user,
+          replyCommentId: reply.id,
+          userReplyCommentId: reply.userReplyComment.id_user,
           nameUserReplyComment: reply.userReplyComment.name,
           avatarUserReplyComment: reply.userReplyComment.avatar,
           contentReplyComment: reply.content,
           likeReplyComment: reply.repLyCommentLike.map((likeReplyComment) => {
             return {
-              idLikeReplyComment: likeReplyComment.id,
-              idUserLikeReplyComment: likeReplyComment.userLike.id,
+              likeReplyCommentId: likeReplyComment.id,
+              userLikeReplyCommentId: likeReplyComment.userLike.id,
               nameUserLikeReplyComment: likeReplyComment.userLike.name,
               avatarUserLikeReplyComment: likeReplyComment.userLike.avatar,
             };
@@ -104,7 +104,13 @@ export const getComment = catchAsync(async (req, res, next) => {
 
   return res.status(200).json({
     message: 'success',
-    result,
+    totalPost: await Comment.count(),
+    result: data.length,
+    currentUser: req.user,
+    page: queryPage,
+    data: {
+      comments: data,
+    },
   });
 });
 

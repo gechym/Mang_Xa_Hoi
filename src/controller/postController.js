@@ -100,15 +100,15 @@ export const getPost = catchAsync(async (req, res, next) => {
 
   let result = post_Comments_like.map((post) => {
     return {
-      idPost: post.id,
-      idUserPost: post.user_id,
+      postId: post.id,
+      userPostId: post.user_id,
       userPosst: post.posts.name,
+      contentPost: post.content,
       userAvatarPosst: post.posts.avatar,
-      content: post.content,
-      Comments: post.commentsPost.map((comment) => {
+      CommentPosts: post.commentsPost.map((comment) => {
         return {
-          idComment: comment.id,
-          idUserComent: comment.comments.id_user,
+          commentId: comment.id,
+          userComentId: comment.comments.id_user,
           nameComment: comment.comments.name,
           avatarComment: comment.comments.avatar,
           contentComment: comment.content,
@@ -116,23 +116,23 @@ export const getPost = catchAsync(async (req, res, next) => {
           updatedAt: comment.updatedAt,
           likeComments: comment.likedComments.map((likeComment) => {
             return {
-              idLikeComment: likeComment.id,
-              idUserLikeComment: likeComment.userLike.id,
+              likeCommentId: likeComment.id,
+              userLikeCommentId: likeComment.userLike.id,
               nameUserLikeComment: likeComment.userLike.name,
               avatarUserLikeComment: likeComment.userLike.avatar,
             };
           }),
           replyComments: comment.replyComments.map((reply) => {
             return {
-              idReplyComment: reply.id,
-              idUserReplyComment: reply.userReplyComment.id_user,
+              replyCommentId: reply.id,
+              userReplyCommentId: reply.userReplyComment.id_user,
               nameUserReplyComment: reply.userReplyComment.name,
               avatarUserReplyComment: reply.userReplyComment.avatar,
               contentReplyComment: reply.content,
               likeReplyComment: reply.repLyCommentLike.map((likeReplyComment) => {
                 return {
-                  idLikeReplyComment: likeReplyComment.id,
-                  idUserLikeReplyComment: likeReplyComment.userLike.id,
+                  likeReplyCommentId: likeReplyComment.id,
+                  userLikeReplyCommentId: likeReplyComment.userLike.id,
                   nameUserLikeReplyComment: likeReplyComment.userLike.name,
                   avatarUserLikeReplyComment: likeReplyComment.userLike.avatar,
                 };
@@ -143,10 +143,10 @@ export const getPost = catchAsync(async (req, res, next) => {
           }),
         };
       }),
-      likes: post.postLike.map((like) => {
+      likesPost: post.postLike.map((like) => {
         return {
-          idLike: like.id,
-          idUserLike: like.user_id,
+          likeId: like.id,
+          userLikeId: like.user_id,
           nameUserLike: like.userLike.name,
           avatarUserLike: like.userLike.avatar,
         };
@@ -161,6 +161,7 @@ export const getPost = catchAsync(async (req, res, next) => {
     totalPost: await Post.count(),
     result: result.length,
     currentUser: req.user,
+    page: queryPage,
     data: {
       posts: result,
     },
