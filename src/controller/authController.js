@@ -148,6 +148,7 @@ export const protect = catchAsync(async (req, res, next) => {
   }
 
   // // check đổi pass khi token còn hạn => bắt user login lại
+  //FIXME: Nhớ lấy passwordChangeAt để check
 
   if (decode.iat * 1000 < currentUser?.passwordChangeAt?.getTime())
     return next(

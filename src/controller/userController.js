@@ -1,9 +1,9 @@
+import { Op } from 'sequelize';
 import User from '../module/User';
 import UserInfo from '../module/UserInfo';
 import catchAsync from '../util/catchAsync';
 import AppError from '../util/AppError';
 import UserRelationship from '../module/UserRelationship';
-import { Op } from 'sequelize';
 import APIFeature from '../util/APIfeature';
 
 const handleAddFriend = async (idUser, idFriend, next) => {

@@ -6,9 +6,29 @@ const httpsResquest = axios.create({
   headers: {
     'Content-Type': 'application/json',
     authorization:
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJuZGJhby4yMGl0NkB2a3UudWRuLnZuIiwiaWF0IjoxNjU2Njg3MzcyLCJleHAiOjE2NTY3NzM3NzJ9.FlQfjFDz6hmiMPpeQV19IwAAFG8YRbA0KQZZJ0EBHiQ',
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJuZGJhby4yMGl0NkB2a3UudWRuLnZuIiwiaWF0IjoxNjU2NzMyNDc2LCJleHAiOjE2NTY4MTg4NzZ9.WutRZGNpKHwoM6bvwmRqRu9-KNMki--IxQyY6EZ2UOs',
   },
 });
+
+export const handleError = (error) => {
+  if (error.response?.data.message) {
+    throw new Error(error.response.data.message);
+  } else {
+    throw new Error(error.message);
+  }
+};
+
+httpsResquest.setTokenLocalStorage = (token) => {
+  localStorage.setItem('token', token);
+};
+
+httpsResquest.setTokenLocalStorage = (token) => {
+  localStorage.setItem('token', token);
+};
+
+httpsResquest.removeTokenLocalStorage = () => {
+  localStorage.removeItem('token');
+};
 
 httpsResquest.interceptors.request.use(
   (res) => {
@@ -16,7 +36,6 @@ httpsResquest.interceptors.request.use(
     return res;
   },
   (error) => {
-    console.log(error);
     return Promise.reject(error);
   },
 );
@@ -24,11 +43,14 @@ httpsResquest.interceptors.request.use(
 httpsResquest.interceptors.response.use(
   (res) => {
     console.log('↘️ Response:::: ', res);
+    if (res.data.token) {
+      httpsResquest.setTokenLocalStorage(res.data.token);
+    }
     return res;
   },
 
   (error) => {
-    console.log(error);
+    httpsResquest.removeTokenLocalStorage();
     return Promise.reject(error);
   },
 );

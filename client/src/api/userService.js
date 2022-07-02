@@ -1,13 +1,4 @@
-import axios from 'axios';
-import httpsResquest from './configService';
-
-export const handleError = (error) => {
-  if (error.response?.data.message) {
-    throw new Error(error.response.data.message);
-  } else {
-    throw new Error(error.message);
-  }
-};
+import httpsResquest, { handleError } from './configService';
 
 export const searchUser = async (name) => {
   try {
@@ -16,6 +7,9 @@ export const searchUser = async (name) => {
         limit: '6',
         name: name,
       },
+      // headers: {
+      //   authorization: `Bearer ${localStorage.getItem('token')}`,
+      // },
     });
     return res.data.data;
   } catch (error) {
