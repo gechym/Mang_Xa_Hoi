@@ -88,6 +88,12 @@ export const login = catchAsync(async (req, res, next) => {
     httpOnly: true,
   });
 
+  // const date1 = new Date(Date.now()).getTime(); // --> Timestamp
+  // const date2 = new Date().toISOString(); //--> ISOString chưa cộng 0700
+  // new Date(decode.iat * 1000).toLocaleString();
+
+  // console.log(date1, date2, Date.now(), new Date(), new Date(date2));
+
   res.status(200).json({
     message: 'success',
     user: {
@@ -118,7 +124,21 @@ export const protect = catchAsync(async (req, res, next) => {
   if (!token) return next(new AppError('Bạn chưa đăng nhập', 404));
 
   // verify token
-  let decode = await promisify(jwt.verify)(token, process.env.JWT_SECRET_KEY);
+
+  let decode = {};
+
+  try {
+    decode = await promisify(jwt.verify)(token, process.env.JWT_SECRET_KEY);
+  } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      return res.status(200).json({
+        message: 'Token hết hạn vui lòng đăng nhập lại',
+      });
+    }
+
+    return next(new AppError(error, 404));
+  }
+
   decode = {
     ...decode,
     decode_iat: new Date(decode.iat * 1000).toLocaleString(),
@@ -227,7 +247,7 @@ export const resetPassword = catchAsync(async (req, res, next) => {
     where: {
       passwordResetToken: hashedToken,
       passwordResetExpires: {
-        [Op.gt]: Date.now(),
+        [Op.gt]: new Date(),
       },
     },
   });
@@ -238,7 +258,7 @@ export const resetPassword = catchAsync(async (req, res, next) => {
     return next(new AppError('mật khẩu xác thực khác nhau', 404));
   }
 
-  const passwordChangeAt = Date.now() + 10000;
+  const passwordChangeAt = new Date(Date.now() + 10000);
 
   await User.update(
     {
@@ -300,7 +320,7 @@ export const changePassword = catchAsync(async (req, res, next) => {
   await User.update(
     {
       password: password,
-      passwordChangeAt: Date.now() + 10000,
+      passwordChangeAt: new Date(Date.now() + 10000),
     },
     {
       where: {

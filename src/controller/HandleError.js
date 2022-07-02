@@ -1,17 +1,17 @@
 const handleError = () => (err, req, res, next) => {
-    console.log(
-        `
+  console.log(
+    `
 /// ┌──────────────────────────────────────────────────────
 /// │             APP ERROR LOG                            
-/// │      ${err.stack}                                        
+/// │      ${err.stack}                                    
 /// └──────────────────────────────────────────────────────
     `,
-    );
+  );
 
-    const statusCode = err.statusCode || 500;
-    return res.status(statusCode).json({
-        message: err.message,
-    });
+  const statusCode = err.statusCode || 500;
+  return res.status(statusCode).json({
+    message: err.message,
+  });
 };
 
 export default handleError;
