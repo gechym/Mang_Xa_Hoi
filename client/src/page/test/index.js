@@ -18,7 +18,6 @@ import Menu from '~/components/Menu';
 import { toggleTheme } from '~/redux/thunk/themeThunk';
 import { pushToast } from '~/components/Notifications';
 import Modal from '~/components/Modal';
-import SearchHeader from '~/components/SearchHeader';
 
 function TestComponent() {
   const dispatch = useDispatch();

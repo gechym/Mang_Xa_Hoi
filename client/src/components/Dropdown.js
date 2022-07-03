@@ -2,8 +2,21 @@ import { Menu, Transition } from '@headlessui/react';
 import { Fragment, memo } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import { Link } from 'react-router-dom';
+import { AnnotationIcon, HomeIcon, LoginIcon } from '@heroicons/react/solid';
 
-function Dropdown({ items, className, title = 'menu' }) {
+const itemDefault = [
+  { lable: 'Login', icon: LoginIcon, to: '/login' },
+  { lable: 'Home', icon: HomeIcon, href: '/home', target: '_blank' },
+  {
+    lable: 'anno',
+    icon: AnnotationIcon,
+    onClick: () => {
+      alert('hello');
+    },
+  },
+];
+
+function Dropdown({ children, items = itemDefault, className, title = 'menu' }) {
   const handleRenderItem = () => {
     return items?.map((item, index) => {
       let Comp = 'button';
@@ -47,20 +60,24 @@ function Dropdown({ items, className, title = 'menu' }) {
     <div className={`text-right w-max ${className ? className : ''}`}>
       <Menu as="div" className="relative inline-block">
         <div>
-          <Menu.Button
-            className="
+          {children ? (
+            <Menu.Button>{children}</Menu.Button>
+          ) : (
+            <Menu.Button
+              className="
               inline-flex w-full justify-center rounded-md 
               bg-lightBtn text-textPrimaryLight
               dark:bg-darkBtn px-4 py-2 text-sm font-medium  dark:text-textPrimaryDark 
               hover:bg-lightHoverIcon dark:hover:bg-darkHoverIcon
              "
-          >
-            {title}
-            <ChevronDownIcon
-              className=" h-5 w-5 ml-1 text-violet-200 hover:text-violet-100"
-              aria-hidden="true"
-            />
-          </Menu.Button>
+            >
+              {title}
+              <ChevronDownIcon
+                className=" h-5 w-5 ml-1 text-violet-200 hover:text-violet-100"
+                aria-hidden="true"
+              />
+            </Menu.Button>
+          )}
         </div>
         <Transition
           as={Fragment}

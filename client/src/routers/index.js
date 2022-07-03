@@ -26,6 +26,11 @@ const publicRouters = [
     component: TestComponent,
     layout: DefaultLayout,
   },
+  {
+    path: '*',
+    component: () => <div>404</div>,
+    layout: DefaultLayout,
+  },
 ];
 
 // nếu không có layout thì để null

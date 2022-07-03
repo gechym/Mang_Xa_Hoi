@@ -5,7 +5,195 @@ import 'tippy.js/dist/tippy.css';
 import MenuItem from './menuItem';
 import Wrapper from './wrapper';
 
-function Menu({ children, items, onChange = () => {} }) {
+import { SearchIcon } from '@heroicons/react/solid';
+
+const menuItemDefault = [
+  {
+    icon: <SearchIcon className="h-5 w-5" />,
+    title: 'English',
+    children: {
+      title: 'Language',
+      data: [
+        {
+          type: 'language',
+          code: 'vi',
+          title: 'việt nam',
+          icon: <SearchIcon className="h-5 w-5" />,
+          href: '/language',
+        },
+        {
+          type: 'language',
+          code: 'en',
+          title: 'english',
+          icon: <SearchIcon className="h-5 w-5" />,
+          to: '/language',
+        },
+        {
+          type: 'language',
+          code: 'en',
+          title: 'english',
+          icon: <SearchIcon className="h-5 w-5" />,
+          to: '/language',
+        },
+        {
+          type: 'language',
+          code: 'vi',
+          title: 'việt nam',
+          icon: <SearchIcon className="h-5 w-5" />,
+          href: '/language',
+        },
+        {
+          type: 'language',
+          code: 'en',
+          title: 'english',
+          icon: <SearchIcon className="h-5 w-5" />,
+          to: '/language',
+        },
+        {
+          type: 'language',
+          code: 'en',
+          title: 'english',
+          icon: <SearchIcon className="h-5 w-5" />,
+          to: '/language',
+        },
+        {
+          type: 'language',
+          code: 'vi',
+          title: 'việt nam',
+          icon: <SearchIcon className="h-5 w-5" />,
+          href: '/language',
+        },
+        {
+          type: 'language',
+          code: 'en',
+          title: 'english',
+          icon: <SearchIcon className="h-5 w-5" />,
+          to: '/language',
+        },
+        {
+          type: 'language',
+          code: 'en',
+          title: 'english',
+          icon: <SearchIcon className="h-5 w-5" />,
+          to: '/language',
+        },
+        {
+          type: 'language',
+          code: 'vi',
+          title: 'việt nam',
+          icon: <SearchIcon className="h-5 w-5" />,
+          href: '/language',
+        },
+        {
+          type: 'language',
+          code: 'en',
+          title: 'english',
+          icon: <SearchIcon className="h-5 w-5" />,
+          to: '/language',
+        },
+        {
+          type: 'language',
+          code: 'en',
+          title: 'english',
+          icon: <SearchIcon className="h-5 w-5" />,
+          to: '/language',
+        },
+        {
+          type: 'language',
+          code: 'vi',
+          title: 'việt nam',
+          icon: <SearchIcon className="h-5 w-5" />,
+          href: '/language',
+        },
+        {
+          type: 'language',
+          code: 'en',
+          title: 'english',
+          icon: <SearchIcon className="h-5 w-5" />,
+          to: '/language',
+        },
+        {
+          type: 'language',
+          code: 'en',
+          title: 'english',
+          icon: <SearchIcon className="h-5 w-5" />,
+          to: '/language',
+        },
+        {
+          type: 'language',
+          code: 'en',
+          title: 'english',
+          icon: <SearchIcon className="h-5 w-5" />,
+          to: '/language',
+        },
+        {
+          type: 'language',
+          code: 'vi',
+          title: 'việt nam',
+          icon: <SearchIcon className="h-5 w-5" />,
+          href: '/language',
+        },
+        {
+          type: 'language',
+          code: 'en',
+          title: 'english',
+          icon: <SearchIcon className="h-5 w-5" />,
+          to: '/language',
+        },
+        {
+          type: 'language',
+          code: 'en',
+          title: 'english',
+          icon: <SearchIcon className="h-5 w-5" />,
+          to: '/language',
+        },
+        {
+          type: 'language',
+          code: 'vi',
+          title: 'việt nam',
+          icon: <SearchIcon className="h-5 w-5" />,
+          href: '/language',
+        },
+        {
+          type: 'language',
+          code: 'en',
+          title: 'english',
+          icon: <SearchIcon className="h-5 w-5" />,
+          to: '/language',
+        },
+        {
+          title: 'Menu cấp 3',
+          icon: <SearchIcon className="h-5 w-5" />,
+          separate: true,
+          children: {
+            title: 'Menu 3',
+            data: [
+              {
+                type: 'language',
+                code: 'en',
+                title: 'english',
+                icon: <SearchIcon className="h-5 w-5" />,
+                to: '/language',
+              },
+            ],
+          },
+        },
+      ],
+    },
+  },
+  {
+    icon: <SearchIcon className="h-5 w-5" />,
+    title: 'Keyboard shortcuts',
+    to: '/upload',
+  },
+  {
+    icon: <SearchIcon className="h-5 w-5" />,
+    title: 'Feedback and help',
+    to: '/following',
+  },
+];
+
+function Menu({ children, items = menuItemDefault, onChange = () => {} }) {
   const [history, setHistory] = useState([{ data: items }]);
   const current = history[history.length - 1];
   console.log('render Menu');
@@ -53,9 +241,9 @@ function Menu({ children, items, onChange = () => {} }) {
 
   const renderResult = (atrts) => {
     return (
-      <div {...atrts} className={`${getClassBgTheme()} rounded-md p-1 min-w-[180px]`}>
+      <div {...atrts} className={`${getClassBgTheme()} shadow-lg rounded-md p-1 min-w-[180px]`}>
         {history.length > 1 && renderHeader()}
-        <Wrapper>{renderDataItems()}</Wrapper>
+        <Wrapper className={'!shadow-none'}>{renderDataItems()}</Wrapper>
       </div>
     );
   };
@@ -69,7 +257,7 @@ function Menu({ children, items, onChange = () => {} }) {
       <TippyHeadless
         hideOnClick="toggle"
         placement="top-end"
-        delay={[0, 400]}
+        delay={[0, 200]}
         offset={[10, 5]}
         interactive
         onHidden={handleResetMenu}

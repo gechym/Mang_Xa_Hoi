@@ -15,6 +15,7 @@ const HeaderLayout = ({ children }) => {
         tablet:col-end-4 
         px-4
         flex
+        justify-between
         items-center
       "
     >

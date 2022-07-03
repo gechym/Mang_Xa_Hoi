@@ -54,7 +54,7 @@ function Button(
         ${disabled ? 'opacity-70 cursor-not-allowed' : ''} 
         ${outline ? 'rounded-lg  ring ring-primary  !bg-transparent !text-primary' : ''} 
         ${icon ? 'rounded-full h-10 w-10' : ''}
-        ${className}
+        ${className ? className : ''}
         `}
       onClick={!disabled && onClick}
       {...props}

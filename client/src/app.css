@@ -55,7 +55,7 @@
 
 @layer components {
   .btn {
-    @apply mx-2 shadow-current border-2 px-4 py-2 rounded  cursor-pointer text-base border-none inline-flex justify-center items-center mx-2;
+    @apply border-2 px-4 py-2 rounded  cursor-pointer text-base border-none inline-flex justify-center items-center mx-2;
   }
 }
 
@@ -65,4 +65,8 @@
   grid-template-columns: repeat(auto-fit, minmax(200px, 200px));
   grid-auto-rows: minmax(300px, 300px);
   grid-gap: 10px;
+}
+
+.myBorder {
+  border-bottom: 3px solid;
 }
