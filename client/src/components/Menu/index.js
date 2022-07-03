@@ -53,9 +53,8 @@ function Menu({ children, items, onChange = () => {} }) {
 
   const renderResult = (atrts) => {
     return (
-      <div {...atrts} className={`${getClassBgTheme()}  rounded-md p-1 min-w-[180px]`}>
+      <div {...atrts} className={`${getClassBgTheme()} rounded-md p-1 min-w-[180px]`}>
         {history.length > 1 && renderHeader()}
-
         <Wrapper>{renderDataItems()}</Wrapper>
       </div>
     );

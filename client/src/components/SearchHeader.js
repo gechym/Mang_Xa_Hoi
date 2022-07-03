@@ -92,7 +92,7 @@ const SearchHeader = ({ className }) => {
 
   return (
     <HeadleesTippy visible={showResult} interactive render={renderUser} onClickOutside={handleHideResult}>
-      <div className={`relative mx-auto w-max shadow-lg  rounded-full ${className}`}>
+      <div className={`relative w-max h-max'' shadow-lg rounded-full ${className ? className : ''}`}>
         <input
           placeholder="Search every 😘😘"
           value={searchValue}
@@ -102,7 +102,7 @@ const SearchHeader = ({ className }) => {
               setSearchValue(e.target.value);
             }
           }}
-          className="peer min-w-[350px] px-6 cursor-pointer relative h-12 dark:bg-darkBtn bg-light rounded-full outline-none w-full focus:cursor-text  "
+          className=" min-w-[200px] px-6 cursor-pointer relative h-[40px] dark:bg-darkBtn bg-light rounded-full outline-none w-full focus:cursor-text  "
         />
         {searchValue && !loading && (
           <AiOutlineCloseCircle
@@ -120,10 +120,11 @@ const SearchHeader = ({ className }) => {
 
         <Button
           className="
-          before:block before:absolute before:h-7 before:right-11 before:w-[1px] before:dark:bg-[#2f3031] before:bg-[#ced0d4] 
-          before:-skew-y-3  
+          before:block before:absolute before:h-7 before:right-8 before:w-[1px] before:dark:bg-[#2f3031] before:bg-[#ced0d4] 
+          before:-skew-y-3
+          !h-8 !w-8 
           absolute z-1 right-[0] inset-y-0 my-auto "
-          icon={<SearchIcon className="w-5 h-5" />}
+          icon={<SearchIcon className="w-4 h-4" />}
         />
       </div>
     </HeadleesTippy>

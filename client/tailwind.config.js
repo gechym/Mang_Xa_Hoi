@@ -4,7 +4,22 @@ module.exports = withMT({
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   darkMode: 'class',
   theme: {
+    screens: {
+      mobile: '320px',
+      tablet: '756px',
+      laptop: '1229px',
+      desktop: '1280px',
+    },
+
     extend: {
+      gridTemplateColumns: {
+        auto: 'repeat(auto-fit, minmax(250px, 1fr))',
+      },
+
+      gridAutoRows: {
+        auto: 'minmax(300px, 300px)',
+      },
+
       fontFamily: {
         inter: ['Inter', 'sans-serif'],
         hind: ['Hind', 'sans-serif'],

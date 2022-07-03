@@ -18,6 +18,10 @@
     @apply text-5xl font-bold;
   }
 
+  html {
+    @apply dark:bg-dark bg-light;
+  }
+
   html *::-webkit-scrollbar {
     border-radius: 0;
     width: 4px;

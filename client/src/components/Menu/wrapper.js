@@ -7,6 +7,7 @@ function Wrapper({ children, className }) {
     <div
       style={{ overflowY: 'overlay' }}
       className={`
+      shadow-lg
         max-h-[500px]
         w-full h-full rounded-lg
         bg-lightSecondary ${getClassTheme()} ${className}`}
