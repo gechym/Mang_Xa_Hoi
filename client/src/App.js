@@ -6,6 +6,7 @@ import DefaultLayout from '~/layout/defaultLayout';
 
 import './app.css';
 import Toaster from '~/components/Toaster';
+import ProtectedRouter from './util/ProtectedRouter';
 
 function App() {
   return (
@@ -23,7 +24,20 @@ function App() {
               Layout = Fragment;
             }
 
-            return (
+            return route.requireLogin ? (
+              <Route
+                key={index}
+                path={route.path}
+                element={
+                  <ProtectedRouter>
+                    <Layout>
+                      <Page />
+                      <Toaster />
+                    </Layout>
+                  </ProtectedRouter>
+                }
+              />
+            ) : (
               <Route
                 key={index}
                 path={route.path}

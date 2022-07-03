@@ -70,6 +70,11 @@ const SearchHeader = ({ className }) => {
                       to={`/user/${user.id}`}
                       key={index}
                       className="flex items-center gap-2 mt-2 cursor-pointer"
+                      onClick={() => {
+                        setSearchValue('');
+                        setSearchResult([]);
+                        setShowResult(false);
+                      }}
                     >
                       <Avatar
                         className="bg-cyan-50 ring-1 ring-[#ced0d4] dark:ring-[#2f3031]"

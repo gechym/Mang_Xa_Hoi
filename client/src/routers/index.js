@@ -2,6 +2,7 @@ import config from '~/config';
 import DefaultLayout from '~/layout/defaultLayout';
 import Home from '~/page/home';
 import Login from '~/page/login';
+import NotFound from '~/page/notFound/NotFound';
 import Register from '~/page/register';
 import TestComponent from '~/page/test';
 
@@ -9,6 +10,7 @@ const publicRouters = [
   {
     path: config.router.home,
     component: Home,
+    requireLogin: true,
     layout: DefaultLayout,
   },
   {
@@ -23,13 +25,14 @@ const publicRouters = [
   },
   {
     path: config.router.test,
+    requireLogin: true,
     component: TestComponent,
     layout: DefaultLayout,
   },
   {
     path: '*',
-    component: () => <div>404</div>,
-    layout: DefaultLayout,
+    component: NotFound,
+    layout: null,
   },
 ];
 
