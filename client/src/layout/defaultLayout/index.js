@@ -25,7 +25,7 @@ function DefaultLayout({ children }) {
     tablet:grid-rows-[50px_1fr_1fr] 
     laptop:grid-cols-[360px_1fr_360px]
     laptop:grid-rows-[56px_1fr_1fr] 
-    grid min-h-screen gap-2 p-2"
+    grid min-h-screen gap-2 p-2 "
     >
       <div
         className="
@@ -56,7 +56,7 @@ function DefaultLayout({ children }) {
       mobile:hidden
       tablet:hidden
       laptop:block 
-      border-2
+      
       "
       >
         Thanh chức năng
@@ -104,7 +104,8 @@ function DefaultLayout({ children }) {
       tablet:col-end-4
       tablet:block
       mobile:hidden
-      border-2"
+      
+      "
       >
         Thanh Hien User
       </div>
