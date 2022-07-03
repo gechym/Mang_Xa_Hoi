@@ -25,7 +25,7 @@ function DefaultLayout({ children }) {
     tablet:grid-rows-[50px_1fr_1fr] 
     laptop:grid-cols-[360px_1fr_360px]
     laptop:grid-rows-[56px_1fr_1fr] 
-    grid min-h-screen gap-2 p-2 "
+    grid min-h-screen gap-2 p-2"
     >
       <div
         className="
@@ -44,7 +44,7 @@ function DefaultLayout({ children }) {
       "
       >
         <LogoHeader className={'h-[40px] w-[40px] rounded-full'} />
-        <SearchHeader />
+        <SearchHeader className={'laptop:block tablet:block mobile:hidden'} />
       </div>
 
       <div
