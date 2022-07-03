@@ -24,7 +24,7 @@ const publicRouters = [
   {
     path: config.router.test,
     component: TestComponent,
-    layout: null,
+    layout: DefaultLayout,
   },
 ];
 

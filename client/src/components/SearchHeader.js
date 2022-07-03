@@ -22,9 +22,9 @@ const SearchHeader = ({ className }) => {
       setLoading(true);
       try {
         const res = await searchUser(valueDebounce);
-
-        if (res) {
-          setSearchResult(res.users);
+        console.log(res);
+        if (res.data) {
+          setSearchResult(res.data.users);
         }
 
         setLoading(false);

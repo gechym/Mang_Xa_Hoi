@@ -3,7 +3,7 @@ import { Fragment, memo } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import { Link } from 'react-router-dom';
 
-function Dropdown({ items }) {
+function Dropdown({ items, className, title = 'menu' }) {
   const handleRenderItem = () => {
     return items?.map((item, index) => {
       let Comp = 'button';
@@ -44,7 +44,7 @@ function Dropdown({ items }) {
   };
 
   return (
-    <div className="fixed top-16 w-56 text-right">
+    <div className={`text-right w-max ${className ? className : ''}`}>
       <Menu as="div" className="relative inline-block">
         <div>
           <Menu.Button
@@ -55,7 +55,7 @@ function Dropdown({ items }) {
               hover:bg-lightHoverIcon dark:hover:bg-darkHoverIcon
              "
           >
-            Menu
+            {title}
             <ChevronDownIcon
               className=" h-5 w-5 ml-1 text-violet-200 hover:text-violet-100"
               aria-hidden="true"

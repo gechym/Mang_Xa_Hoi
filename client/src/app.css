@@ -18,8 +18,8 @@
     @apply text-5xl font-bold;
   }
 
-  html {
-    @apply dark:bg-dark bg-light;
+  .dark {
+    @apply bg-dark;
   }
 
   html *::-webkit-scrollbar {

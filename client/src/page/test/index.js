@@ -935,7 +935,7 @@ function TestComponent() {
 
   return (
     <div className={`min-h-screen p-2 bg-light text-textPrimaryLight dark:bg-dark dark:text-textPrimaryDark`}>
-      <Dropdown items={items} />
+      <Dropdown items={items} title={'dropdown'} className={''} />
       <Menu items={menuItem} onChange={handleOnChang}>
         <Button icon={<MoonIcon className="w-5 h-5" />}></Button>
       </Menu>

@@ -11,7 +11,7 @@ export const searchUser = async (name) => {
       //   authorization: `Bearer ${localStorage.getItem('token')}`,
       // },
     });
-    return res.data.data;
+    return res.data;
   } catch (error) {
     handleError(error);
   }

@@ -6,7 +6,7 @@ const httpsResquest = axios.create({
   headers: {
     'Content-Type': 'application/json',
     authorization:
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJuZGJhby4yMGl0NkB2a3UudWRuLnZuIiwiaWF0IjoxNjU2NzU3MzY2LCJleHAiOjE2NTY4NDM3NjZ9.X54Px32rRhxS4GgOwVSZhC9nJH6NiFB5uSbvbtO0aqY',
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJuZ3V5ZW5kdWNiYW9AZ21haWwuY29tIiwiaWF0IjoxNjU2ODQ1MTc2LCJleHAiOjE2NTY5MzE1NzZ9.uE0Ytb0wYV9i_3mZAX73ETtxnAsvXncpCHsxUKzzR6I',
   },
 });
 
@@ -52,6 +52,8 @@ httpsResquest.interceptors.response.use(
 
     if (res.data.message === 'Token hết hạn vui lòng đăng nhập lại') {
       console.log('✅ refresh token');
+
+      return Promise.reject(new Error(res.data.message));
     }
     return res;
   },
