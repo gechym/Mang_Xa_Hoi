@@ -27,3 +27,9 @@ export const fetch_login_error = (error) => {
     payload: error,
   };
 };
+
+export const logout = () => {
+  return {
+    type: userConstant.logout,
+  };
+};

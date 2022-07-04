@@ -9,11 +9,13 @@ import TestComponent from '~/page/test';
 const publicRouters = [
   {
     path: config.router.index,
+    requireLogin: true,
     component: Home,
     layout: DefaultLayout,
   },
   {
     path: config.router.home,
+    requireLogin: true,
     component: Home,
     layout: DefaultLayout,
   },

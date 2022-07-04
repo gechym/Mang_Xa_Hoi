@@ -1,5 +1,5 @@
 import { login } from '~/api/userService';
-import { fetch_login, fetch_login_error, fetch_login_success } from '../actions/userAction';
+import { fetch_login, fetch_login_error, fetch_login_success, logout } from '../actions/userAction';
 
 export const loginUser =
   ({ email, password }) =>
@@ -12,3 +12,8 @@ export const loginUser =
       dispatch(fetch_login_error(err.m));
     }
   };
+
+export const logoutUser = () => async (dispatch, getState) => {
+  dispatch(logout());
+  localStorage.removeItem('token');
+};

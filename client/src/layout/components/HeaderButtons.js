@@ -24,7 +24,11 @@ const HeaderButtons = () => {
           className={classNameButtonActive('/home')}
           large
           icon={
-            pathname === '/home' ? <AiFillHome className="w-7 h-7" /> : <AiOutlineHome className="w-7 h-7" />
+            pathname === '/home' || pathname === '/' ? (
+              <AiFillHome className="w-7 h-7" />
+            ) : (
+              <AiOutlineHome className="w-7 h-7" />
+            )
           }
         />
       </Link>

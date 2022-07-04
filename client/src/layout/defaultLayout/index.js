@@ -1,26 +1,12 @@
 import { useDispatch } from 'react-redux';
-
 import { toggleTheme } from '~/redux/thunk/themeThunk';
-import { Link } from 'react-router-dom';
-
 import Button from '~/components/Button';
 import { BsSun } from 'react-icons/bs';
-import { TbGridDots } from 'react-icons/tb';
-import { HiBell } from 'react-icons/hi';
-import { LogoHeader } from '~/components/icons';
-import { RiMessengerFill } from 'react-icons/ri';
-
-import SearchHeader from '~/components/SearchHeader';
-
 import WrapperResponsive from '~/layout/components/wrapperResponsive';
-import HeaderLayout from '~/layout/components/HeaderLayout';
 import RightLayout from '~/layout/components/RightLayout';
 import LeftLayout from '~/layout/components/LeftLayout';
 import MainLayout from '~/layout/components/mainLayout';
-import HeaderButtons from '~/layout/components/HeaderButtons';
-import { Avatar } from '@material-tailwind/react';
-import Menu from '~/components/Menu';
-import Dropdown from '~/components/Dropdown';
+import Header from '~/layout/components//Header';
 
 function DefaultLayout({ children }) {
   const dispatch = useDispatch();
@@ -42,37 +28,7 @@ function DefaultLayout({ children }) {
     grid min-h-screen gap-2 p-2"
     >
       {/* Header */}
-      <HeaderLayout>
-        {/* Content left */}
-        <div className="flex items-center w-96">
-          <Link to="/">
-            <LogoHeader className={'h-[40px] w-[40px] rounded-full mr-4'} />
-          </Link>
-          <SearchHeader className={'laptop:block tablet:block mobile:hidden'} />
-        </div>
-        {/* content center */}
-        <div className="flex-1 flex justify-center items-center">
-          <HeaderButtons />
-        </div>
-        {/* content right */}
-        <div className="w-96 flex items-center justify-end">
-          <Dropdown>
-            <Button className={'!mx-1'} icon={<TbGridDots className="w-5 h-5" />} />
-          </Dropdown>
-
-          <Button className={'!mx-1'} icon={<RiMessengerFill className="w-5 h-5" />} />
-
-          <Button className={'!mx-1'} icon={<HiBell className="w-5 h-5" />} />
-
-          <Menu>
-            <Avatar
-              className="w-10 h-10 mx-1"
-              src="https://avatars.githubusercontent.com/u/79199646?v=4"
-              variant="circular"
-            />
-          </Menu>
-        </div>
-      </HeaderLayout>
+      <Header />
 
       <RightLayout>Thanh chức năng</RightLayout>
 

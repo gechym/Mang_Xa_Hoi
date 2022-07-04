@@ -1,11 +1,12 @@
 const { default: axios } = require('axios');
+const token = localStorage.getItem('token') || '';
 
 const httpsResquest = axios.create({
   baseURL: 'http://localhost:8080',
   timeout: 6 * 1000,
   headers: {
     'Content-Type': 'application/json',
-    authorization: `Bearer ${localStorage.getItem('token')}`,
+    authorization: `Bearer ${token}`,
   },
 });
 
@@ -60,7 +61,7 @@ httpsResquest.interceptors.response.use(
 
   (error) => {
     console.error('↘️ Response error:::: ', error.message, error.response?.data.message);
-    httpsResquest.removeTokenLocalStorage();
+    // httpsResquest.removeTokenLocalStorage();
     return Promise.reject(error);
   },
 );

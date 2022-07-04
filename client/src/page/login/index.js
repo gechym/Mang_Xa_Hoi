@@ -6,6 +6,7 @@ import { AiOutlineLoading } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '~/redux/thunk/userThunk';
 import { userSelecter } from '~/redux/selecter';
+import toast from 'react-hot-toast';
 
 function Login() {
   const [email, setEmail] = useState('nguyenducbao@gmail.com  ');
@@ -17,6 +18,10 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await dispatch(loginUser({ email, password }));
+  };
+
+  const handleKeyPress = (event) => {
+    toast(event.key);
   };
 
   useEffect(() => {
@@ -85,6 +90,8 @@ function Login() {
                   <Button
                     onClick={handleSubmit}
                     disabled={loading}
+                    onKeyPress={handleKeyPress}
+                    tabIndex="0"
                     className={`cursor-pointer 
                     flex justify-center gap-2 
                     items-center w-full  px-4 
