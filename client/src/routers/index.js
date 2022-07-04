@@ -8,6 +8,11 @@ import TestComponent from '~/page/test';
 
 const publicRouters = [
   {
+    path: config.router.index,
+    component: Home,
+    layout: DefaultLayout,
+  },
+  {
     path: config.router.home,
     component: Home,
     layout: DefaultLayout,

@@ -3,7 +3,6 @@ import { Button, Input } from '@material-tailwind/react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { AiOutlineLoading } from 'react-icons/ai';
-import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '~/redux/thunk/userThunk';
 import { userSelecter } from '~/redux/selecter';
@@ -24,7 +23,7 @@ function Login() {
     if (user) {
       navigate('/');
     }
-  }, [user]);
+  }, [user, navigate]);
 
   return (
     <div className="bg-white">
