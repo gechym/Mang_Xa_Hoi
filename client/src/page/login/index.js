@@ -1,7 +1,31 @@
 import { LogoHeader } from '~/components/icons';
-import { Input } from '@material-tailwind/react';
-import { Link } from 'react-router-dom';
+import { Button, Input } from '@material-tailwind/react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { AiOutlineLoading } from 'react-icons/ai';
+import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '~/redux/thunk/userThunk';
+import { userSelecter } from '~/redux/selecter';
+
 function Login() {
+  const [email, setEmail] = useState('nguyenducbao@gmail.com  ');
+  const [password, setPassword] = useState('123456789');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { loading, error, user } = useSelector(userSelecter);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await dispatch(loginUser({ email, password }));
+  };
+
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user]);
+
   return (
     <div className="bg-white">
       <div className="flex justify-center h-screen">
@@ -36,17 +60,43 @@ function Login() {
             <div className="mt-8">
               <>
                 <div>
-                  <Input className="h-11" color="blue" label="Email" type="email" />
+                  <Input
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="h-11"
+                    color="blue"
+                    label="Email"
+                    type="email"
+                  />
                 </div>
 
                 <div className="mt-6">
-                  <Input color="blue" label="password" type={'password'} />
+                  <Input
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    color="blue"
+                    label="password"
+                    type={'password'}
+                  />
                 </div>
 
-                <div className="mt-6">
-                  <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-primary rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-                    Sign in
-                  </button>
+                <span className="text-[#E41E3F] text-center text-sm">{error}</span>
+
+                <div className="mt-2">
+                  <Button
+                    onClick={handleSubmit}
+                    disabled={loading}
+                    className={`cursor-pointer 
+                    flex justify-center gap-2 
+                    items-center w-full  px-4 
+                    py-2 tracking-wide text-white 
+                    transition-colors 
+                    duration-200 transform 
+                    bg-primary rounded-md ${loading ? 'opacity-70' : ''}`}
+                  >
+                    {loading ? <AiOutlineLoading className="animate-spin w-5 h-5" /> : ''}
+                    <span>Sign in</span>
+                  </Button>
                 </div>
               </>
               <div className="flex justify-center mt-2">

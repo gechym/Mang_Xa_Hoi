@@ -1,10 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { toggleTheme } from '~/redux/thunk/themeThunk';
-
 import Button from '~/components/Button';
-import { BsSun } from 'react-icons/bs';
 import { TbGridDots } from 'react-icons/tb';
 import { HiBell } from 'react-icons/hi';
 import { LogoHeader } from '~/components/icons';
@@ -12,11 +9,7 @@ import { RiMessengerFill } from 'react-icons/ri';
 
 import SearchHeader from '~/components/SearchHeader';
 
-import WrapperResponsive from '~/layout/components/wrapperResponsive';
 import HeaderLayout from '~/layout/components/HeaderLayout';
-import RightLayout from '~/layout/components/RightLayout';
-import LeftLayout from '~/layout/components/LeftLayout';
-import MainLayout from '~/layout/components/mainLayout';
 import HeaderButtons from '~/layout/components/HeaderButtons';
 import { Avatar } from '@material-tailwind/react';
 import Menu from '~/components/Menu';
@@ -61,13 +54,13 @@ const NotFound = () => {
       </h1>
       <div className="bg-primary px-2 text-sm rounded rotate-12 absolute">Page Not Found</div>
       <button className="mt-5">
-        <a className="relative inline-block text-sm font-medium text-primary group active:bg-primary/500 focus:outline-none focus:ring">
+        <span className="relative inline-block text-sm font-medium text-primary group active:bg-primary/500 focus:outline-none focus:ring">
           <span className="absolute inset-0 transition-transform translate-x-0.5 translate-y-0.5 bg-primary group-hover:translate-y-0 group-hover:translate-x-0"></span>
 
           <span className="relative block px-8 py-3 bg-[#1A2238] border border-current">
             <Link to="/">Go Home</Link>
           </span>
-        </a>
+        </span>
       </button>
     </main>
   );

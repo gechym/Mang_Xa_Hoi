@@ -72,6 +72,13 @@ export const login = catchAsync(async (req, res, next) => {
 
   const user = await User.findOne({
     where: { email: email },
+    include: [
+      {
+        model: UserInfo,
+        as: 'userInfor',
+        attributes: ['name', 'avatar', 'image_cover', 'introduce', 'address', 'phone'],
+      },
+    ],
   });
 
   if (!user) return next(new AppError('Email không tồn tại, vui lòng thử lại', 404));
@@ -101,6 +108,7 @@ export const login = catchAsync(async (req, res, next) => {
       email: user.email,
       rule: user.rule,
     },
+    userInfo: user.userInfor,
     token: token,
   });
 });

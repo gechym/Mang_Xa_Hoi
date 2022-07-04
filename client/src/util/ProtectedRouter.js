@@ -1,15 +1,12 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import Login from '~/page/login';
-
-const userState = {
-  user: true,
-  loading: false,
-  error: null,
-};
+import { useSelector } from 'react-redux';
+import { userSelecter } from '~/redux/selecter';
 
 const ProtectedRouter = ({ children }) => {
-  return userState.user ? children : <Navigate to="/login" state={'/login'} />;
+  const { user } = useSelector(userSelecter);
+
+  return user ? children : <Navigate to="/login" state={'/login'} />;
 };
 
 export default ProtectedRouter;

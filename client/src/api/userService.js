@@ -7,10 +7,16 @@ export const searchUser = async (name) => {
         limit: '6',
         name: name,
       },
-      // headers: {
-      //   authorization: `Bearer ${localStorage.getItem('token')}`,
-      // },
     });
+    return res.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const login = async (data) => {
+  try {
+    const res = await httpsResquest.post('/api/v1/users/login', data);
     return res.data;
   } catch (error) {
     handleError(error);

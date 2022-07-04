@@ -10,7 +10,6 @@ const publicRouters = [
   {
     path: config.router.home,
     component: Home,
-    requireLogin: true,
     layout: DefaultLayout,
   },
   {

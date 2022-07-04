@@ -5,8 +5,7 @@ const httpsResquest = axios.create({
   timeout: 6 * 1000,
   headers: {
     'Content-Type': 'application/json',
-    authorization:
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJuZ3V5ZW5kdWNiYW9AZ21haWwuY29tIiwiaWF0IjoxNjU2ODQ1MTc2LCJleHAiOjE2NTY5MzE1NzZ9.uE0Ytb0wYV9i_3mZAX73ETtxnAsvXncpCHsxUKzzR6I',
+    authorization: `Bearer ${localStorage.getItem('token')}`,
   },
 });
 
@@ -46,21 +45,22 @@ httpsResquest.interceptors.request.use(
 httpsResquest.interceptors.response.use(
   (res) => {
     console.log('↘️ Response:::: ', res);
+
     if (res.data.token) {
       httpsResquest.setTokenLocalStorage(res.data.token);
     }
 
     if (res.data.message === 'Token hết hạn vui lòng đăng nhập lại') {
       console.log('✅ refresh token');
-
       return Promise.reject(new Error(res.data.message));
     }
+
     return res;
   },
 
   (error) => {
+    console.error('↘️ Response error:::: ', error.message, error.response?.data.message);
     httpsResquest.removeTokenLocalStorage();
-
     return Promise.reject(error);
   },
 );

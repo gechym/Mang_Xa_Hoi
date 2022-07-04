@@ -2,6 +2,7 @@ import { XIcon } from '@heroicons/react/solid';
 import React from 'react';
 import { toast, Toaster, ToastBar } from 'react-hot-toast';
 import Button from '~/components/Button';
+import { LogoHeader } from './icons';
 
 const MyToaster = () => {
   const getClassWithTheme = () =>
