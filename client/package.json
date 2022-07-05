@@ -27,6 +27,7 @@
     "redux-thunk": "^2.4.1",
     "reselect": "^4.1.6",
     "sass": "^1.51.0",
+    "use-local-storage": "^2.3.6",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {

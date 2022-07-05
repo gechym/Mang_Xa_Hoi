@@ -36,6 +36,29 @@ const userReducer = (state = initialState, action) => {
       return {
         ...initialState,
       };
+
+    case constantUser.fetch_register:
+      return {
+        ...state,
+        loading: true,
+      };
+    case constantUser.fetch_register_success:
+      return {
+        ...state,
+        user: action.payload.user,
+        userInfo: action.payload.userInfo,
+        error: null,
+        loading: false,
+      };
+    case constantUser.fetch_register_error:
+      return {
+        ...state,
+        user: null,
+        userInfo: null,
+        loading: false,
+        error: action.payload,
+      };
+
     default:
       return state;
   }

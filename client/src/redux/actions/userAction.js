@@ -28,6 +28,26 @@ export const fetch_login_error = (error) => {
   };
 };
 
+export const fetch_register = () => {
+  return {
+    type: userConstant.fetch_register,
+  };
+};
+
+export const fetch_register_success = (res) => {
+  return {
+    type: userConstant.fetch_register_success,
+    payload: res,
+  };
+};
+
+export const fetch_register_error = (error) => {
+  return {
+    type: userConstant.fetch_register_error,
+    payload: error,
+  };
+};
+
 export const logout = () => {
   return {
     type: userConstant.logout,

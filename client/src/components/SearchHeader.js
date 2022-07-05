@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import HeadleesTippy from '@tippyjs/react/headless';
 import { SearchIcon } from '@heroicons/react/solid';
+import { useDispatch } from 'react-redux';
+import { logoutUser } from '~/redux/thunk/userThunk';
 
 import Button from './Button';
 import useDebounce from '~/hooks/useDebounce';
 import { searchUser } from '~/api/userService';
 import Wrapper from './Menu/wrapper';
-import { Avatar } from '@material-tailwind/react';
 import { AiOutlineLoading, AiOutlineCloseCircle } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Image from './Image';
+import toast from 'react-hot-toast';
 
 const SearchHeader = ({ className }) => {
   const [searchValue, setSearchValue] = useState('');
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
-  const valueDebounce = useDebounce(searchValue, 500);
+  const valueDebounce = useDebounce(searchValue, 200);
   const [showResult, setShowResult] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -30,7 +35,24 @@ const SearchHeader = ({ className }) => {
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        console.log(error);
+        console.log(error.message);
+        if (error.message === 'JsonWebTokenError: jwt malformed') {
+          console.log('Lỗi token jwt malformed');
+          navigate('/');
+          dispatch(logoutUser());
+          toast('Token đã bị thay đỗi vui lòng đăng nhập lại', {
+            icon: '🚧',
+          });
+        }
+
+        if (error.message === 'JsonWebTokenError: invalid token') {
+          console.log('Lỗi token invalid token đăng xuất');
+          navigate('/');
+          dispatch(logoutUser());
+          toast('Token đã bị thay đỗi vui lòng đăng nhập lại', {
+            icon: '🚧',
+          });
+        }
       }
     };
 
@@ -40,7 +62,7 @@ const SearchHeader = ({ className }) => {
       return;
     }
     fetchApi();
-  }, [valueDebounce]);
+  }, [valueDebounce, dispatch]);
 
   const handleHideResult = () => setShowResult(false);
   const handleShowResult = () => setShowResult(true);
@@ -76,7 +98,7 @@ const SearchHeader = ({ className }) => {
                         setShowResult(false);
                       }}
                     >
-                      <Avatar
+                      <Image
                         className="bg-cyan-50 ring-1 ring-[#ced0d4] dark:ring-[#2f3031]"
                         size="md"
                         variant="circular"

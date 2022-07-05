@@ -1,11 +1,49 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Input } from '@material-tailwind/react';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { userSelecter } from '~/redux/selecter';
+import { useCallback, useEffect, useState } from 'react';
+import { registerUser } from '~/redux/thunk/userThunk';
+import { AiOutlineLoading } from 'react-icons/ai';
+import toast from 'react-hot-toast';
 
 function Register() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfig, setPasswordConfig] = useState('');
+  const [name, setName] = useState('');
+  const dispatch = useDispatch();
+  const { loading, error, user } = useSelector(userSelecter);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, []);
+
+  const handleRegiser = useCallback(() => {
+    dispatch(
+      registerUser(
+        { name, email, password, passwordConfig },
+        () => {
+          toast.success('Đăng ký thành công!, bạn sẽ được chuyển hướng đến kênh bản tin ngay 🥰🥰🥰');
+          setTimeout(() => {
+            navigate('/');
+          }, 3000);
+        },
+        () => {
+          toast(error); //FIXME: no sync error message
+        },
+      ),
+    );
+  }, [dispatch, error, email, name, password, passwordConfig]);
+
   return (
-    <div class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-cyan-500 to-primary ">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-cyan-500 to-primary ">
       <div
-        class="
+        className="
       flex flex-col
       bg-white
       shadow-md
@@ -19,37 +57,78 @@ function Register() {
       max-w-md
     "
       >
-        <div class="font-medium self-center text-xl sm:text-3xl text-gray-800">
+        <div className="font-medium self-center text-xl sm:text-3xl text-gray-800">
           Join us <span className="text-primary">FaceKe</span>
         </div>
-        <div class="mt-4 self-center text-xl sm:text-sm text-gray-800">
+        <div className="mt-4 self-center text-xl sm:text-sm text-gray-800">
           Enter your credentials to get access account
         </div>
 
-        <div class="mt-10">
+        <div className="mt-6">
           <div>
-            <Input className="h-11" color="blue" label="Name" type="text" />
+            <Input
+              onChange={(e) => setName(e.target.value)}
+              value={name}
+              className="h-11"
+              color="blue"
+              label="Name"
+              type="text"
+            />
           </div>
 
           <div className="mt-4">
-            <Input className="h-11" color="blue" label="Email" type="email" />
+            <Input
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+              className="h-11"
+              color="blue"
+              label="Email"
+              type="email"
+            />
           </div>
 
           <div className="mt-4">
-            <Input color="blue" label="password" type={'password'} />
+            <Input
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              color="blue"
+              label="password"
+              type={'password'}
+            />
           </div>
 
           <div className="mt-4">
-            <Input color="blue" label="password configuration" type={'password'} />
+            <Input
+              onChange={(e) => setPasswordConfig(e.target.value)}
+              value={passwordConfig}
+              color="blue"
+              label="password configuration"
+              type={'password'}
+            />
           </div>
         </div>
-        <Button className="mt-4" color="blue">
-          Let go
+
+        <span className="text-[#E41E3F] my-2 text-sm">{error}</span>
+
+        <Button
+          disabled={loading}
+          onClick={handleRegiser}
+          tabIndex="0"
+          className={`cursor-pointer 
+                    flex justify-center gap-2 
+                    items-center w-full  px-4 
+                    py-2 tracking-wide text-white 
+                    transition-colors 
+                    duration-200 transform 
+                    bg-primary rounded-md ${loading ? 'opacity-70' : ''}`}
+        >
+          {loading ? <AiOutlineLoading className="animate-spin w-5 h-5" /> : ''}
+          <span>Sign in</span>
         </Button>
       </div>
-      <div class="flex justify-center items-center mt-6">
+      <div className="flex justify-center items-center mt-6">
         <span
-          class="
+          className="
         inline-flex
         items-center
         text-gray-700
@@ -57,9 +136,9 @@ function Register() {
         text-xs text-center
       "
         >
-          <span class="ml-2">
+          <span className="ml-2">
             You have an account?
-            <Link to={'/login'} class="text-xs  ml-2 text-white font-semibold">
+            <Link to={'/login'} className="text-xs  ml-2 text-white font-semibold">
               Login here
             </Link>
           </span>

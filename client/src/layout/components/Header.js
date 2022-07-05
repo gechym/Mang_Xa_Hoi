@@ -14,16 +14,16 @@ import { BiUserPin } from 'react-icons/bi';
 import SearchHeader from '~/components/SearchHeader';
 import HeaderLayout from '~/layout/components/HeaderLayout';
 import HeaderButtons from '~/layout/components/HeaderButtons';
-import { Avatar } from '@material-tailwind/react';
 import { MdOutlineSettings } from 'react-icons/md';
 import Menu from '~/components/Menu';
 import Dropdown from '~/components/Dropdown';
 import { userSelecter } from '~/redux/selecter';
+import Image from '~/components/Image';
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user } = useSelector(userSelecter);
+  const { user, userInfo } = useSelector(userSelecter);
   const itemMenuDropdown = [
     { lable: 'My profile', icon: BiUserPin, to: '/myProfile' },
     {
@@ -69,11 +69,7 @@ const Header = () => {
             <Button className={'!mx-1'} icon={<HiBell className="w-5 h-5" />} />
 
             <Dropdown items={itemMenuDropdown}>
-              <Avatar
-                className="w-10 h-10 mx-1"
-                src="https://avatars.githubusercontent.com/u/79199646?v=4"
-                variant="circular"
-              />
+              <Image className="w-10 h-10 mx-1" src={userInfo.avatar} variant="circular" />
             </Dropdown>
           </>
         ) : (
