@@ -39,3 +39,16 @@ export const login = async (data) => {
     handleError(error);
   }
 };
+
+export const refreshToken = async () => {
+  try {
+    const res = await httpsResquest.get('/api/v1/users/refreshToken', {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('refreshToken')}`,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    handleError(error);
+  }
+};

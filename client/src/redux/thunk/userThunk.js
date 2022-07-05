@@ -38,4 +38,5 @@ export const registerUser =
 export const logoutUser = () => async (dispatch, getState) => {
   dispatch(logout());
   localStorage.removeItem('token');
+  localStorage.removeItem('refreshToken');
 };

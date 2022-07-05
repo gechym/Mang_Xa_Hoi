@@ -36,20 +36,19 @@ const SearchHeader = ({ className }) => {
       } catch (error) {
         setLoading(false);
         console.log(error.message);
+
         if (error.message === 'JsonWebTokenError: jwt malformed') {
-          console.log('Lỗi token jwt malformed');
-          navigate('/');
+          navigate('/login');
           dispatch(logoutUser());
-          toast('Token đã bị thay đỗi vui lòng đăng nhập lại', {
+          toast('Session đã bị tác động từ bên ngoài vui lòng đăng nhập lại để bảo mật', {
             icon: '🚧',
           });
         }
 
         if (error.message === 'JsonWebTokenError: invalid token') {
-          console.log('Lỗi token invalid token đăng xuất');
-          navigate('/');
+          navigate('/login');
           dispatch(logoutUser());
-          toast('Token đã bị thay đỗi vui lòng đăng nhập lại', {
+          toast('Session đã bị tác động từ bên ngoài vui lòng đăng nhập lại để bảo mật', {
             icon: '🚧',
           });
         }

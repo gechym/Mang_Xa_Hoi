@@ -23,6 +23,19 @@ const createToken = (newUser) => {
   );
 };
 
+const createRefreshToken = (newUser) => {
+  return jwt.sign(
+    {
+      id: newUser.id,
+      email: newUser.email,
+    },
+    process.env.JWT_SECRET_KEY,
+    {
+      expiresIn: process.env.REFRESH_TOKEN_JWT_HET_HAN,
+    },
+  );
+};
+
 export const signUp = catchAsync(async (req, res, next) => {
   const { email, password, passwordConfig, name, avatar, imageCover, introduce, address, phone } = req.body;
   if (!email || !password || !passwordConfig || !name) {
@@ -51,6 +64,7 @@ export const signUp = catchAsync(async (req, res, next) => {
   });
 
   const token = createToken(user);
+  const refreshToken = createRefreshToken(user);
 
   res.cookie('jwt', token, {
     expires: new Date(Date.now() + process.env.COOKIE_HET_HAN * 24 * 60 * 60 * 1000),
@@ -60,6 +74,7 @@ export const signUp = catchAsync(async (req, res, next) => {
   res.status(200).json({
     message: 'success',
     token: token,
+    refreshToken: refreshToken,
     userInfo,
     user,
   });
@@ -88,6 +103,7 @@ export const login = catchAsync(async (req, res, next) => {
   if (!checkPassword) return next(new AppError('mật khẩu không đúng'), 404);
 
   const token = createToken(user);
+  const refreshToken = createRefreshToken(user);
 
   res.cookie('jwt', token, {
     expires: new Date(Date.now() + process.env.COOKIE_HET_HAN * 24 * 60 * 60 * 1000),
@@ -110,6 +126,7 @@ export const login = catchAsync(async (req, res, next) => {
     },
     userInfo: user.userInfor,
     token: token,
+    refreshToken: refreshToken,
   });
 });
 
@@ -120,6 +137,90 @@ export const checkRules =
 
     next();
   };
+
+export const refreshToken = catchAsync(async (req, res, next) => {
+  const { authorization } = req.headers;
+  let token;
+
+  if (authorization && authorization.startsWith('Bearer')) {
+    token = authorization.split(' ')[1];
+  }
+  if (!token) return next(new AppError('Bạn chưa đăng nhập', 404));
+
+  // verify token
+
+  let decode = {};
+
+  try {
+    decode = await promisify(jwt.verify)(token, process.env.JWT_SECRET_KEY);
+  } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      return res.status(200).json({
+        message: 'Token hết hạn vui lòng đăng nhập lại',
+      });
+    }
+
+    return next(new AppError(error, 404));
+  }
+
+  decode = {
+    ...decode,
+    decode_iat: new Date(decode.iat * 1000).toLocaleString(),
+    decode_exp: new Date(decode.exp * 1000).toLocaleString(),
+  };
+  console.log(decode);
+
+  // check user
+  const currentUser = await User.findOne({
+    attributes: {
+      exclude: [
+        'password',
+        'passwordResetToken',
+        'passwordResetExpires',
+        'createdAt',
+        'updatedAt',
+        'deletedAt',
+      ],
+    },
+    where: {
+      id: decode.id,
+      email: decode.email,
+    },
+    include: [
+      {
+        model: UserInfo,
+        as: 'userInfor',
+        attributes: ['name', 'avatar', 'image_cover', 'introduce', 'address', 'phone'],
+      },
+    ],
+  });
+  if (!currentUser) {
+    return next(new AppError('Lỗi xác thực danh tính ,Vui lòng đăng nhập lại', 404));
+  }
+
+  // // check đổi pass khi token còn hạn => bắt user login lại
+  //FIXME: Nhớ lấy passwordChangeAt để check
+
+  if (decode.iat * 1000 < currentUser?.passwordChangeAt?.getTime())
+    return next(
+      new AppError(
+        `Bạn đã đổi password ngày ${currentUser.passwordChangeAt.toLocaleString()} , vui lòng đăng nhập lại`,
+        404,
+      ),
+    );
+
+  // create new token and refresh token
+  const tokenNew = createToken(currentUser);
+  const refreshTokenNew = createRefreshToken(currentUser);
+
+  return res.status(200).json({
+    message: 'success',
+    token: tokenNew,
+    refreshToken: refreshTokenNew,
+    user: currentUser,
+    userInfo: currentUser.userInfor,
+  });
+});
 
 export const protect = catchAsync(async (req, res, next) => {
   // lấy token
@@ -191,7 +292,7 @@ export const protect = catchAsync(async (req, res, next) => {
 });
 
 export const forgotPassword = catchAsync(async (req, res, next) => {
-  await User.sync({ alted: true });
+  // await User.sync({ alted: true });
   const { email } = req.body;
 
   if (!email) return next(new AppError('Vui lòng nhập email', 404));
@@ -283,6 +384,7 @@ export const resetPassword = catchAsync(async (req, res, next) => {
   );
 
   const token = createToken(user);
+  const refreshToken = createRefreshToken(user);
 
   res.cookie('jwt', token, {
     expires: new Date(Date.now() + process.env.COOKIE_HET_HAN * 24 * 60 * 60 * 1000),
@@ -293,6 +395,7 @@ export const resetPassword = catchAsync(async (req, res, next) => {
   res.status(200).json({
     message: 'success',
     token: token,
+    refreshToken: refreshToken,
     user: {
       id: user.id,
       email: user.email,
@@ -338,6 +441,7 @@ export const changePassword = catchAsync(async (req, res, next) => {
   );
 
   const token = createToken(user);
+  const refreshToken = createRefreshToken(user);
 
   res.cookie('jwt', token, {
     expires: new Date(Date.now() + process.env.COOKIE_HET_HAN * 24 * 60 * 60 * 1000),
@@ -353,5 +457,6 @@ export const changePassword = catchAsync(async (req, res, next) => {
       rule: user.rule,
     },
     token,
+    refreshToken,
   });
 });

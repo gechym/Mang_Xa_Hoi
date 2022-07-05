@@ -15,14 +15,16 @@ import {
   deleteAcceptAddFriend,
   disagreeAddFriend,
   getListFriend,
+  refreshToken,
 } from '../controller';
 
 const userRouter = express.Router();
 
 // userRouter.route('/').get(getUsers);
-userRouter.route('/').get(protect, checkRules('admin'), getUsers);
+userRouter.route('/').get(protect, checkRules('admin', 'user'), getUsers);
 userRouter.route('/signup').post(signUp);
 userRouter.route('/login').post(login);
+userRouter.route('/refreshToken').get(refreshToken);
 userRouter.route('/forgotPassword').patch(forgotPassword);
 userRouter.route('/resetPassword/:resetToken').patch(resetPassword);
 userRouter.route('/changepassword').patch(protect, changePassword);
