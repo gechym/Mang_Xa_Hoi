@@ -155,7 +155,7 @@ export const refreshToken = catchAsync(async (req, res, next) => {
     decode = await promisify(jwt.verify)(token, process.env.JWT_SECRET_KEY);
   } catch (error) {
     if (error.name === 'TokenExpiredError') {
-      return res.status(200).json({
+      return res.status(400).json({
         message: 'Token hết hạn vui lòng đăng nhập lại',
       });
     }
