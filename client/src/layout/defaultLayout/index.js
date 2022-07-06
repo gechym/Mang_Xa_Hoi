@@ -32,25 +32,7 @@ function DefaultLayout({ children }) {
 
       <RightLayout>Thanh chức năng</RightLayout>
 
-      <MainLayout>
-        {children}
-        <WrapperResponsive>
-          <Button
-            icon={<BsSun />}
-            onClick={() => {
-              dispatch(toggleTheme());
-            }}
-          />
-        </WrapperResponsive>
-        <WrapperResponsive>
-          <Button
-            icon={<BsSun />}
-            onClick={() => {
-              dispatch(toggleTheme());
-            }}
-          />
-        </WrapperResponsive>
-      </MainLayout>
+      <MainLayout>{children}</MainLayout>
 
       <LeftLayout>Thanh user</LeftLayout>
     </div>

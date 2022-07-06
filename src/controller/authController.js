@@ -117,6 +117,14 @@ export const login = catchAsync(async (req, res, next) => {
 
   // console.log(date1, date2, Date.now(), new Date(), new Date(date2));
 
+  // res.cookie('jwt', token, {
+  //   // gửi cookie cho clied để mỗi lần req sau clied sẽ tự động gửi về server
+  //   expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+  //   // cookie này tồn tại 90n
+  //   // secure:true,
+  //   httpOnly: true,
+  // });
+
   res.status(200).json({
     message: 'success',
     user: {

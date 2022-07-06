@@ -10,6 +10,7 @@ import { LogoHeader } from '~/components/icons';
 import { RiMessengerFill } from 'react-icons/ri';
 import { FiLogOut } from 'react-icons/fi';
 import { BiUserPin } from 'react-icons/bi';
+import { SiSpeedtest } from 'react-icons/si';
 
 import SearchHeader from '~/components/SearchHeader';
 import HeaderLayout from '~/layout/components/HeaderLayout';
@@ -32,6 +33,11 @@ const Header = () => {
       onClick: () => {
         alert('✅ chức năng đang hoàn thiện');
       },
+    },
+    {
+      lable: 'test',
+      icon: SiSpeedtest,
+      to: '/test',
     },
     {
       lable: 'logout',
