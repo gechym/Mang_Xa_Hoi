@@ -11,11 +11,12 @@ export const WrapperResponsive = ({ children }) => {
                 laptop:min-w-[470px] 
                 tablet:min-w-[470px] 
                 laptop:tablet:max-w-[680px] 
-                h-[200px]
+                min-h-[200px]
                 mobile:w-full
                 rounded-lg
                 shadow-lg
                 mb-4
+                p-2
                 "
     >
       {children}

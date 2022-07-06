@@ -22,21 +22,20 @@ export const loginUser =
       }
 
       dispatch(fetch_login_success(res));
+      await callBack();
     } catch (err) {
       dispatch(fetch_login_error(err.message));
     }
   };
 
 export const refresh =
-  ({ email, password, refreshToken: refresh }, callBack) =>
+  ({ refreshToken: refresh }, callBack) =>
   async (dispatch, getState) => {
     dispatch(fetch_login());
     try {
       let res = {};
       if (refresh) {
         res = await refreshToken();
-      } else {
-        res = await login({ email, password });
       }
 
       dispatch(fetch_login_success(res));

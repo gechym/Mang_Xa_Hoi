@@ -17,7 +17,15 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await dispatch(loginUser({ email, password }));
+    await dispatch(
+      loginUser({ email, password }, () => {
+        toast.success('Đăng nhập thành công , bạn sẽ được chuyển đến trang bản tin 😘');
+        setTimeout(() => {
+          toast.dismiss();
+          navigate('/');
+        }, 2000);
+      }),
+    );
   };
 
   const handleKeyPress = (event) => {
@@ -28,7 +36,7 @@ function Login() {
     if (user) {
       navigate('/');
     }
-  }, [user, navigate]);
+  }, []);
 
   return (
     <div className="bg-white">
