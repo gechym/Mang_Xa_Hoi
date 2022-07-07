@@ -47,12 +47,12 @@ function App() {
                 key={index}
                 path={route.path}
                 element={
-                  <ProtectedRouter>
-                    <Layout>
-                      <Page />
-                      <Toaster />
-                    </Layout>
-                  </ProtectedRouter>
+                  // <ProtectedRouter>
+                  <Layout>
+                    <Page />
+                    <Toaster />
+                  </Layout>
+                  // </ProtectedRouter>
                 }
               />
             ) : (

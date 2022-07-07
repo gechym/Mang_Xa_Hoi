@@ -16,7 +16,6 @@ export const WrapperResponsive = ({ children }) => {
                 rounded-lg
                 shadow-lg
                 mb-4
-                p-2
                 "
     >
       {children}
