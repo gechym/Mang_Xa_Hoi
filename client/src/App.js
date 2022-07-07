@@ -1,5 +1,5 @@
 import { Fragment, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { refresh } from '~/redux/thunk/userThunk';
 
@@ -22,15 +22,7 @@ function App() {
     <div>
       <Router>
         <Routes>
-          <Route
-            index
-            element={
-              <DefaultLayout>
-                <Home />
-                <Toaster />
-              </DefaultLayout>
-            }
-          />
+          <Route index element={<Navigate to="/home" />} />
           {publicRouters.map((route, index) => {
             const Page = route.component;
 
