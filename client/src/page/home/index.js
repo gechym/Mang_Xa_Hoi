@@ -1,9 +1,8 @@
 import { useSelector } from 'react-redux';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import WrapperResponsive from '~/layout/components/wrapperResponsive';
 import Post from '~/components/post';
-import SkeletonPost from '~/layout/components/SkeletonPost';
+import SkeletonPost from '~/components/SkeletonPost';
 import { useEffect, useState } from 'react';
 
 function Home() {

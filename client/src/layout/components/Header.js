@@ -66,9 +66,9 @@ const Header = () => {
       <div className="w-80 flex items-center justify-end ">
         {user ? (
           <>
-            {/* <Menu> */}
-            <Button content="Menu" className={'!mx-1'} icon={<TbGridDots className="w-5 h-5" />} />
-            {/* </Menu> */}
+            <Menu>
+              <Button content="Menu" className={'!mx-1'} icon={<TbGridDots className="w-5 h-5" />} />
+            </Menu>
 
             <Button className={'!mx-1'} icon={<RiMessengerFill className="w-5 h-5" />} />
 

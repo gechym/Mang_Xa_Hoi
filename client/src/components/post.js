@@ -38,6 +38,7 @@ const Post = () => {
         mình có đúng hay do mình gà scss nhỉ mn? P/s: Ai giúp mình gộp đống keyframe và animation(trong hình)
         qua scss với. Cảm ơn mn!!
       </p>
+
       <img
         className="object-cover"
         src="https://scontent.fdad3-3.fna.fbcdn.net/v/t39.30808-6/292199586_574081037634590_6647433652060029008_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=q8Ma_3CLu-sAX_JpuUK&_nc_ht=scontent.fdad3-3.fna&oh=00_AT8UaC25S0j28qGdko9bEYQc3JeUxr1P7ZyDmpH5zyGYtg&oe=62CB4685"

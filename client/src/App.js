@@ -9,7 +9,6 @@ import DefaultLayout from '~/layout/defaultLayout';
 import './app.css';
 import Toaster from '~/components/Toaster';
 import ProtectedRouter from './util/ProtectedRouter';
-import Home from './page/home';
 
 function App() {
   const dispatch = useDispatch();
@@ -39,12 +38,12 @@ function App() {
                 key={index}
                 path={route.path}
                 element={
-                  // <ProtectedRouter>
-                  <Layout>
-                    <Page />
-                    <Toaster />
-                  </Layout>
-                  // </ProtectedRouter>
+                  <ProtectedRouter>
+                    <Layout>
+                      <Page />
+                      <Toaster />
+                    </Layout>
+                  </ProtectedRouter>
                 }
               />
             ) : (
