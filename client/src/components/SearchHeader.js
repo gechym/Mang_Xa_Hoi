@@ -61,7 +61,7 @@ const SearchHeader = ({ className }) => {
       return;
     }
     fetchApi();
-  }, [valueDebounce, dispatch]);
+  }, [valueDebounce, dispatch, navigate]);
 
   const handleHideResult = () => setShowResult(false);
   const handleShowResult = () => setShowResult(true);

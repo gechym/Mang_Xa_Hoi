@@ -1,16 +1,9 @@
-import { useDispatch } from 'react-redux';
-import { toggleTheme } from '~/redux/thunk/themeThunk';
-import Button from '~/components/Button';
-import { BsSun } from 'react-icons/bs';
-import WrapperResponsive from '~/layout/components/wrapperResponsive';
 import RightLayout from '~/layout/components/RightLayout';
 import LeftLayout from '~/layout/components/LeftLayout';
 import MainLayout from '~/layout/components/mainLayout';
 import Header from '~/layout/components//Header';
 
 function DefaultLayout({ children }) {
-  const dispatch = useDispatch();
-
   return (
     <div
       className="

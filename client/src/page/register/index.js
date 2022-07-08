@@ -21,7 +21,7 @@ function Register() {
     if (user) {
       navigate('/');
     }
-  }, []);
+  }, [user, navigate]);
 
   const handleRegiser = useCallback(() => {
     dispatch(
@@ -38,7 +38,7 @@ function Register() {
         },
       ),
     );
-  }, [dispatch, error, email, name, password, passwordConfig]);
+  }, [dispatch, error, email, name, password, passwordConfig, navigate]);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-cyan-500 to-primary ">

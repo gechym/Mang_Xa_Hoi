@@ -196,7 +196,6 @@ const menuItemDefault = [
 function Menu({ children, items = menuItemDefault, onChange = () => {} }) {
   const [history, setHistory] = useState([{ data: items }]);
   const current = history[history.length - 1];
-  console.log('render Menu');
 
   const renderDataItems = () => {
     return current.data.map((item, index) => {

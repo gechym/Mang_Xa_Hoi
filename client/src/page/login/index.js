@@ -36,7 +36,7 @@ function Login() {
     if (user) {
       navigate('/');
     }
-  }, []);
+  }, [user, navigate]);
 
   return (
     <div className="bg-white">
