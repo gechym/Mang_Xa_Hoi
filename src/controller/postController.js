@@ -102,9 +102,10 @@ export const getPost = catchAsync(async (req, res, next) => {
     return {
       postId: post.id,
       userPostId: post.user_id,
-      userPosst: post.posts.name,
-      contentPost: post.content,
+      userPost: post.posts.name,
       userAvatarPosst: post.posts.avatar,
+      contentPost: post.content,
+      imagesPost: post.images,
       CommentPosts: post.commentsPost.map((comment) => {
         return {
           commentId: comment.id,
