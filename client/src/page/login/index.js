@@ -36,7 +36,7 @@ function Login() {
     if (user) {
       navigate('/');
     }
-  }, [user, navigate]);
+  }, []);
 
   return (
     <div className="bg-white">
@@ -45,9 +45,8 @@ function Login() {
           <div
             className="
                   flex items-center h-full px-20 
-                  bg-gradient-to-r from-cyan-500 to-primary 
-                  hover:bg-gradient-to-l 
-                  transition duration-[10000]"
+                  animate-bgGradient
+                  bg-gradient-to-r from-cyan-500 to-primary"
           >
             <div className="flex items-center gap-2">
               <h2 className="text-4xl font-bold dark:text-textPrimaryDark text-textPrimaryLight">

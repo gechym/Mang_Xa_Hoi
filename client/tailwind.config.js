@@ -12,6 +12,17 @@ module.exports = withMT({
     },
 
     extend: {
+      keyframes: {
+        gradient: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
+      },
+
+      animation: {
+        bgGradient: 'gradient 0.1s ease infinite',
+      },
+
       gridTemplateColumns: {
         auto: 'repeat(auto-fit, minmax(250px, 1fr))',
       },
