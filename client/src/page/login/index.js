@@ -9,7 +9,7 @@ import { userSelecter } from '~/redux/selecter';
 import toast from 'react-hot-toast';
 
 function Login() {
-  const [email, setEmail] = useState('nguyenducbao@gmail.com  ');
+  const [email, setEmail] = useState('nguyenducbao166@gmail.com  ');
   const [password, setPassword] = useState('123456789');
   const dispatch = useDispatch();
   const navigate = useNavigate();
