@@ -28,12 +28,21 @@ export const loginUser =
     }
   };
 
+const spleep = (ms) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+};
+
 export const refresh =
   ({ refreshToken: refresh }, callBack) =>
   async (dispatch, getState) => {
     dispatch(fetch_login());
     try {
       let res = {};
+
+      await spleep(1000);
+
       if (refresh) {
         res = await refreshToken();
       }
