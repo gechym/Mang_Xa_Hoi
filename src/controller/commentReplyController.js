@@ -7,6 +7,7 @@ import RepLyComment from '../module/RepComments';
 import Like from '../module/Like';
 import UserInfo from '../module/UserInfo';
 import APIFeature from '../util/APIfeature';
+import Reaction from '../module/React';
 
 export const getCommentReply = catchAsync(async (req, res, next) => {
   const { queryWhere, querySort, queryLimit, queryPage, offset } = APIFeature(req.query);
@@ -44,6 +45,10 @@ export const getCommentReply = catchAsync(async (req, res, next) => {
             as: 'userLike',
             attributes: ['id_user', 'name', 'avatar', 'createdAt', 'updatedAt'],
           },
+          {
+            model: Reaction,
+            as: 'reactionLike',
+          },
         ],
       },
     ],
@@ -65,10 +70,12 @@ export const getCommentReply = catchAsync(async (req, res, next) => {
       },
       likeReplyComment: reply.repLyCommentLike.map((likeReplyComment) => {
         return {
+          // add comment
           likeReplyCommentId: likeReplyComment.id,
           userLikeReplyCommentId: likeReplyComment.userLike.id,
           nameUserLikeReplyComment: likeReplyComment.userLike.name,
           avatarUserLikeReplyComment: likeReplyComment.userLike.avatar,
+          action: likeReplyComment.reactionLike.name,
         };
       }),
       createdAt: reply.createdAt,

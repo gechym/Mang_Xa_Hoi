@@ -6,6 +6,7 @@ import Post from '../module/Post';
 import Comment from '../module/Comment';
 import RepLyComment from '../module/RepComments';
 import Like from '../module/Like';
+import Reaction from '../module/React';
 
 const connectDatabase = async () => {
   try {
@@ -44,6 +45,9 @@ const connectDatabase = async () => {
 
     UserInfo.hasMany(Like, { as: 'userLike', foreignKey: 'user_id' });
     Like.belongsTo(UserInfo, { as: 'userLike', foreignKey: 'user_id' });
+
+    Reaction.hasMany(Like, { as: 'reactionLike', foreignKey: 'reaction_id' });
+    Like.belongsTo(Reaction, { as: 'reactionLike', foreignKey: 'reaction_id' });
 
     // await sequelize
     //   .sync({ force: true })

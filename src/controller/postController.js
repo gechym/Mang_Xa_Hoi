@@ -7,6 +7,7 @@ import RepLyComment from '../module/RepComments';
 import Like from '../module/Like';
 import UserInfo from '../module/UserInfo';
 import APIFeature from '../util/APIfeature';
+import Reaction from '../module/React';
 
 const checkLike = async (idUer, idChek, fieldName) => {
   // post_id, comment_id, reply_comment_id:
@@ -52,6 +53,10 @@ export const getPost = catchAsync(async (req, res, next) => {
                 as: 'userLike',
                 attributes: ['id_user', 'name', 'avatar', 'createdAt', 'updatedAt'],
               },
+              {
+                model: Reaction,
+                as: 'reactionLike',
+              },
             ],
           },
           {
@@ -59,6 +64,7 @@ export const getPost = catchAsync(async (req, res, next) => {
             as: 'comments',
             attributes: ['id_user', 'name', 'avatar', 'createdAt', 'updatedAt'],
           },
+
           {
             model: RepLyComment,
             as: 'replyComments',
@@ -77,6 +83,10 @@ export const getPost = catchAsync(async (req, res, next) => {
                     as: 'userLike',
                     attributes: ['id_user', 'name', 'avatar', 'createdAt', 'updatedAt'],
                   },
+                  {
+                    model: Reaction,
+                    as: 'reactionLike',
+                  },
                 ],
               },
             ],
@@ -91,6 +101,10 @@ export const getPost = catchAsync(async (req, res, next) => {
             model: UserInfo,
             as: 'userLike',
             attributes: ['id_user', 'name', 'avatar', 'createdAt', 'updatedAt'],
+          },
+          {
+            model: Reaction,
+            as: 'reactionLike',
           },
         ],
       },
@@ -117,10 +131,12 @@ export const getPost = catchAsync(async (req, res, next) => {
           updatedAt: comment.updatedAt,
           likeComments: comment.likedComments.map((likeComment) => {
             return {
+              // add thêm react
               likeCommentId: likeComment.id,
               userLikeCommentId: likeComment.userLike.id,
               nameUserLikeComment: likeComment.userLike.name,
               avatarUserLikeComment: likeComment.userLike.avatar,
+              action: likeComment.reactionLike.name,
             };
           }),
           replyComments: comment.replyComments.map((reply) => {
@@ -136,6 +152,7 @@ export const getPost = catchAsync(async (req, res, next) => {
                   userLikeReplyCommentId: likeReplyComment.userLike.id,
                   nameUserLikeReplyComment: likeReplyComment.userLike.name,
                   avatarUserLikeReplyComment: likeReplyComment.userLike.avatar,
+                  action: likeReplyComment.reactionLike.name,
                 };
               }),
               createdAt: reply.createdAt,
@@ -150,6 +167,7 @@ export const getPost = catchAsync(async (req, res, next) => {
           userLikeId: like.user_id,
           nameUserLike: like.userLike.name,
           avatarUserLike: like.userLike.avatar,
+          action: like.reactionLike.name,
         };
       }),
       createdAt: post.createdAt,
@@ -163,6 +181,7 @@ export const getPost = catchAsync(async (req, res, next) => {
     result: result.length,
     currentUser: req.user,
     page: queryPage,
+    totalPage: Math.ceil((await Post.count()) / queryLimit),
     data: {
       posts: result,
     },

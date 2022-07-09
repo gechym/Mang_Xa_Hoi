@@ -6,6 +6,7 @@ import RepLyComment from '../module/RepComments';
 import Like from '../module/Like';
 import UserInfo from '../module/UserInfo';
 import APIFeature from '../util/APIfeature';
+import Reaction from '../module/React';
 
 export const getComment = catchAsync(async (req, res, next) => {
   const { queryWhere, querySort, queryLimit, queryPage, offset } = APIFeature(req.query);
@@ -30,6 +31,10 @@ export const getComment = catchAsync(async (req, res, next) => {
             model: UserInfo,
             as: 'userLike',
             attributes: ['id_user', 'name', 'avatar', 'createdAt', 'updatedAt'],
+          },
+          {
+            model: Reaction,
+            as: 'reactionLike',
           },
         ],
       },
@@ -56,6 +61,10 @@ export const getComment = catchAsync(async (req, res, next) => {
                 as: 'userLike',
                 attributes: ['id_user', 'name', 'avatar', 'createdAt', 'updatedAt'],
               },
+              {
+                model: Reaction,
+                as: 'reactionLike',
+              },
             ],
           },
         ],
@@ -74,10 +83,12 @@ export const getComment = catchAsync(async (req, res, next) => {
       updatedAt: comment.updatedAt,
       likeComments: comment.likedComments.map((likeComment) => {
         return {
+          // add react
           likeCommentId: likeComment.id,
           userLikeCommentId: likeComment.userLike.id,
           nameUserLikeComment: likeComment.userLike.name,
           avatarUserLikeComment: likeComment.userLike.avatar,
+          action: likeComment.reactionLike.name,
         };
       }),
       replyComments: comment.replyComments.map((reply) => {
@@ -93,6 +104,7 @@ export const getComment = catchAsync(async (req, res, next) => {
               userLikeReplyCommentId: likeReplyComment.userLike.id,
               nameUserLikeReplyComment: likeReplyComment.userLike.name,
               avatarUserLikeReplyComment: likeReplyComment.userLike.avatar,
+              action: likeReplyComment.reactionLike.name,
             };
           }),
           createdAt: reply.createdAt,
