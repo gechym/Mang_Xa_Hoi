@@ -21,6 +21,7 @@ function DefaultLayout({ children }) {
     grid min-h-screen gap-2 p-2"
     >
       {/* Header */}
+
       <Header />
 
       <RightLayout>Thanh chức năng</RightLayout>

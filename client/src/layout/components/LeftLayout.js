@@ -14,7 +14,7 @@ const LeftLayout = ({ children }) => {
       tablet:col-end-4
       tablet:block
       mobile:hidden
-      
+      ring
       "
     >
       {children}

@@ -11,7 +11,7 @@ const RightLayout = ({ children }) => {
       mobile:hidden
       tablet:hidden
       laptop:block 
-      
+      ring
       "
     >
       {children}
