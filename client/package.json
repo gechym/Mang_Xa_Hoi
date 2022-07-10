@@ -13,10 +13,9 @@
     "@testing-library/user-event": "^13.5.0",
     "@tippyjs/react": "^4.2.6",
     "axios": "^0.27.2",
-    "classnames": "^2.3.1",
     "clsx": "^1.1.1",
     "framer-motion": "^6.4.3",
-    "normalize.css": "^8.0.1",
+    "moment": "^2.29.4",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-files-uploading": "^1.0.2",
@@ -34,7 +33,6 @@
     "redux-thunk": "^2.4.1",
     "reselect": "^4.1.6",
     "sass": "^1.51.0",
-    "use-local-storage": "^2.3.6",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {

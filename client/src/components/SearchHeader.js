@@ -120,7 +120,7 @@ const SearchHeader = ({ className }) => {
     <HeadleesTippy visible={showResult} interactive render={renderUser} onClickOutside={handleHideResult}>
       <div className={`relative w-max h-max'' shadow-lg rounded-full ${className ? className : ''}`}>
         <input
-          placeholder="Search every 😘😘"
+          placeholder="Tìm cài này ... 🖐️🖐️🖐️"
           value={searchValue}
           onFocus={handleShowResult}
           onChange={(e) => {

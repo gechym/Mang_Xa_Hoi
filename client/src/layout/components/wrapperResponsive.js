@@ -11,7 +11,6 @@ export const WrapperResponsive = ({ children }) => {
                 laptop:min-w-[470px] 
                 tablet:min-w-[470px] 
                 laptop:tablet:max-w-[680px] 
-                min-h-[200px]
                 mobile:w-full
                 rounded-lg
                 shadow-lg

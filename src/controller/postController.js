@@ -198,6 +198,7 @@ export const createPost = catchAsync(async (req, res, next) => {
   const post = await Post.create({
     user_id: req.user.id,
     content: content,
+    images: images,
   });
 
   return res.status(200).json({ message: 'success', post });

@@ -252,7 +252,7 @@ function Menu({ children, items = menuItemDefault, onChange = () => {} }) {
   };
 
   return (
-    <>
+    <div>
       <TippyHeadless
         hideOnClick="toggle"
         placement="top-end"
@@ -264,7 +264,7 @@ function Menu({ children, items = menuItemDefault, onChange = () => {} }) {
       >
         {children}
       </TippyHeadless>
-    </>
+    </div>
   );
 }
 
