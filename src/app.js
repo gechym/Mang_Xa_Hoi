@@ -1,4 +1,5 @@
 require('dotenv').config({ path: './config.env' });
+import path from 'path';
 import express from 'express';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
@@ -87,27 +88,27 @@ app.use(morgan('dev'));
 app.use(xss()); // chặng người dùng chằn những mã html vs <script/> ...
 
 //1 set security header
-app.use(helmet());
-app.use(
-  // fix error csp //!https://stackoverflow.com/questions/67601708/axios-cdn-link-refused-to-load
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'", 'data:', 'blob:'],
+// app.use(helmet());
+// app.use(
+//   // fix error csp //!https://stackoverflow.com/questions/67601708/axios-cdn-link-refused-to-load
+//   helmet.contentSecurityPolicy({
+//     directives: {
+//       defaultSrc: ["'self'", 'data:', 'blob:'],
 
-      fontSrc: ["'self'", 'https:', 'data:'],
+//       fontSrc: ["'self'", 'https:', 'data:'],
 
-      scriptSrc: ["'self'", 'unsafe-inline'],
+//       scriptSrc: ["'self'", 'unsafe-inline'],
 
-      scriptSrc: ["'self'", 'https://*.cloudflare.com'],
+//       scriptSrc: ["'self'", 'https://*.cloudflare.com'],
 
-      scriptSrcElem: ["'self'", 'https:', 'https://*.cloudflare.com'],
+//       scriptSrcElem: ["'self'", 'https:', 'https://*.cloudflare.com'],
 
-      styleSrc: ["'self'", 'https:', 'unsafe-inline'],
+//       styleSrc: ["'self'", 'https:', 'unsafe-inline'],
 
-      connectSrc: ["'self'", 'data', 'https://*.cloudflare.com'],
-    },
-  }),
-);
+//       connectSrc: ["'self'", 'data', 'https://*.cloudflare.com'],
+//     },
+//   }),
+// );
 
 //2 limiter request something ip
 const limiter = rateLimit({
@@ -129,7 +130,10 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/posts', postRouter);
 app.use('/api/v1/comments', commentRouter);
 app.use('/api/v1/replyComments', replyCommentRouter);
-
+app.use(express.static(path.join(__dirname, '../client/build'))); // khai các file¿
+app.use('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
 app.use('*', (req, res, next) => {
   return next(new AppError('404', 404));
 });
