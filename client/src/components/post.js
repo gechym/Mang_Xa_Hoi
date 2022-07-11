@@ -3,7 +3,6 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import { FaRegCommentAlt } from 'react-icons/fa';
 import { RiShareForwardLine } from 'react-icons/ri';
 import { AiOutlineLike } from 'react-icons/ai';
-import FbImageLibrary from '@joelfernando06/react-fb-image-grid';
 import { FcSms } from 'react-icons/fc';
 
 import Button from '~/components/Button';
@@ -44,21 +43,122 @@ const Post = ({ post }) => {
           </p>
         </div>
       </div>
-      <p className="text-sm text-inherit py-2 px-3">
+      <p className="text-sm text-inherit py-3 px-3">
         <span className="bg-primary p-[2px] rounded-lg">#{post.postId}</span>
         {post.contentPost}
       </p>
-
-      {post.imagesPost && (
-        <FbImageLibrary
-          className="cursor-pointer"
-          hideOverlay
-          renderOverlay={() => <button>Show Image</button>}
-          overlayBackgroundColor="rgba(0,0,0,0.5)"
-          images={post.imagesPost ? post.imagesPost : []}
+      <div className="grid grid-cols-2 grid-rows-1 gap-1">
+        <Image
+          className="!block !w-full !h-full rounded-sm"
+          src={
+            'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
+          }
         />
-      )}
+        <Image
+          className="!block !w-full !h-full rounded-sm "
+          src={
+            'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
+          }
+        />
+      </div>
+      {/*//3 ảnh
+      <div className="grid grid-cols-2 grid-rows-[300px_1fr] gap-1">
+        <div className="col-start-1 col-end-3 ">
+          <Image
+            className="!block !w-full !h-full rounded-sm"
+            src={
+              'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
+            }
+          />
+        </div>
+        <Image
+          className="!block !w-full !h-full rounded-sm"
+          src={
+            'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
+          }
+        />
+        <Image
+          className="!block !w-full !h-full rounded-sm"
+          src={
+            'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
+          }
+        />
+      </div>
+      // 4 ảnh
+      <div className="grid grid-cols-2 grid-rows-2 gap-1">
+        <Image
+          className="!block !w-full !h-full rounded-sm"
+          src={
+            'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
+          }
+        />
+        <Image
+          className="!block !w-full !h-full rounded-sm "
+          src={
+            'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
+          }
+        />
+        <Image
+          className="!block !w-full !h-full rounded-sm"
+          src={
+            'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
+          }
+        />
+        <Image
+          className="!block !w-full !h-full rounded-sm "
+          src={
+            'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
+          }
+        />
+      </div>
+      // 5 ảnh trở lên
+      <div className="grid grid-cols-[1.2fr_1fr] grid-rows-[1fr_minmax(150px,150px)] gap-1">
+        <Image
+          className="!block !w-full !h-full rounded-sm"
+          src={
+            'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
+          }
+        />
+        <Image
+          className="!block !w-full !h-full rounded-sm "
+          src={
+            'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
+          }
+        />
+        <div className="col-start-1 col-end-3 grid grid-cols-3 grid-rows-[150px] gap-1 overflow-hidden">
+          <Image
+            className="!block !w-full !h-full rounded-sm"
+            src={
+              'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
+            }
+          />
+          <Image
+            className="!block !w-full !h-full rounded-sm"
+            src={
+              'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
+            }
+          />
+          <Image
+            className="!block !w-full !h-full rounded-sm"
+            src={
+              'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
+            }
+          />
 
+          <Image
+            className="!block !w-full !h-full rounded-sm"
+            src={
+              'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
+            }
+          />
+          <Image
+            className="!block !w-full !h-full rounded-sm"
+            src={
+              'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
+            }
+          />
+        </div>
+      </div> */}
       <div className="flex justify-between py-3 mx-3  border-b-2 border-[#ced0d4] dark:border-[#3e4042]">
         <div className="flex items-center">
           <LikeIcon />

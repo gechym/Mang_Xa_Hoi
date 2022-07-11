@@ -37,16 +37,20 @@ const Modal = ({ isOpen, setIsOpen, children, className, titel = 'titel' }) => {
                 <div className="flex min-h-full items-center justify-center">
                   <Dialog.Panel
                     className={`
-                        transform overflow-hidden rounded-2xl
+                        transform overflow-hidden rounded-md
                         ${getClassBgTheme()}
                         p-4 text-left align-middle transition-all
-                        shadow-lg dark:shadow-grey-50/10 
-                        ring-2 ring-opacity-90 ${getClassRingTheme()}`}
+                        shadow-lg
+                        ring-1 ring-opacity-90 ${getClassRingTheme()}`}
                   >
                     <Dialog.Title as="h3" className="text-lg text-center font-medium leading-6 text-gray-900">
                       {titel}
                     </Dialog.Title>
-                    <div className={`mt-2 max-h-[200px] w-80 overflow-x-auto ${className ? className : ''}`}>
+                    <div
+                      className={`mt-2 min-h-[200px] min-w-[200px] max-h-[80vh] max-w-[90vw] overflow-x-auto ${
+                        className ? className : ''
+                      }`}
+                    >
                       {children}
                     </div>
                   </Dialog.Panel>

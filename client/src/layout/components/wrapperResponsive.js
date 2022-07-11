@@ -6,11 +6,11 @@ export const WrapperResponsive = ({ children }) => {
       className="
                 bg-lightSecondary  dark:bg-darkSecondary
                 mx-auto 
-                laptop:w-[77%]
+                laptop:w-[75%]
                 tablet:w-[70%] 
                 laptop:min-w-[470px] 
                 tablet:min-w-[470px] 
-                laptop:tablet:max-w-[680px] 
+                laptop:tablet:max-w-[650px] 
                 mobile:w-full
                 rounded-lg
                 shadow-lg

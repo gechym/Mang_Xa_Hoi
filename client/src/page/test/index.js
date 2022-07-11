@@ -11,6 +11,7 @@ import { toggleTheme } from '~/redux/thunk/themeThunk';
 import { pushToast } from '~/components/Notifications';
 import Modal from '~/components/Modal';
 import useUploadFile from '~/components/UploadFile';
+import './test.css';
 
 function TestComponent() {
   const dispatch = useDispatch();
@@ -71,13 +72,12 @@ function TestComponent() {
       >
         loading
       </Button>
+
       <Button type="button" onClick={openModal}>
         Open dialog
       </Button>
 
-      <Modal isOpen={isOpen} setIsOpen={setIsOpen} titel="Hello Modal">
-        <h1>Hello</h1>
-      </Modal>
+      <Modal isOpen={isOpen} setIsOpen={setIsOpen} titel="Hello Modal"></Modal>
       {renderUiUpload()}
     </div>
   );
