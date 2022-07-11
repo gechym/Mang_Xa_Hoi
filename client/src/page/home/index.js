@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useInfiniteQuery } from 'react-query';
 
@@ -17,7 +17,7 @@ function Home() {
   const theme = useSelector(themeSelecter);
   const { user } = useSelector(userSelecter);
   const { inView, ref } = useInview();
-
+  const renderRef = useRef(0);
   // Quyrey for infinite scroll
   const key = user.id;
   const {
@@ -26,7 +26,6 @@ function Home() {
     fetchNextPage,
     hasNextPage,
     isFetching,
-    // isPreviousData,
     isFetchingNextPage,
   } = useInfiniteQuery({
     queryKey: key,
@@ -62,23 +61,30 @@ function Home() {
     },
     [theme],
   );
-
+  // isFetching : true nêu bất cứ khi nào fetch dữ liệu kể cả khi dữ liệu trước đó đc cache lại
+  // isPreviousData : dữ liệu trước đó có được cache lại lại hay không
   return (
     <div className="relative">
+      {renderRef.current++}
       {error && <div>{error.message}</div>}
-      {/* 
-      isFetching : true nêu bất cứ khi nào fetch dữ liệu kể cả khi dữ liệu trước đó đc cache lại
-      isPreviousData : dữ liệu trước đó có được cache lại lại hay không  
-      */}
+
       {isFetching && (
         <div className="text-center fixed z-20 top-16 left-0 right-0">
-          {<Button icon={<AiOutlineLoading className="w-8 h-8 text-primary animate-spin" />} />}
+          {
+            <Button
+              icon={
+                <AiOutlineLoading className="w-8 h-8 text-primary animate-spin" />
+              }
+            />
+          }
         </div>
       )}
+
       {data &&
         data.pages.map((dataPage) => {
           return renderPost(dataPage.data.posts);
         })}
+
       {isFetching && (
         <>
           <WrapperResponsive>
@@ -89,6 +95,7 @@ function Home() {
           </WrapperResponsive>
         </>
       )}
+
       <div className="text-center">
         <Button className={`${!hasNextPage ? 'hidden' : ''} `} ref={ref} />
       </div>

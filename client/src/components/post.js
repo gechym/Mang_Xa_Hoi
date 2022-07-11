@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useRef } from 'react';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { FaRegCommentAlt } from 'react-icons/fa';
 import { RiShareForwardLine } from 'react-icons/ri';
@@ -19,11 +19,24 @@ import {
 
 import moment from 'moment';
 import localization from 'moment/locale/vi';
+import GalleryGirdImage from './GallerImag/GalleryGirdImage';
 moment.updateLocale('vi', localization);
 
 const Post = ({ post }) => {
+  const renderRef = useRef(0);
+
+  //mySQL
+  const converType = (data) => {
+    if (typeof data === 'string') {
+      return JSON.parse(data);
+    }
+
+    return data;
+  };
+
   return (
     <>
+      {renderRef.current++}
       <div className="pt-3 px-3 flex items-center gap-2">
         <Image
           className="w-[38px] h-[38px] rounded-full cursor-pointer ring-2 ring-primary"
@@ -47,118 +60,13 @@ const Post = ({ post }) => {
         <span className="bg-primary p-[2px] rounded-lg">#{post.postId}</span>
         {post.contentPost}
       </p>
-      <div className="grid grid-cols-2 grid-rows-1 gap-1">
-        <Image
-          className="!block !w-full !h-full rounded-sm"
-          src={
-            'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
-          }
-        />
-        <Image
-          className="!block !w-full !h-full rounded-sm "
-          src={
-            'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
-          }
-        />
-      </div>
-      {/*//3 ảnh
-      <div className="grid grid-cols-2 grid-rows-[300px_1fr] gap-1">
-        <div className="col-start-1 col-end-3 ">
-          <Image
-            className="!block !w-full !h-full rounded-sm"
-            src={
-              'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
-            }
-          />
-        </div>
-        <Image
-          className="!block !w-full !h-full rounded-sm"
-          src={
-            'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
-          }
-        />
-        <Image
-          className="!block !w-full !h-full rounded-sm"
-          src={
-            'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
-          }
-        />
-      </div>
-      // 4 ảnh
-      <div className="grid grid-cols-2 grid-rows-2 gap-1">
-        <Image
-          className="!block !w-full !h-full rounded-sm"
-          src={
-            'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
-          }
-        />
-        <Image
-          className="!block !w-full !h-full rounded-sm "
-          src={
-            'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
-          }
-        />
-        <Image
-          className="!block !w-full !h-full rounded-sm"
-          src={
-            'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
-          }
-        />
-        <Image
-          className="!block !w-full !h-full rounded-sm "
-          src={
-            'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
-          }
-        />
-      </div>
-      // 5 ảnh trở lên
-      <div className="grid grid-cols-[1.2fr_1fr] grid-rows-[1fr_minmax(150px,150px)] gap-1">
-        <Image
-          className="!block !w-full !h-full rounded-sm"
-          src={
-            'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
-          }
-        />
-        <Image
-          className="!block !w-full !h-full rounded-sm "
-          src={
-            'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
-          }
-        />
-        <div className="col-start-1 col-end-3 grid grid-cols-3 grid-rows-[150px] gap-1 overflow-hidden">
-          <Image
-            className="!block !w-full !h-full rounded-sm"
-            src={
-              'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
-            }
-          />
-          <Image
-            className="!block !w-full !h-full rounded-sm"
-            src={
-              'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
-            }
-          />
-          <Image
-            className="!block !w-full !h-full rounded-sm"
-            src={
-              'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
-            }
-          />
 
-          <Image
-            className="!block !w-full !h-full rounded-sm"
-            src={
-              'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
-            }
-          />
-          <Image
-            className="!block !w-full !h-full rounded-sm"
-            src={
-              'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/292069686_2617551351711184_6772733467504329972_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=v4t4aVeOGiEAX_8w3Gh&tn=KTPC1_mtkk8H_1Zz&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-UN70DNJ_cYvy3JLeWBx0ybxW7Upb3ntnsoXbxmWcIOw&oe=62CEE63D'
-            }
-          />
-        </div>
-      </div> */}
+      <GalleryGirdImage
+        images={converType(post.imagesPost).map((item) => item.url)}
+        title={post.userPost}
+        caption={post.contentPost}
+      />
+
       <div className="flex justify-between py-3 mx-3  border-b-2 border-[#ced0d4] dark:border-[#3e4042]">
         <div className="flex items-center">
           <LikeIcon />
@@ -201,4 +109,4 @@ const Post = ({ post }) => {
   );
 };
 
-export default Post;
+export default memo(Post);
