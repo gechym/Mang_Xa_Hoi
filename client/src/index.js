@@ -1,13 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import GlobalStyle from '~/Components/GloabaStyle';
+import { Provider } from 'react-redux';
+import { ThemeProvider } from '@material-tailwind/react';
+import { QueryClientProvider, QueryClient } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+
+import store from './redux/store';
+
+import './index.css';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <GlobalStyle>
-      <App />
-    </GlobalStyle>
-  </React.StrictMode>,
+  <ThemeProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <App />
+        <ReactQueryDevtools position="bottom-right" />
+      </QueryClientProvider>
+    </Provider>
+  </ThemeProvider>,
 );

@@ -23,6 +23,19 @@ const createToken = (newUser) => {
   );
 };
 
+const createRefreshToken = (newUser) => {
+  return jwt.sign(
+    {
+      id: newUser.id,
+      email: newUser.email,
+    },
+    process.env.JWT_SECRET_KEY,
+    {
+      expiresIn: process.env.REFRESH_TOKEN_JWT_HET_HAN,
+    },
+  );
+};
+
 export const signUp = catchAsync(async (req, res, next) => {
   const { email, password, passwordConfig, name, avatar, imageCover, introduce, address, phone } = req.body;
   if (!email || !password || !passwordConfig || !name) {
@@ -51,6 +64,7 @@ export const signUp = catchAsync(async (req, res, next) => {
   });
 
   const token = createToken(user);
+  const refreshToken = createRefreshToken(user);
 
   res.cookie('jwt', token, {
     expires: new Date(Date.now() + process.env.COOKIE_HET_HAN * 24 * 60 * 60 * 1000),
@@ -60,6 +74,7 @@ export const signUp = catchAsync(async (req, res, next) => {
   res.status(200).json({
     message: 'success',
     token: token,
+    refreshToken: refreshToken,
     userInfo,
     user,
   });
@@ -72,6 +87,13 @@ export const login = catchAsync(async (req, res, next) => {
 
   const user = await User.findOne({
     where: { email: email },
+    include: [
+      {
+        model: UserInfo,
+        as: 'userInfor',
+        attributes: ['name', 'avatar', 'image_cover', 'introduce', 'address', 'phone'],
+      },
+    ],
   });
 
   if (!user) return next(new AppError('Email không tồn tại, vui lòng thử lại', 404));
@@ -81,12 +103,27 @@ export const login = catchAsync(async (req, res, next) => {
   if (!checkPassword) return next(new AppError('mật khẩu không đúng'), 404);
 
   const token = createToken(user);
+  const refreshToken = createRefreshToken(user);
 
   res.cookie('jwt', token, {
     expires: new Date(Date.now() + process.env.COOKIE_HET_HAN * 24 * 60 * 60 * 1000),
     secure: true,
     httpOnly: true,
   });
+
+  // const date1 = new Date(Date.now()).getTime(); // --> Timestamp
+  // const date2 = new Date().toISOString(); //--> ISOString chưa cộng 0700
+  // new Date(decode.iat * 1000).toLocaleString();
+
+  // console.log(date1, date2, Date.now(), new Date(), new Date(date2));
+
+  // res.cookie('jwt', token, {
+  //   // gửi cookie cho clied để mỗi lần req sau clied sẽ tự động gửi về server
+  //   expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+  //   // cookie này tồn tại 90n
+  //   // secure:true,
+  //   httpOnly: true,
+  // });
 
   res.status(200).json({
     message: 'success',
@@ -95,7 +132,9 @@ export const login = catchAsync(async (req, res, next) => {
       email: user.email,
       rule: user.rule,
     },
+    userInfo: user.userInfor,
     token: token,
+    refreshToken: refreshToken,
   });
 });
 
@@ -107,8 +146,7 @@ export const checkRules =
     next();
   };
 
-export const protect = catchAsync(async (req, res, next) => {
-  // lấy token
+export const refreshToken = catchAsync(async (req, res, next) => {
   const { authorization } = req.headers;
   let token;
 
@@ -118,7 +156,21 @@ export const protect = catchAsync(async (req, res, next) => {
   if (!token) return next(new AppError('Bạn chưa đăng nhập', 404));
 
   // verify token
-  let decode = await promisify(jwt.verify)(token, process.env.JWT_SECRET_KEY);
+
+  let decode = {};
+
+  try {
+    decode = await promisify(jwt.verify)(token, process.env.JWT_SECRET_KEY);
+  } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      return res.status(400).json({
+        message: 'Token hết hạn vui lòng đăng nhập lại',
+      });
+    }
+
+    return next(new AppError(error, 404));
+  }
+
   decode = {
     ...decode,
     decode_iat: new Date(decode.iat * 1000).toLocaleString(),
@@ -131,7 +183,91 @@ export const protect = catchAsync(async (req, res, next) => {
     attributes: {
       exclude: [
         'password',
-        'passwordChangeAt',
+        'passwordResetToken',
+        'passwordResetExpires',
+        'createdAt',
+        'updatedAt',
+        'deletedAt',
+      ],
+    },
+    where: {
+      id: decode.id,
+      email: decode.email,
+    },
+    include: [
+      {
+        model: UserInfo,
+        as: 'userInfor',
+        attributes: ['name', 'avatar', 'image_cover', 'introduce', 'address', 'phone'],
+      },
+    ],
+  });
+  if (!currentUser) {
+    return next(new AppError('Lỗi xác thực danh tính ,Vui lòng đăng nhập lại', 404));
+  }
+
+  // // check đổi pass khi token còn hạn => bắt user login lại
+  //FIXME: Nhớ lấy passwordChangeAt để check
+
+  if (decode.iat * 1000 < currentUser?.passwordChangeAt?.getTime())
+    return next(
+      new AppError(
+        `Bạn đã đổi password ngày ${currentUser.passwordChangeAt.toLocaleString()} , vui lòng đăng nhập lại`,
+        404,
+      ),
+    );
+
+  // create new token and refresh token
+  const tokenNew = createToken(currentUser);
+  const refreshTokenNew = createRefreshToken(currentUser);
+
+  return res.status(200).json({
+    message: 'success',
+    token: tokenNew,
+    refreshToken: refreshTokenNew,
+    user: currentUser,
+    userInfo: currentUser.userInfor,
+  });
+});
+
+export const protect = catchAsync(async (req, res, next) => {
+  // lấy token
+  const { authorization } = req.headers;
+  let token;
+
+  if (authorization && authorization.startsWith('Bearer')) {
+    token = authorization.split(' ')[1];
+  }
+  if (!token) return next(new AppError('Bạn chưa đăng nhập', 404));
+
+  // verify token
+
+  let decode = {};
+
+  try {
+    decode = await promisify(jwt.verify)(token, process.env.JWT_SECRET_KEY);
+  } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      return res.status(200).json({
+        message: 'Token hết hạn vui lòng đăng nhập lại',
+      });
+    }
+
+    return next(new AppError(error, 404));
+  }
+
+  decode = {
+    ...decode,
+    decode_iat: new Date(decode.iat * 1000).toLocaleString(),
+    decode_exp: new Date(decode.exp * 1000).toLocaleString(),
+  };
+  console.log(decode);
+
+  // check user
+  const currentUser = await User.findOne({
+    attributes: {
+      exclude: [
+        'password',
         'passwordResetToken',
         'passwordResetExpires',
         'createdAt',
@@ -149,6 +285,7 @@ export const protect = catchAsync(async (req, res, next) => {
   }
 
   // // check đổi pass khi token còn hạn => bắt user login lại
+  //FIXME: Nhớ lấy passwordChangeAt để check
 
   if (decode.iat * 1000 < currentUser?.passwordChangeAt?.getTime())
     return next(
@@ -163,7 +300,7 @@ export const protect = catchAsync(async (req, res, next) => {
 });
 
 export const forgotPassword = catchAsync(async (req, res, next) => {
-  await User.sync({ alted: true });
+  // await User.sync({ alted: true });
   const { email } = req.body;
 
   if (!email) return next(new AppError('Vui lòng nhập email', 404));
@@ -221,13 +358,13 @@ export const resetPassword = catchAsync(async (req, res, next) => {
 
   const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
 
-  if (!password || !passwordConfig) return next(new AppError('Vui lòng cung cấp đầy đủ thông tin'));
+  if (!password || !passwordConfig) return next(new AppError('Vui lòng cung cấp đầy đủ thông tin', 404));
 
   const user = await User.findOne({
     where: {
       passwordResetToken: hashedToken,
       passwordResetExpires: {
-        [Op.gt]: Date.now(),
+        [Op.gt]: new Date(),
       },
     },
   });
@@ -238,7 +375,7 @@ export const resetPassword = catchAsync(async (req, res, next) => {
     return next(new AppError('mật khẩu xác thực khác nhau', 404));
   }
 
-  const passwordChangeAt = Date.now() + 10000;
+  const passwordChangeAt = new Date(Date.now() + 10000);
 
   await User.update(
     {
@@ -255,6 +392,7 @@ export const resetPassword = catchAsync(async (req, res, next) => {
   );
 
   const token = createToken(user);
+  const refreshToken = createRefreshToken(user);
 
   res.cookie('jwt', token, {
     expires: new Date(Date.now() + process.env.COOKIE_HET_HAN * 24 * 60 * 60 * 1000),
@@ -265,6 +403,7 @@ export const resetPassword = catchAsync(async (req, res, next) => {
   res.status(200).json({
     message: 'success',
     token: token,
+    refreshToken: refreshToken,
     user: {
       id: user.id,
       email: user.email,
@@ -300,7 +439,7 @@ export const changePassword = catchAsync(async (req, res, next) => {
   await User.update(
     {
       password: password,
-      passwordChangeAt: Date.now() + 10000,
+      passwordChangeAt: new Date(Date.now() + 10000),
     },
     {
       where: {
@@ -310,6 +449,7 @@ export const changePassword = catchAsync(async (req, res, next) => {
   );
 
   const token = createToken(user);
+  const refreshToken = createRefreshToken(user);
 
   res.cookie('jwt', token, {
     expires: new Date(Date.now() + process.env.COOKIE_HET_HAN * 24 * 60 * 60 * 1000),
@@ -325,5 +465,6 @@ export const changePassword = catchAsync(async (req, res, next) => {
       rule: user.rule,
     },
     token,
+    refreshToken,
   });
 });

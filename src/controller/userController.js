@@ -1,9 +1,9 @@
+import { Op } from 'sequelize';
 import User from '../module/User';
 import UserInfo from '../module/UserInfo';
 import catchAsync from '../util/catchAsync';
 import AppError from '../util/AppError';
 import UserRelationship from '../module/UserRelationship';
-import { Op } from 'sequelize';
 import APIFeature from '../util/APIfeature';
 
 const handleAddFriend = async (idUser, idFriend, next) => {
@@ -221,7 +221,7 @@ export const acceptAddFriend = catchAsync(async (req, res, next) => {
     );
 
   if (!checkFriendSendRequestAddFriend)
-    return next(new AppError(`Người bạn này chưa gửi lời mời kết bạn đến bạn`));
+    return next(new AppError(`Người bạn này chưa gửi lời mời kết bạn đến bạn`, 404));
 
   await handleAddFriend(req.user.id, friendId, next);
 
@@ -376,9 +376,10 @@ export const getUsers = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     message: 'success',
+    currentUser: req.user,
     totalUser: await UserInfo.count(),
     result: userInfor.length,
-    currentUser: req.user,
+    page: queryPage,
     data: {
       users: userInfor,
     },
@@ -389,7 +390,7 @@ export const getUsers = catchAsync(async (req, res, next) => {
   });
 });
 
-export const getFriend = catchAsync(async (req, res, next) => {
+export const getStatusFriend = catchAsync(async (req, res, next) => {
   const { friendId } = req.params;
 
   if (Number(friendId) === req.user.id) return next(new AppError('Id không được trùng', 400));
@@ -429,5 +430,24 @@ export const getFriend = catchAsync(async (req, res, next) => {
   res.status(200).json({
     message: message,
     status,
+  });
+});
+
+export const getListFriend = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  if (!Number(id)) return next(new AppError('id không phù hợp', 400));
+
+  await checkCurrentUserAndFriend(req.user.id, id, next);
+
+  const user = await UserInfo.findOne({
+    where: { id_user: Number(id) },
+  });
+
+  return res.status(200).json({
+    message: 'success',
+    data: {
+      user: user,
+      listFriend: user.listFriend ? user.listFriend : [],
+    },
   });
 });

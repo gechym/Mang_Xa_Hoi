@@ -11,7 +11,12 @@ import cors from 'cors';
 import { createServer } from 'http';
 
 import handleError from './controller/HandleError';
-import { userRouter } from './routes';
+import {
+  userRouter,
+  postRouter,
+  commentRouter,
+  replyCommentRouter,
+} from './routes';
 import AppError from './util/AppError';
 
 const app = express();
@@ -20,11 +25,31 @@ const app = express();
 
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', `${process.env.HOST_CLIENT}`);
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, OPTIONS, PUT, PATCH, DELETE',
+  );
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-Requested-With,content-type',
+  );
   res.setHeader('Access-Control-Allow-Credentials', true);
   next();
 });
+
+// app.use(function (req, res, next) {
+//   res.setHeader('Access-Control-Allow-Origin', `http://192.168.1.5:3000`);
+//   res.setHeader(
+//     'Access-Control-Allow-Methods',
+//     'GET, POST, OPTIONS, PUT, PATCH, DELETE',
+//   );
+//   res.setHeader(
+//     'Access-Control-Allow-Headers',
+//     'X-Requested-With,content-type',
+//   );
+//   res.setHeader('Access-Control-Allow-Credentials', true);
+//   next();
+// });
 
 app.use(cors());
 app.options('*', cors());
@@ -42,7 +67,14 @@ app.use(express.static(`${__dirname}/public`)); // khai các file
 // Bảo mật app
 app.use(
   hpp({
-    whitelist: ['duration', 'ratingsQuantity', 'ratingsAverage', 'maxGroupSize', 'difficulty', 'price'],
+    whitelist: [
+      'duration',
+      'ratingsQuantity',
+      'ratingsAverage',
+      'maxGroupSize',
+      'difficulty',
+      'price',
+    ],
     // ngoại lệ
   }),
 ); // chặn 2 lần query parama giống nhau vd :  /api/v1/users?sort=price&sort=duration
@@ -80,7 +112,7 @@ app.use(
 //2 limiter request something ip
 const limiter = rateLimit({
   // midleware giới hạn các lần gửi req quá nhiều từ một ip nào đó
-  max: 100,
+  max: 10000000,
   windowMs: 60 * 60 * 1000, // 60 minutes,
   message: 'Too many requests from this ip , please try again in a hour!',
 });
@@ -94,6 +126,9 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/posts', postRouter);
+app.use('/api/v1/comments', commentRouter);
+app.use('/api/v1/replyComments', replyCommentRouter);
 
 app.use('*', (req, res, next) => {
   return next(new AppError('404', 404));

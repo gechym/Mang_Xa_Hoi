@@ -1,16 +1,27 @@
-import { Fragment, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Fragment, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { refresh } from '~/redux/thunk/userThunk';
 
 import { publicRouters } from '~/routers';
-import { DefaultLayout } from '~/layouts/';
+import DefaultLayout from '~/layout/defaultLayout';
+
+import './app.css';
+import Toaster from '~/components/Toaster';
+import ProtectedRouter from './util/ProtectedRouter';
 
 function App() {
-  const [mode, setMode] = useState('Light');
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(refresh({ refreshToken: true }));
+  }, [dispatch]);
 
   return (
-    <div className="App" id={mode}>
+    <div>
       <Router>
         <Routes>
+          <Route index element={<Navigate to="/home" />} />
           {publicRouters.map((route, index) => {
             const Page = route.component;
 
@@ -22,13 +33,27 @@ function App() {
               Layout = Fragment;
             }
 
-            return (
+            return route.requireLogin ? (
+              <Route
+                key={index}
+                path={route.path}
+                element={
+                  <ProtectedRouter>
+                    <Layout>
+                      <Page />
+                      <Toaster />
+                    </Layout>
+                  </ProtectedRouter>
+                }
+              />
+            ) : (
               <Route
                 key={index}
                 path={route.path}
                 element={
                   <Layout>
                     <Page />
+                    <Toaster />
                   </Layout>
                 }
               />
@@ -36,7 +61,6 @@ function App() {
           })}
         </Routes>
       </Router>
-      <button onClick={() => setMode((prev) => (prev === 'Light' ? 'Dark' : 'Light'))}>Toggle</button>
     </div>
   );
 }
