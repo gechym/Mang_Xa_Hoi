@@ -1,18 +1,48 @@
-import Home from '~/page/Home';
-import Profile from '~/page/Profile';
 import config from '~/config';
-import Watch from '~/page/watch';
-import Group from '~/page/Group';
-import Marketplace from '~/page/Marketplace';
-import { OnlyHeaderLayput } from '~/layouts';
+import DefaultLayout from '~/layout/defaultLayout';
+import Home from '~/page/home';
+import Login from '~/page/login';
+import NotFound from '~/page/notFound/NotFound';
+import Register from '~/page/register';
+import TestComponent from '~/page/test';
 
 const publicRouters = [
-  { path: config.router.home, component: Home },
-  { path: config.router.profire, component: Profile, layout: OnlyHeaderLayput },
-  { path: config.router.watch, component: Watch, layout: OnlyHeaderLayput },
-  { path: config.router.groups, component: Group, layout: OnlyHeaderLayput },
-  { path: config.router.marketplace, component: Marketplace, layout: OnlyHeaderLayput },
+  {
+    path: config.router.index,
+    requireLogin: true,
+    component: Home,
+    layout: DefaultLayout,
+  },
+  {
+    path: config.router.home,
+    requireLogin: true,
+    component: Home,
+    layout: DefaultLayout,
+  },
+  {
+    path: config.router.login,
+    component: Login,
+    layout: null,
+  },
+  {
+    path: config.router.register,
+    component: Register,
+    layout: null,
+  },
+  {
+    path: config.router.test,
+    requireLogin: true,
+    component: TestComponent,
+    layout: DefaultLayout,
+  },
+  {
+    path: '*',
+    component: NotFound,
+    layout: null,
+  },
 ];
+
+// nếu không có layout thì để null
 
 const privateRouters = [];
 

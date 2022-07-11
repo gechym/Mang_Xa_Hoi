@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+
+@layer base {
+  body {
+    @apply font-inter box-border;
+  }
+
+  .h4 {
+    @apply text-2xl block;
+  }
+
+  .h3 {
+    @apply text-3xl block;
+  }
+
+  .h1 {
+    @apply text-5xl font-bold;
+  }
+
+  .dark {
+    @apply bg-dark;
+  }
+
+  body {
+    .tippy-box {
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1.6rem;
+      line-height: 2.2rem;
+      background-color: rgba(84, 84, 84, 0.92);
+      color: white;
+    }
+
+    .tippy-arrow {
+      color: rgba(84, 84, 84, 0.92);
+    }
+
+    .tippy-box[data-placement^='bottom'] > .tippy-arrow:before {
+      top: -8px;
+    }
+
+    .tippy-content {
+      padding: 8px 9px;
+    }
+  }
+
+  html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 4px;
+  }
+
+  html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 4px;
+  }
+
+  html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.15);
+  }
+
+  html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.15);
+  }
+
+  html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+  }
+}
+
+@layer components {
+  .btn {
+    @apply border-2 px-4 py-2 rounded  cursor-pointer text-base border-none inline-flex justify-center items-center mx-2;
+  }
+}
+
+.container-my {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 200px));
+  grid-auto-rows: minmax(300px, 300px);
+  grid-gap: 10px;
+}
+
+.myBorder {
+  border-bottom: 3px solid;
+}
