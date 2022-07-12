@@ -3,7 +3,7 @@ import { refreshToken } from './userService';
 const { default: axios } = require('axios');
 
 const httpsResquest = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: 'https://fakebook-gechym.herokuapp.com/',
   timeout: 6 * 1000,
   headers: {
     'Content-Type': 'application/json',
@@ -40,15 +40,15 @@ httpsResquest.removeRefreshTokenLocalStorage = () => {
 };
 
 // xu ly data truoc khi gui len server
-httpsResquest.interceptors.request.use(
-  (res) => {
-    console.log('↗️ Request:::: ', res);
-    return res;
-  },
-  (error) => {
-    return Promise.reject(error);
-  },
-);
+// httpsResquest.interceptors.request.use(
+//   (res) => {
+//     console.log('↗️ Request:::: ', res);
+//     return res;
+//   },
+//   (error) => {
+//     return Promise.reject(error);
+//   },
+// );
 
 // xu ly data sau khi nhan du lieu tu server
 httpsResquest.interceptors.response.use(
@@ -75,7 +75,11 @@ httpsResquest.interceptors.response.use(
     return res;
   },
   (error) => {
-    console.error('↘️ Response error:::: ', error.message, error.response?.data.message);
+    console.error(
+      '↘️ Response error:::: ',
+      error.message,
+      error.response?.data.message,
+    );
     // httpsResquest.removeTokenLocalStorage();
     return Promise.reject(error);
   },
