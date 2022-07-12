@@ -424,7 +424,7 @@ export const getStatusFriend = catchAsync(async (req, res, next) => {
 
   if (checkCurrentUserSendRequestAddFriend) {
     status = 3;
-    message = `[pending] bạn đã gửi lời mời đến ${checkCurrentUserSendRequestAddFriend.userReciver?.name} `;
+    message = `[pending]  bạn đã gửi lời mời đến ${checkCurrentUserSendRequestAddFriend.userReciver?.name} `;
   }
 
   res.status(200).json({
