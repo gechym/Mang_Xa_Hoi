@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Image from '~/components/Image';
+import Image from '~/components/ImageLazy';
 import GalleryImage from './GalleryImage';
 import imagesFallBack from '~/assets/images';
 
@@ -199,15 +199,15 @@ const GalleryGirdImage = ({ images, ...passProp }) => {
             onClick={() => handleOnclick(3)}
             src={images[3]}
           />
-          <div className="relative">
+          <div className="relative h-full w-full">
             <p
               onClick={() => handleOnclick(4)}
-              className="z-10 absolute top-0 left-0 right-0 bottom-0 text-5xl font-medium text-white/70 cursor-pointer flex items-center justify-center bg-black/30"
+              className="z-[2] absolute top-0 left-0 right-0 bottom-0 text-5xl font-medium text-white/70 cursor-pointer flex items-center justify-center bg-black/30"
             >
               {images.length - 4}+
             </p>
             <Image
-              className="!block cursor-pointer  !w-full !h-full rounded-sm"
+              className="!block cursor-pointer !w-full !h-full rounded-sm"
               fallBack={imagesFallBack.imageError}
               src={images[4]}
             />

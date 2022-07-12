@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Lightbox from 'react-image-lightbox';
 import './lib.css';
 const images = [
-  'https://picsum.photos/id/1018/1000/600/',
+  `https://picsum.photos/id/1018/1000/600/`,
   'https://picsum.photos/id/1015/1000/600/',
   'https://picsum.photos/id/1019/1000/600/',
   'https://picsum.photos/id/1020/1000/600/',
@@ -11,7 +11,14 @@ const images = [
   'https://picsum.photos/id/1023/1000/600/',
 ];
 
-const GalleryImage = ({ iamges = images, isOpen, setIsOpen, index = 0, title = '', caption = '' }) => {
+const GalleryImage = ({
+  iamges = images,
+  isOpen,
+  setIsOpen,
+  index = 0,
+  title = '',
+  caption = '',
+}) => {
   const [photoIndex, setPhotoIndex] = useState(index);
 
   useEffect(() => {
@@ -28,8 +35,12 @@ const GalleryImage = ({ iamges = images, isOpen, setIsOpen, index = 0, title = '
           nextSrc={iamges[(photoIndex + 1) % images.length]}
           prevSrc={iamges[(photoIndex + images.length - 1) % images.length]}
           onCloseRequest={() => setIsOpen(false)}
-          onMovePrevRequest={() => setPhotoIndex((photoIndex + images.length - 1) % images.length)}
-          onMoveNextRequest={() => setPhotoIndex((photoIndex + 1) % images.length)}
+          onMovePrevRequest={() =>
+            setPhotoIndex((photoIndex + images.length - 1) % images.length)
+          }
+          onMoveNextRequest={() =>
+            setPhotoIndex((photoIndex + 1) % images.length)
+          }
         />
       )}
     </>
