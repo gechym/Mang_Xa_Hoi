@@ -152,12 +152,66 @@ const GalleryGirdImage = ({ images, ...passProp }) => {
             onClick={() => handleOnclick(3)}
             src={images[3]}
           />
+
           <Image
-            className="!block cursor-pointer !w-full !h-full rounded-sm"
+            className="!block cursor-pointer  !w-full !h-full rounded-sm"
             fallBack={imagesFallBack.imageError}
             onClick={() => handleOnclick(4)}
             src={images[4]}
           />
+        </div>
+        <GalleryImage
+          iamges={images}
+          index={photoIndex}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          {...passProp}
+        />
+      </div>
+    );
+  }
+
+  if (images?.length >= 6) {
+    return (
+      <div className="grid grid-cols-[1.2fr_1fr] grid-rows-[minmax(300px,1fr)_minmax(150px,150px)] gap-1">
+        <Image
+          className="!block cursor-pointer !w-full !h-full rounded-sm"
+          fallBack={imagesFallBack.imageError}
+          onClick={() => handleOnclick(0)}
+          src={images[0]}
+        />
+        <Image
+          className="!block cursor-pointer !w-full !h-full rounded-sm "
+          fallBack={imagesFallBack.imageError}
+          onClick={() => handleOnclick(1)}
+          src={images[1]}
+        />
+        <div className="col-start-1 col-end-3 grid grid-cols-3 grid-rows-[150px] gap-1 overflow-hidden">
+          <Image
+            className="!block cursor-pointer !w-full !h-full rounded-sm"
+            fallBack={imagesFallBack.imageError}
+            onClick={() => handleOnclick(2)}
+            src={images[2]}
+          />
+          <Image
+            className="!block cursor-pointer !w-full !h-full rounded-sm"
+            fallBack={imagesFallBack.imageError}
+            onClick={() => handleOnclick(3)}
+            src={images[3]}
+          />
+          <div className="relative">
+            <p
+              onClick={() => handleOnclick(4)}
+              className="z-10 absolute top-0 left-0 right-0 bottom-0 text-5xl font-medium text-white/70 cursor-pointer flex items-center justify-center bg-black/30"
+            >
+              {images.length - 4}+
+            </p>
+            <Image
+              className="!block cursor-pointer  !w-full !h-full rounded-sm"
+              fallBack={imagesFallBack.imageError}
+              src={images[4]}
+            />
+          </div>
         </div>
         <GalleryImage
           iamges={images}

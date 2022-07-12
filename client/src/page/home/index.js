@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useInfiniteQuery } from 'react-query';
 
@@ -17,7 +17,7 @@ function Home() {
   const theme = useSelector(themeSelecter);
   const { user } = useSelector(userSelecter);
   const { inView, ref } = useInview();
-  const renderRef = useRef(0);
+
   // Quyrey for infinite scroll
   const key = user.id;
   const {
@@ -65,7 +65,6 @@ function Home() {
   // isPreviousData : dữ liệu trước đó có được cache lại lại hay không
   return (
     <div className="relative">
-      {renderRef.current++}
       {error && <div>{error.message}</div>}
 
       {isFetching && (

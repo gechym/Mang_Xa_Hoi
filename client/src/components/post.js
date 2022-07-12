@@ -1,4 +1,4 @@
-import React, { memo, useRef } from 'react';
+import React, { memo } from 'react';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { FaRegCommentAlt } from 'react-icons/fa';
 import { RiShareForwardLine } from 'react-icons/ri';
@@ -23,8 +23,6 @@ import GalleryGirdImage from './GallerImag/GalleryGirdImage';
 moment.updateLocale('vi', localization);
 
 const Post = ({ post }) => {
-  const renderRef = useRef(0);
-
   //mySQL
   const converType = (data) => {
     if (typeof data === 'string') {
@@ -36,7 +34,6 @@ const Post = ({ post }) => {
 
   return (
     <>
-      {renderRef.current++}
       <div className="pt-3 px-3 flex items-center gap-2">
         <Image
           className="w-[38px] h-[38px] rounded-full cursor-pointer ring-2 ring-primary"
