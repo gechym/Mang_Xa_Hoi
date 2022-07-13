@@ -131,6 +131,7 @@ app.use('/api/v1/posts', postRouter);
 app.use('/api/v1/comments', commentRouter);
 app.use('/api/v1/replyComments', replyCommentRouter);
 app.use(express.static(path.join(__dirname, '../client/build'))); // khai các file¿
+
 app.use('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });

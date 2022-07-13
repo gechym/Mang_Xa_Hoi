@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 import { refreshToken } from './userService';
 
 const { default: axios } = require('axios');
@@ -76,6 +77,15 @@ httpsResquest.interceptors.response.use(
   },
   (error) => {
     console.error('↘️ Response error:::: ', error.message, error.response?.data.message);
+
+    if (error.response?.data.message.includes('Bạn đã đổi password ngày')) {
+      // toast(error.response.data.message, {
+      //   icon: '🐧',
+      //   duration: 10000,
+      // });
+      httpsResquest.removeTokenLocalStorage();
+    }
+
     // httpsResquest.removeTokenLocalStorage();
     return Promise.reject(error);
   },

@@ -181,14 +181,7 @@ export const refreshToken = catchAsync(async (req, res, next) => {
   // check user
   const currentUser = await User.findOne({
     attributes: {
-      exclude: [
-        'password',
-        'passwordResetToken',
-        'passwordResetExpires',
-        'createdAt',
-        'updatedAt',
-        'deletedAt',
-      ],
+      exclude: ['password', 'passwordResetToken', 'passwordResetExpires', 'createdAt', 'updatedAt', 'deletedAt'],
     },
     where: {
       id: decode.id,
@@ -212,7 +205,11 @@ export const refreshToken = catchAsync(async (req, res, next) => {
   if (decode.iat * 1000 < currentUser?.passwordChangeAt?.getTime())
     return next(
       new AppError(
-        `Bạn đã đổi password ngày ${currentUser.passwordChangeAt.toLocaleString()} , vui lòng đăng nhập lại`,
+        `Bạn đã đổi password ngày ${new Date(currentUser.passwordChangeAt).toLocaleString('vn-vi', {
+          hour12: false,
+          timeStyle: 'medium',
+          dateStyle: 'short',
+        })} , vui lòng đăng nhập lại`,
         404,
       ),
     );
@@ -266,14 +263,7 @@ export const protect = catchAsync(async (req, res, next) => {
   // check user
   const currentUser = await User.findOne({
     attributes: {
-      exclude: [
-        'password',
-        'passwordResetToken',
-        'passwordResetExpires',
-        'createdAt',
-        'updatedAt',
-        'deletedAt',
-      ],
+      exclude: ['password', 'passwordResetToken', 'passwordResetExpires', 'createdAt', 'updatedAt', 'deletedAt'],
     },
     where: {
       id: decode.id,
@@ -290,7 +280,11 @@ export const protect = catchAsync(async (req, res, next) => {
   if (decode.iat * 1000 < currentUser?.passwordChangeAt?.getTime())
     return next(
       new AppError(
-        `Bạn đã đổi password ngày ${currentUser.passwordChangeAt.toLocaleString()} , vui lòng đăng nhập lại`,
+        `Bạn đã đổi password ngày ${new Date(currentUser.passwordChangeAt).toLocaleString('vn-vi', {
+          hour12: false,
+          timeStyle: 'short',
+          dateStyle: 'short',
+        })} , vui lòng đăng nhập lại`,
         404,
       ),
     );

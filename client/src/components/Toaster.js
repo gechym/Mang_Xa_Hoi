@@ -12,7 +12,7 @@ const MyToaster = () => {
       position="bottom-left"
       toastOptions={{
         className: getClassWithTheme(),
-        duration: 3000,
+        duration: 5000,
       }}
     >
       {(t) => (

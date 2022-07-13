@@ -77,8 +77,8 @@ function TestComponent() {
         Open dialog
       </Button>
 
-      <Modal isOpen={isOpen} setIsOpen={setIsOpen} titel=""></Modal>
       {renderUiUpload()}
+      <Modal isOpen={isOpen} setIsOpen={setIsOpen} titel=""></Modal>
 
       <GalleryImage isOpen={isOpen} setIsOpen={setIsOpen} title="Nguyễn Đức Bảo" caption="hình ảnh đẹp " />
     </div>

@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useInfiniteQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 
 import { AiOutlineLoading } from 'react-icons/ai';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -12,22 +13,18 @@ import SkeletonPost from '~/components/SkeletonPost';
 import { getDataInfinityQuery } from '~/api/postService';
 import Button from '~/components/Button';
 import useInview from '~/hooks/useInView';
+import CreatePost from '~/layout/components/CreatePost';
 
 function Home() {
   const theme = useSelector(themeSelecter);
-  const { user } = useSelector(userSelecter);
+  const { user, userInfo, error: errorUserReducer } = useSelector(userSelecter);
   const { inView, ref } = useInview();
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
 
-  // Quyrey for infinite scroll
+  // Query for infinite scroll
   const key = user.id;
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
-  } = useInfiniteQuery({
+  const { data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } = useInfiniteQuery({
     queryKey: key,
     queryFn: getDataInfinityQuery,
     getNextPageParam: (lastPage, pages) => {
@@ -43,11 +40,22 @@ function Home() {
 
   useEffect(() => {
     // infonity scroll
-    if (inView && !isFetchingNextPage && hasNextPage) {
+    if (inView && !isFetchingNextPage && hasNextPage && !errorUserReducer && !error?.message) {
       console.log('fetchNextPage');
       fetchNextPage();
     }
-  }, [inView, isFetchingNextPage, fetchNextPage]);
+  }, [inView, isFetchingNextPage, fetchNextPage, errorUserReducer, error?.message]);
+
+  // useEffect(() => {
+  //   if (error?.message.includes('Bạn đã đổi password ngày')) {
+  //     navigate('/login');
+  //     dispatch(logoutUser());
+  //     toast(error?.message, {
+  //       icon: '🚧',
+  //     });
+  //     error.message = '';
+  //   }
+  // }, [error?.message]);
 
   const renderPost = useCallback(
     (posts) => {
@@ -66,16 +74,14 @@ function Home() {
   return (
     <div className="relative">
       {error && <div>{error.message}</div>}
+      {errorUserReducer}
+      <WrapperResponsive>
+        <CreatePost />
+      </WrapperResponsive>
 
       {isFetching && (
         <div className="text-center fixed z-20 top-16 left-0 right-0">
-          {
-            <Button
-              icon={
-                <AiOutlineLoading className="w-8 h-8 text-primary animate-spin" />
-              }
-            />
-          }
+          {<Button icon={<AiOutlineLoading className="w-8 h-8 text-primary animate-spin" />} />}
         </div>
       )}
 

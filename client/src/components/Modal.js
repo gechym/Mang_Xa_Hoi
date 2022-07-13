@@ -43,7 +43,7 @@ const Modal = ({ isOpen, setIsOpen, children, className, titel = 'titel' }) => {
                         shadow-lg
                         ring-1 ring-opacity-90 ${getClassRingTheme()}`}
                   >
-                    <Dialog.Title as="h3" className="text-lg text-center font-medium leading-6 text-gray-900">
+                    <Dialog.Title as="h3" className=" text-lg text-center font-medium leading-6 text-gray-900">
                       {titel}
                     </Dialog.Title>
                     <div

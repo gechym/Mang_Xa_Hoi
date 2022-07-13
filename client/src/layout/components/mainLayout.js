@@ -9,8 +9,8 @@ const MainLayout = ({ children }) => {
         tablet:col-start-1 tablet:col-end-3 
         tablet:row-start-2 tablet:row-end-4
         mobile:mt-16
-        laptop:mt-4
-        tablet:mt-4
+        laptop:mt-2
+        tablet:mt-2
         "
     >
       {children}

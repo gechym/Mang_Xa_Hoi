@@ -16,7 +16,7 @@ const itemDefault = [
   },
 ];
 
-function Dropdown({ children, items = itemDefault, className, title = 'menu' }) {
+function Dropdown({ children, items = itemDefault, className, classNameItem, title = 'menu' }) {
   const handleRenderItem = () => {
     return items?.map((item, index) => {
       let Comp = 'button';
@@ -47,7 +47,7 @@ function Dropdown({ children, items = itemDefault, className, title = 'menu' }) 
                 active ? 'bg-lightBtn dark:bg-darkBtn' : ''
               }`}
             >
-              <Icon className=" h-6 w-6 mr-1 text-violet-200 hover:text-violet-100" aria-hidden="true" />
+              <Icon className=" h-5 w-5 mr-1 text-violet-200 hover:text-violet-100" aria-hidden="true" />
               {item.lable}
             </Comp>
           )}
@@ -72,10 +72,7 @@ function Dropdown({ children, items = itemDefault, className, title = 'menu' }) 
              "
             >
               {title}
-              <ChevronDownIcon
-                className=" h-5 w-5 ml-1 text-violet-200 hover:text-violet-100"
-                aria-hidden="true"
-              />
+              <ChevronDownIcon className=" h-5 w-5 ml-1 text-violet-200 hover:text-violet-100" aria-hidden="true" />
             </Menu.Button>
           )}
         </div>
@@ -89,12 +86,14 @@ function Dropdown({ children, items = itemDefault, className, title = 'menu' }) 
           leaveTo="transform opacity-0 scale-95"
         >
           <Menu.Items
-            className="
-              absolute flex flex-col right-0 mt-2 w-56 py-2 px-1
+            className={`
+            absolute flex flex-col right-0 mt-2 min-w-[160px] py-2 px-1 
               origin-top-right rounded-md bg-lightSecondary dark:bg-darkSecondary
               shadow-lg ring-1 ring-black
               ring-opacity-5
-              focus:outline-none"
+              focus:outline-none
+              ${classNameItem ? classNameItem : ''}
+            `}
           >
             {handleRenderItem()}
           </Menu.Items>

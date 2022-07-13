@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@editorjs/editorjs": "^2.25.0",
     "@headlessui/react": "^0.0.0-insiders.6253aa5",
     "@heroicons/react": "^1.0.6",
     "@joelfernando06/react-fb-image-grid": "^0.1.8",

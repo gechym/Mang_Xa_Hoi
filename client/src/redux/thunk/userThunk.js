@@ -41,15 +41,19 @@ export const refresh =
     try {
       let res = {};
 
-      await spleep(1000);
-
       if (refresh) {
         res = await refreshToken();
       }
 
       dispatch(fetch_login_success(res));
     } catch (err) {
-      dispatch(fetch_login_error(''));
+      if (err.message.includes('Bạn đã đổi password ngày')) {
+        console.log(err.message);
+        dispatch(fetch_login_error(err.message));
+        return;
+      }
+
+      dispatch(fetch_login_error());
     }
   };
 
