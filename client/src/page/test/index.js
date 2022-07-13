@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import toast from 'react-hot-toast';
@@ -12,10 +12,57 @@ import { pushToast } from '~/components/Notifications';
 import Modal from '~/components/Modal';
 import useUploadFile from '~/components/UploadFile';
 import GalleryImage from '~/components/GallerImag/GalleryImage';
+import EditorJS from '@editorjs/editorjs';
+import Header from '@editorjs/header';
+import List from '@editorjs/list';
+import Embed from '@editorjs/embed';
+import Image from '@editorjs/simple-image';
+import Raw from '@editorjs/raw';
+
+import WrapperResponsive from '~/layout/components/wrapperResponsive';
 
 function TestComponent() {
   const dispatch = useDispatch();
   const { filesReview, renderUiUpload } = useUploadFile();
+
+  useEffect(() => {
+    const editor = new EditorJS({
+      placeholder: 'Let`s write an awesome story!',
+      holder: 'editorjs',
+
+      onReady: () => {
+        console.log('Editor.js is ready to work!');
+      },
+      onChange: (api, event) => {
+        console.log("Now I know that Editor's content changed!", api, event);
+        api.saver
+          .save()
+          .then((outputData) => {
+            console.log('Article data: ', outputData);
+          })
+          .catch((error) => {
+            console.log('Saving failed: ', error);
+          });
+      },
+      tools: {
+        header: {
+          class: Header,
+          levels: [2, 3, 4],
+          defaultLevel: 3,
+        },
+        list: {
+          class: List,
+          inlineStyles: ['unordered', 'ordered'],
+        },
+        embed: {
+          class: Embed,
+          inlineToolbar: true,
+        },
+        raw: Raw,
+        image: { inlineToolbar: true, class: Image },
+      },
+    });
+  }, []);
 
   console.log(filesReview);
 
@@ -81,6 +128,13 @@ function TestComponent() {
       <Modal isOpen={isOpen} setIsOpen={setIsOpen} titel=""></Modal>
 
       <GalleryImage isOpen={isOpen} setIsOpen={setIsOpen} title="Nguyễn Đức Bảo" caption="hình ảnh đẹp " />
+
+      <WrapperResponsive>
+        <div
+          className="w-full selection:!bg-primary selection:!text-textPrimaryDark bg-light text-textPrimaryLight dark:bg-dark dark:text-textPrimaryDark"
+          id="editorjs"
+        ></div>
+      </WrapperResponsive>
     </div>
   );
 }
