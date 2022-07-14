@@ -7,15 +7,7 @@ import { FcSms } from 'react-icons/fc';
 
 import Button from '~/components/Button';
 import Image from '~/components/Image';
-import {
-  HahaIcon,
-  LikeIcon,
-  LoveIcon,
-  AngryIcon,
-  SadIcon,
-  WowIcon,
-  DearIcon,
-} from '~/layout/components/iconReact';
+import { HahaIcon, LikeIcon, LoveIcon, AngryIcon, SadIcon, WowIcon, DearIcon } from '~/layout/components/iconReact';
 
 import moment from 'moment';
 import localization from 'moment/locale/vi';
@@ -40,9 +32,7 @@ const Post = ({ post }) => {
           src={post.userAvatarPosst}
         />
         <div>
-          <h1 className="text-sm font-bold text-textPrimaryLight dark:text-textPrimaryDark ">
-            {post.userPost}
-          </h1>
+          <h1 className="text-sm font-bold text-textPrimaryLight dark:text-textPrimaryDark ">{post.userPost}</h1>
           <p className="text-xs font-normal text-textSecondaryLight dark:text-textSecondaryDark">
             {moment(post.createdAt).fromNow()} 🌏{' '}
             {new Date(post.createdAt).toLocaleString('vn-vi', {

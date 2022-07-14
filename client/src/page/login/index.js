@@ -53,9 +53,7 @@ function Login() {
                 <LogoHeader className={'rounded-full w-[200px] h-[200px]'} />
               </h2>
 
-              <p className="max-w-xl  text-4xl mt-3 font-bold text-white">
-                Unlimited Connections With FaceKe
-              </p>
+              <p className="max-w-xl  text-4xl mt-3 font-bold text-white">Unlimited Connections With FaceKe</p>
             </div>
           </div>
         </div>
@@ -119,10 +117,7 @@ function Login() {
               </div>
               <p className="mt-6 text-base text-center text-gray-400">
                 Don&#x27;t have an account yet?{' '}
-                <Link
-                  to="/register"
-                  className="text-primary focus:outline-none focus:underline hover:underline"
-                >
+                <Link to="/register" className="text-primary focus:outline-none focus:underline hover:underline">
                   Sign up
                 </Link>
                 .

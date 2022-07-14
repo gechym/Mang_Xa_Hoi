@@ -66,8 +66,7 @@ const SearchHeader = ({ className }) => {
   const handleHideResult = () => setShowResult(false);
   const handleShowResult = () => setShowResult(true);
 
-  const getClassTheme = () =>
-    'bg-lightSecondary text-textPrimaryLight dark:bg-darkSecondary dark:text-textPrimaryDark';
+  const getClassTheme = () => 'bg-lightSecondary text-textPrimaryLight dark:bg-darkSecondary dark:text-textPrimaryDark';
 
   const renderUser = () => {
     return (
@@ -75,7 +74,7 @@ const SearchHeader = ({ className }) => {
         {searchResult.length > 0 && (
           <>
             <Wrapper className={'p-2 relative'}>
-              <h4
+              <p
                 className={`text-sm
                 pt-2
                 px-2
@@ -83,7 +82,7 @@ const SearchHeader = ({ className }) => {
                 fixed z-10 top-0 left-0 right-0 ${getClassTheme()}`}
               >
                 Search current
-              </h4>
+              </p>
               <div className="mt-8">
                 {searchResult.map((user, index) => {
                   return (
