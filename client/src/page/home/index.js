@@ -8,8 +8,8 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 import WrapperResponsive from '~/layout/components/wrapperResponsive';
 import { themeSelecter, userSelecter } from '~/redux/selecter';
-import Post from '~/components/post';
-import SkeletonPost from '~/components/SkeletonPost';
+import Post from '~/layout/components/post';
+import SkeletonPost from '~/layout/components/SkeletonPost';
 import { getDataInfinityQuery } from '~/api/postService';
 import Button from '~/components/Button';
 import useInview from '~/hooks/useInView';

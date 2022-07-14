@@ -15,8 +15,8 @@ function ImageLazy({ src, alt, className, fallBack: customFallback = images.noIm
     <>
       <LazyLoadImage
         className={`inline-block relative object-cover object-center w-12 h-12 rounded-lg ${className}`}
-        placeholderSrc={customFallback}
-        effect={isError ? '' : 'opacity'}
+        // placeholderSrc={customFallback}
+        effect={'blur'}
         height={'100%'}
         alt={alt}
         src={src}

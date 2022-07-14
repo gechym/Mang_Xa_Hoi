@@ -4,13 +4,13 @@ import { SearchIcon } from '@heroicons/react/solid';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '~/redux/thunk/userThunk';
 
-import Button from './Button';
+import Button from '../../components/Button';
 import useDebounce from '~/hooks/useDebounce';
 import { searchUser } from '~/api/userService';
-import Wrapper from './Menu/wrapper';
+import Wrapper from '../../components/Menu/wrapper';
 import { AiOutlineLoading, AiOutlineCloseCircle } from 'react-icons/ai';
 import { Link, useNavigate } from 'react-router-dom';
-import Image from './Image';
+import Image from '../../components/Image';
 import toast from 'react-hot-toast';
 
 const SearchHeader = ({ className }) => {

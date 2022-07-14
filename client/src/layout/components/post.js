@@ -11,7 +11,7 @@ import { HahaIcon, LikeIcon, LoveIcon, AngryIcon, SadIcon, WowIcon, DearIcon } f
 
 import moment from 'moment';
 import localization from 'moment/locale/vi';
-import GalleryGirdImage from './GallerImag/GalleryGirdImage';
+import GalleryGirdImage from '~/components/GallerImag/GalleryGirdImage';
 moment.updateLocale('vi', localization);
 
 const Post = ({ post }) => {

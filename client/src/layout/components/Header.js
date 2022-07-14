@@ -12,7 +12,7 @@ import { FiLogOut } from 'react-icons/fi';
 import { BiUserPin } from 'react-icons/bi';
 import { SiSpeedtest } from 'react-icons/si';
 
-import SearchHeader from '~/components/SearchHeader';
+import SearchHeader from '~/layout/components/SearchHeader';
 import HeaderLayout from '~/layout/components/HeaderLayout';
 import HeaderButtons from '~/layout/components/HeaderButtons';
 import { MdOutlineSettings } from 'react-icons/md';
