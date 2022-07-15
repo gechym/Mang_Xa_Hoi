@@ -1,0 +1,121 @@
+.blockType {
+  box-sizing: border-box;
+  background: #333;
+  padding: 5px;
+  margin: 0;
+  border-radius: 18px;
+  cursor: pointer;
+  height: 36px;
+  width: 36px;
+  line-height: 36px;
+  text-align: center;
+}
+
+.blockType svg {
+  fill: #ddd;
+}
+
+.spacer {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  width: 74px;
+  height: 8px;
+}
+
+.popup {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  background: #333;
+  border-radius: 2px;
+  z-index: 3;
+  box-sizing: border-box;
+  width: 74px;
+}
+
+.popup {
+  z-index: 3;
+  padding: 2px;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: opacity 0.25s cubic-bezier(0.3, 1.2, 0.2, 1);
+  transition: opacity 0.25s cubic-bezier(0.3, 1.2, 0.2, 1);
+}
+
+.popup:hover,
+.popup:hover > div::before,
+.popup[data-show='true'] {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup:after,
+.popup:before {
+  bottom: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: ' ';
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.popup:after {
+  border-width: 4px;
+  margin-left: -4px;
+}
+.popup:before {
+  border-width: 6px;
+  margin-left: -6px;
+}
+
+.popupFrame {
+  box-sizing: border-box;
+  border-radius: 2px;
+  width: 74px;
+}
+
+.arrow,
+.arrow::before {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: inherit;
+}
+.arrow::before {
+  content: '';
+  border: 1px solid #ddd;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.arrow[data-popper-placement^='top'] {
+  bottom: 4px;
+}
+.arrow[data-popper-placement^='bottom'] {
+  top: 4px;
+}
+.arrow[data-popper-placement^='left'] {
+  right: 4px;
+}
+.arrow[data-popper-placement^='right'] {
+  left: 4px;
+}
+.arrow[data-popper-placement^='top']::before {
+  border-left: 0;
+  border-top: 0;
+}
+.arrow[data-popper-placement^='bottom']::before {
+  border-right: 0;
+  border-bottom: 0;
+}
+.arrow[data-popper-placement^='left']::before {
+  border-left: 0;
+  border-bottom: 0;
+}
+.arrow[data-popper-placement^='right']::before {
+  border-right: 0;
+  border-top: 0;
+}

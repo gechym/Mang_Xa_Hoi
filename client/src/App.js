@@ -18,50 +18,48 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div>
-      <Router>
-        <Routes>
-          <Route index element={<Navigate to="/home" />} />
-          {publicRouters.map((route, index) => {
-            const Page = route.component;
+    <Router>
+      <Routes>
+        <Route index element={<Navigate to="/home" />} />
+        {publicRouters.map((route, index) => {
+          const Page = route.component;
 
-            let Layout = DefaultLayout;
+          let Layout = DefaultLayout;
 
-            if (route.layout) {
-              Layout = route.layout;
-            } else if (route.layout === null) {
-              Layout = Fragment;
-            }
+          if (route.layout) {
+            Layout = route.layout;
+          } else if (route.layout === null) {
+            Layout = Fragment;
+          }
 
-            return route.requireLogin ? (
-              <Route
-                key={index}
-                path={route.path}
-                element={
-                  <ProtectedRouter>
-                    <Layout>
-                      <Page />
-                      <Toaster />
-                    </Layout>
-                  </ProtectedRouter>
-                }
-              />
-            ) : (
-              <Route
-                key={index}
-                path={route.path}
-                element={
+          return route.requireLogin ? (
+            <Route
+              key={index}
+              path={route.path}
+              element={
+                <ProtectedRouter>
                   <Layout>
                     <Page />
                     <Toaster />
                   </Layout>
-                }
-              />
-            );
-          })}
-        </Routes>
-      </Router>
-    </div>
+                </ProtectedRouter>
+              }
+            />
+          ) : (
+            <Route
+              key={index}
+              path={route.path}
+              element={
+                <Layout>
+                  <Page />
+                  <Toaster />
+                </Layout>
+              }
+            />
+          );
+        })}
+      </Routes>
+    </Router>
   );
 }
 

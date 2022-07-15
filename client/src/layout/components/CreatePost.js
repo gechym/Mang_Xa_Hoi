@@ -10,7 +10,8 @@ import Image from '~/components/Image';
 import Dropdown from '~/components/Dropdown';
 import { FaLock, FaUserFriends } from 'react-icons/fa';
 import { MdPublic } from 'react-icons/md';
-import EditorCustom from '~/components/CustomTextEdior/Editor';
+import Editor from '~/components/CustomTextEdior/Editor';
+import EditorCustomTest from '~/components/CustomTextEdior/Test';
 
 const CreatePost = () => {
   const { userInfo } = useSelector(userSelecter);
@@ -91,7 +92,6 @@ const CreatePost = () => {
             </Dropdown>
           </div>
         </div>
-        <EditorCustom />
         <Button className="w-full m-0 bg-transparent font-bold !bg-primary !text-white">Đăng</Button>
       </Modal>
     </div>

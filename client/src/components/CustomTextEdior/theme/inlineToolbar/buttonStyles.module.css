@@ -1,0 +1,37 @@
+.buttonWrapper {
+  display: inline-block;
+}
+
+.button {
+  background: #fbfbfb;
+  color: #888;
+  font-size: 18px;
+  border: 0;
+  padding-top: 5px;
+  vertical-align: bottom;
+  height: 34px;
+  width: 36px;
+}
+
+.button:hover {
+  background: #f3f3f3;
+  outline: 0; /* reset for :focus */
+}
+
+.button:active {
+  background: #f3f3f3;
+  outline: 0; /* reset for :focus */
+}
+
+.button svg {
+  fill: #888;
+}
+
+.active svg {
+  fill: #444;
+}
+
+.active {
+  background: #efefef;
+  color: #444;
+}

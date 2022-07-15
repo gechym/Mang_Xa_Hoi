@@ -1,0 +1,112 @@
+.b1x6qj4x {
+  display: inline-block;
+}
+.b1vm70k4 {
+  background: #fbfbfb;
+  color: #888;
+  font-size: 18px;
+  border: 0;
+  padding-top: 5px;
+  vertical-align: bottom;
+  height: 34px;
+  width: 36px;
+}
+.b1vm70k4:hover,
+.b1vm70k4:focus {
+  background: #f3f3f3;
+  outline: 0;
+}
+.b1vm70k4 svg {
+  fill: #888;
+}
+.ah6tpgz {
+  background: #efefef;
+  color: #444;
+}
+.ah6tpgz svg {
+  fill: #444;
+}
+.bloz0n9 {
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  background: #fff;
+  padding: 5px;
+  margin: 0;
+  border-radius: 18px;
+  cursor: pointer;
+  height: 36px;
+  width: 36px;
+  line-height: 36px;
+  text-align: center;
+}
+.bloz0n9 svg {
+  fill: #888;
+}
+.p98xzql {
+  border: 1px solid #ddd;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0px 1px 3px 0px rgba(220, 220, 220, 1);
+  box-sizing: border-box;
+  width: 74px;
+}
+.p1sbsapy {
+  z-index: 3;
+  padding: 8px;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: opacity 0.25s cubic-bezier(0.3, 1.2, 0.2, 1);
+  transition: opacity 0.25s cubic-bezier(0.3, 1.2, 0.2, 1);
+}
+.p1sbsapy:hover,
+.p1sbsapy:hover > div::before,
+.p1sbsapy[data-show='true'] {
+  visibility: visible;
+  opacity: 1;
+}
+.a1f9fdzj,
+.a1f9fdzj::before {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: inherit;
+}
+.a1f9fdzj::before {
+  content: '';
+  border: 1px solid #ddd;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.a1f9fdzj[data-popper-placement^='top'] {
+  bottom: 4px;
+}
+.a1f9fdzj[data-popper-placement^='bottom'] {
+  top: 4px;
+}
+.a1f9fdzj[data-popper-placement^='left'] {
+  right: 4px;
+}
+.a1f9fdzj[data-popper-placement^='right'] {
+  left: 4px;
+}
+.a1f9fdzj[data-popper-placement^='top']::before {
+  border-left: 0;
+  border-top: 0;
+}
+.a1f9fdzj[data-popper-placement^='bottom']::before {
+  border-right: 0;
+  border-bottom: 0;
+}
+.a1f9fdzj[data-popper-placement^='left']::before {
+  border-left: 0;
+  border-bottom: 0;
+}
+.a1f9fdzj[data-popper-placement^='right']::before {
+  border-right: 0;
+  border-top: 0;
+}
+.wev3spl {
+  position: absolute;
+  //left: -10% !important;
+}
