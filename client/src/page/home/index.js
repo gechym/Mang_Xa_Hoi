@@ -73,6 +73,7 @@ function Home() {
   // isPreviousData : dữ liệu trước đó có được cache lại lại hay không
   return (
     <div className="relative">
+      {console.log(process.env)}
       {error && <div>{error.message}</div>}
       {errorUserReducer}
       <WrapperResponsive>

@@ -2,7 +2,6 @@
 
 import app from './app';
 import connectDatabase from './Database/connectDB';
-
 connectDatabase();
 
 // let usersCurrentInServer = [];

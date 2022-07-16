@@ -1,9 +1,9 @@
 import Sequelize from 'sequelize';
 
-export const sequelize = new Sequelize(process.env.NAME_DATA_BASE, process.env.NAME, process.env.PASSWORD, {
-  host: process.env.HOST_DATABASE,
-  post: process.env.PORT_HOST_DATABASE,
-  dialect: 'mysql',
+export const sequelize = new Sequelize('social_network', 'root', '', {
+  host: '127.0.0.1',
+  post: '3306',
+  dialect: 'mariadb',
   timezone: '+07:00',
   difine: {
     freezeTableName: true,

@@ -3,7 +3,7 @@ import { refreshToken } from './userService';
 const { default: axios } = require('axios');
 
 const httpsResquest = axios.create({
-  baseURL: process.env.BASE_URl,
+  baseURL: 'http://localhost:8080/',
   timeout: 6 * 1000,
   headers: {
     'Content-Type': 'application/json',
