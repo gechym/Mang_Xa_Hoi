@@ -27,28 +27,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', `http://192.168.1.109:3000/`);
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  next();
-});
-
-// app.use(function (req, res, next) {
-//   res.setHeader('Access-Control-Allow-Origin', `http://192.168.1.5:3000`);
-//   res.setHeader(
-//     'Access-Control-Allow-Methods',
-//     'GET, POST, OPTIONS, PUT, PATCH, DELETE',
-//   );
-//   res.setHeader(
-//     'Access-Control-Allow-Headers',
-//     'X-Requested-With,content-type',
-//   );
-//   res.setHeader('Access-Control-Allow-Credentials', true);
-//   next();
-// });
-
 app.use(cors());
 app.options('*', cors());
 app.use(express.json({ limit: '10kb' }));
@@ -120,11 +98,14 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/posts', postRouter);
 app.use('/api/v1/comments', commentRouter);
 app.use('/api/v1/replyComments', replyCommentRouter);
-app.use(express.static(path.join(__dirname, '../client/build'))); // khai các file¿
 
-app.use('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'));
-});
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build'))); // khai các file¿
+  app.use('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+  });
+}
+
 app.use('*', (req, res, next) => {
   return next(new AppError('404', 404));
 });
