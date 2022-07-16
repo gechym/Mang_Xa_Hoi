@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize';
 
-export const sequelize = new Sequelize(process.env.NAME_DATA_BASE, process.env.NAME, process.env.PASSWORD, {
-  host: process.env.HOST_DATABASE,
+export const sequelize = new Sequelize('bfkkfiaesmqwcs8hivyb', 'uzeqrtiutcjrh1gz', 'FRSYEnvfWPWBHFimwelW', {
+  host: 'bfkkfiaesmqwcs8hivyb-mysql.services.clever-cloud.com',
   post: process.env.PORT_HOST_DATABASE,
   dialect: 'mysql',
   timezone: '+07:00',

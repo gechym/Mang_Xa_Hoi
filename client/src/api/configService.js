@@ -3,7 +3,7 @@ import { refreshToken } from './userService';
 const { default: axios } = require('axios');
 
 const httpsResquest = axios.create({
-  baseURL: process.env.BASE_URl,
+  baseURL: 'https://fakebook-gechym.herokuapp.com/',
   timeout: 6 * 1000,
   headers: {
     'Content-Type': 'application/json',
