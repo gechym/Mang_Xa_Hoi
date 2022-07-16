@@ -1,4 +1,3 @@
-import toast from 'react-hot-toast';
 import { refreshToken } from './userService';
 
 const { default: axios } = require('axios');

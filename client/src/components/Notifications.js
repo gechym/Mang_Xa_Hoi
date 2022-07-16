@@ -35,7 +35,7 @@ const ToastNotification = ({ t, content, image, to }) => {
         transition-all`}
     >
       <div className="flex items-center justify-between h-5 w-full ">
-        <h1 className="text-base font-[500]">Thông báo mới</h1>
+        <p className="text-base font-[500]">Thông báo mới</p>
         <Button
           onClick={() => toast.dismiss(t.id)}
           className={'w-[28px] h-[28px] p-0 m-0'}

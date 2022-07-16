@@ -5,7 +5,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 function ImageLazy({ src, alt, className, fallBack: customFallback = images.noImage, ...props }, ref) {
-  const [isError, setIsError] = useState(true);
+  const [, setIsError] = useState(true);
 
   const handleImageErr = () => {
     setIsError(true);

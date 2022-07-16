@@ -49,9 +49,9 @@ function Login() {
                   bg-gradient-to-r from-cyan-500 to-primary"
           >
             <div className="flex items-center gap-2">
-              <h2 className="text-4xl font-bold dark:text-textPrimaryDark text-textPrimaryLight">
+              <p className="text-4xl font-bold dark:text-textPrimaryDark text-textPrimaryLight">
                 <LogoHeader className={'rounded-full w-[200px] h-[200px]'} />
-              </h2>
+              </p>
 
               <p className="max-w-xl  text-4xl mt-3 font-bold text-white">Unlimited Connections With FaceKe</p>
             </div>

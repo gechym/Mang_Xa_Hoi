@@ -12,12 +12,7 @@ import cors from 'cors';
 import { createServer } from 'http';
 
 import handleError from './controller/HandleError';
-import {
-  userRouter,
-  postRouter,
-  commentRouter,
-  replyCommentRouter,
-} from './routes';
+import { userRouter, postRouter, commentRouter, replyCommentRouter } from './routes';
 import AppError from './util/AppError';
 
 const app = express();
@@ -26,14 +21,16 @@ const app = express();
 
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', `${process.env.HOST_CLIENT}`);
-  res.setHeader(
-    'Access-Control-Allow-Methods',
-    'GET, POST, OPTIONS, PUT, PATCH, DELETE',
-  );
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-Requested-With,content-type',
-  );
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
+
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', `http://192.168.1.109:3000/`);
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
   res.setHeader('Access-Control-Allow-Credentials', true);
   next();
 });
@@ -68,14 +65,7 @@ app.use(express.static(`${__dirname}/public`)); // khai các file
 // Bảo mật app
 app.use(
   hpp({
-    whitelist: [
-      'duration',
-      'ratingsQuantity',
-      'ratingsAverage',
-      'maxGroupSize',
-      'difficulty',
-      'price',
-    ],
+    whitelist: ['duration', 'ratingsQuantity', 'ratingsAverage', 'maxGroupSize', 'difficulty', 'price'],
     // ngoại lệ
   }),
 ); // chặn 2 lần query parama giống nhau vd :  /api/v1/users?sort=price&sort=duration

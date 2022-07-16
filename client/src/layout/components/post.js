@@ -32,7 +32,7 @@ const Post = ({ post }) => {
           src={post.userAvatarPosst}
         />
         <div>
-          <h1 className="text-sm font-bold text-textPrimaryLight dark:text-textPrimaryDark ">{post.userPost}</h1>
+          <p className="text-sm font-bold text-textPrimaryLight dark:text-textPrimaryDark ">{post.userPost}</p>
           <p className="text-xs font-normal text-textSecondaryLight dark:text-textSecondaryDark">
             {moment(post.createdAt).fromNow()} 🌏{' '}
             {new Date(post.createdAt).toLocaleString('vn-vi', {

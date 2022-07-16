@@ -10,8 +10,7 @@ import Image from '~/components/Image';
 import Dropdown from '~/components/Dropdown';
 import { FaLock, FaUserFriends } from 'react-icons/fa';
 import { MdPublic } from 'react-icons/md';
-import Editor from '~/components/CustomTextEdior/Editor';
-import EditorCustomTest from '~/components/CustomTextEdior/Test';
+import SimpleSideToolbarEditor from '~/components/CustomTextEdior/Editor';
 
 const CreatePost = () => {
   const { userInfo } = useSelector(userSelecter);
@@ -84,7 +83,7 @@ const CreatePost = () => {
         <div className="mt-2 flex gap-2 items-center">
           <Image className="bg-blue-grey-300 !w-10 !h-10 rounded-full" src={userInfo?.avatar} />
           <div>
-            <h1 className="text-sm font-semibold">{userInfo.name}</h1>
+            <p className="text-sm font-semibold">{userInfo.name}</p>
             <Dropdown items={itemDefault} classNameItem={'!left-0 z-10'}>
               <Button leftIcon={status.icon} className="py-[1px]  text-sm rounded-lg m-0">
                 {status.lable}
@@ -92,6 +91,7 @@ const CreatePost = () => {
             </Dropdown>
           </div>
         </div>
+        <SimpleSideToolbarEditor />
         <Button className="w-full m-0 bg-transparent font-bold !bg-primary !text-white">Đăng</Button>
       </Modal>
     </div>

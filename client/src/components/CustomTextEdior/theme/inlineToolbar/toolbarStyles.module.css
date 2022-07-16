@@ -1,3 +1,8 @@
+.dark .toolbar {
+  background: #333 !important;
+  color: #fff !important;
+}
+
 .toolbar {
   left: 50%;
   transform: translate(-50%) scale(0);
