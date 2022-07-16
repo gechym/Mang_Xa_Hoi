@@ -2,6 +2,7 @@ import '../../../node_modules/@draft-js-plugins/inline-toolbar/lib/plugin.css';
 import '../../../node_modules/@draft-js-plugins/side-toolbar/lib/plugin.css';
 import '../../../node_modules/@draft-js-plugins/emoji/lib/plugin.css';
 import '../../../node_modules/@draft-js-plugins/hashtag/lib/plugin.css';
+import '../../../node_modules/@draft-js-plugins/alignment/lib/plugin.css';
 
 import './style/emoje-plugin.css';
 
@@ -12,16 +13,26 @@ import blockTypeSelectStyles from './theme/side/blockTypeSelectStyles.module.css
 import buttonStyleInline from './theme/inlineToolbar/buttonStyles.module.css';
 import toolbarStyleInline from './theme/inlineToolbar/toolbarStyles.module.css';
 
+import editorStyles from './editorStyles.module.css';
+
 import hashtagPluginTheme from './theme/hashtagStyles.module.css';
 
 import React, { Component } from 'react';
-import Editor, { createEditorStateWithText } from '@draft-js-plugins/editor';
+import Editor, { createEditorStateWithText, composeDecorators } from '@draft-js-plugins/editor';
 
 import createSideToolbarPlugin from '@draft-js-plugins/side-toolbar';
 import createInlineToolbarPlugin, { Separator } from '@draft-js-plugins/inline-toolbar';
 import createEmojiPlugin from '@draft-js-plugins/emoji';
-import editorStyles from './editorStyles.module.css';
 import createHashtagPlugin from '@draft-js-plugins/hashtag';
+import createImagePlugin from '@draft-js-plugins/image';
+import createAlignmentPlugin from '@draft-js-plugins/alignment';
+import createFocusPlugin from '@draft-js-plugins/focus';
+import createResizeablePlugin from '@draft-js-plugins/resizeable';
+import createBlockDndPlugin from '@draft-js-plugins/drag-n-drop';
+
+import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
+import { convertToRaw, convertFromRaw, EditorState } from 'draft-js';
 
 import {
   ItalicButton,
@@ -54,20 +65,96 @@ const hashtagPlugin = createHashtagPlugin({
   theme: hashtagPluginTheme,
 });
 
-const plugins = [sideToolbarPlugin, inlineToolbarPlugin, emojiPlugin, hashtagPlugin];
+const focusPlugin = createFocusPlugin();
+const resizeablePlugin = createResizeablePlugin();
+const alignmentPlugin = createAlignmentPlugin();
+const blockDndPlugin = createBlockDndPlugin();
+const { AlignmentTool } = alignmentPlugin;
+
+const decorator = composeDecorators(
+  resizeablePlugin.decorator,
+  blockDndPlugin.decorator,
+  alignmentPlugin.decorator,
+  focusPlugin.decorator,
+);
+
+const imagePlugin = createImagePlugin({ decorator });
+
+const plugins = [
+  blockDndPlugin,
+  focusPlugin,
+  resizeablePlugin,
+  alignmentPlugin,
+  sideToolbarPlugin,
+  inlineToolbarPlugin,
+  emojiPlugin,
+  hashtagPlugin,
+  imagePlugin,
+];
+
+const initialState = {
+  entityMap: {
+    0: {
+      type: 'IMAGE',
+      mutability: 'IMMUTABLE',
+      data: {
+        src: 'https://picsum.photos/id/29/2000/1000/',
+      },
+    },
+  },
+  blocks: [
+    {
+      key: '9gm3s',
+      text: 'You can have images in your text field. This is a very rudimentary example, but you can enhance the image plugin with resizing, focus or alignment plugins.',
+      type: 'unstyled',
+      depth: 0,
+      inlineStyleRanges: [],
+      entityRanges: [],
+      data: {},
+    },
+    {
+      key: 'ov7r',
+      text: ' ',
+      type: 'atomic',
+      depth: 0,
+      inlineStyleRanges: [],
+      entityRanges: [
+        {
+          offset: 0,
+          length: 1,
+          key: 0,
+        },
+      ],
+      data: {},
+    },
+    {
+      key: 'e23a8',
+      text: 'See advanced examples further down …',
+      type: 'unstyled',
+      depth: 0,
+      inlineStyleRanges: [],
+      entityRanges: [],
+      data: {},
+    },
+  ],
+};
 
 export default class SimpleSideToolbarEditor extends Component {
   state = {
-    editorState: createEditorStateWithText(''),
+    editorState: EditorState.createWithContent(convertFromRaw(initialState)),
   };
 
   componentDidMount() {
     this.setState({
-      editorState: createEditorStateWithText(''),
+      editorState: EditorState.createWithContent(convertFromRaw(initialState)),
     });
   }
 
   onChange = (editorState) => {
+    // const html = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+    // const raw = convertToRaw(editorState.getCurrentContent());
+    // cb(html, raw);
+
     this.setState({
       editorState,
     });
@@ -80,7 +167,7 @@ export default class SimpleSideToolbarEditor extends Component {
   render() {
     return (
       <>
-        <div className={`w-[90%] h-800px max-h-[60vh] overflow-x-auto ${editorStyles.editor}`} onClick={this.focus}>
+        <div className={`w-full h-800px max-h-[60vh] overflow-x-auto ${editorStyles.editor}`} onClick={this.focus}>
           <Editor
             placeholder="Write your story here..."
             editorState={this.state.editorState}
@@ -89,8 +176,8 @@ export default class SimpleSideToolbarEditor extends Component {
             ref={(element) => {
               this.editor = element;
             }}
-          />
-
+          ></Editor>
+          <AlignmentTool />
           <EmojiSuggestions />
           <SideToolbar />
           <InlineToolbar>

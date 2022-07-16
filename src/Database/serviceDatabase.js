@@ -1,9 +1,9 @@
 import Sequelize from 'sequelize';
 
-export const sequelize = new Sequelize('social_network', 'root', '', {
+export const sequelize = new Sequelize(process.env.NAME_DATA_BASE, process.env.NAME, process.env.PASSWORD, {
   host: process.env.HOST_DATABASE,
   post: process.env.PORT_HOST_DATABASE,
-  dialect: 'mariadb',
+  dialect: 'mysql',
   timezone: '+07:00',
   difine: {
     freezeTableName: true,
@@ -12,3 +12,4 @@ export const sequelize = new Sequelize('social_network', 'root', '', {
   // sync: { alert: true },
   // query: { raw: true },
 });
+// mysql://uzeqrtiutcjrh1gz:FRSYEnvfWPWBHFimwelW@bfkkfiaesmqwcs8hivyb-mysql.services.clever-cloud.com:3306/bfkkfiaesmqwcs8hivyb

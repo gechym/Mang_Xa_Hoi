@@ -12,6 +12,7 @@ import { pushToast } from '~/components/Notifications';
 import Modal from '~/components/Modal';
 import useUploadFile from '~/components/UploadFile';
 import GalleryImage from '~/components/GallerImag/GalleryImage';
+import SimpleSideToolbarEditor from '~/components/CustomTextEdior/Editor';
 
 function TestComponent() {
   const dispatch = useDispatch();
@@ -79,7 +80,7 @@ function TestComponent() {
 
       {renderUiUpload()}
       <Modal isOpen={isOpen} setIsOpen={setIsOpen} titel=""></Modal>
-
+      <SimpleSideToolbarEditor />
       <GalleryImage isOpen={isOpen} setIsOpen={setIsOpen} title="Nguyễn Đức Bảo" caption="hình ảnh đẹp " />
     </div>
   );
