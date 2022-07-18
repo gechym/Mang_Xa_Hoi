@@ -6,20 +6,107 @@
     @apply font-inter box-border;
   }
 
-  .h4 {
-    @apply text-2xl block;
-  }
-
-  .h3 {
-    @apply text-3xl block;
-  }
-
-  .h1 {
-    @apply text-5xl font-bold;
-  }
-
   .dark {
     @apply bg-dark;
+  }
+
+  /* ul {
+    display: block;
+    list-style-type: disc;
+    margin-top: 1em !important;
+    margin-bottom: 1 em !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 40px !important;
+  }
+
+  li {
+    display: list-item;
+  }
+
+  ol {
+    display: block;
+    list-style-type: decimal;
+    margin-top: 1em !important;
+    margin-bottom: 1em !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 40px !important;
+  } */
+
+  h1 {
+    display: block;
+    font-size: 2em !important;
+    margin-top: 0.67em !important;
+    margin-bottom: 0.67em !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    font-weight: bold !important;
+  }
+
+  h2 {
+    display: block;
+    font-size: 1.5em !important;
+    margin-top: 0.83em !important;
+    margin-bottom: 0.83em !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    font-weight: bold !important;
+  }
+
+  h3 {
+    display: block;
+    font-size: 1.17em !important;
+    margin-top: 1em !important;
+    margin-bottom: 1em !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    font-weight: bold !important;
+  }
+
+  h4 {
+    display: block;
+    font-size: 1em !important;
+    margin-top: 1.33em !important;
+    margin-bottom: 1.33em !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    font-weight: bold !important;
+  }
+
+  h5 {
+    display: block;
+    font-size: 0.83em !important;
+    margin-top: 1.67em !important;
+    margin-bottom: 1.67em !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    font-weight: bold !important;
+  }
+
+  h6 {
+    display: block;
+    font-size: 0.67em !important;
+    margin-top: 2.33em !important;
+    margin-bottom: 2.33em !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    font-weight: bold !important;
+  }
+
+  pre {
+    display: block;
+    font-family: monospace !important;
+    white-space: pre !important;
+    margin: 1em 0 !important;
+  }
+
+  blockquote {
+    border-left: 3px solid #ccc !important;
+    margin: 1.5em 10px !important;
+    padding: 0.5em 10px !important;
+    quotes: '\201C''\201D''\2018''\2019' !important;
+    opacity: 0.7 !important;
   }
 
   body {

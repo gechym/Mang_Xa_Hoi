@@ -16,7 +16,11 @@ const CreatePost = () => {
   const { userInfo } = useSelector(userSelecter);
   const [isOpen, setIsOpen] = useState(false);
   const [status, setStatus] = useState({ lable: 'Public', icon: <MdPublic /> });
-
+  const [html, setHtml] = useState('');
+  const [raw, setRaw] = useState({
+    entityMap: {},
+    blocks: [],
+  });
   const itemDefault = [
     // { lable: 'Chỉ mình tôi', icon: LoginIcon, to: '/login' },
     // { lable: 'Home', icon: HomeIcon, href: '/home', target: '_blank' },
@@ -91,7 +95,14 @@ const CreatePost = () => {
             </Dropdown>
           </div>
         </div>
-        <SimpleSideToolbarEditor />
+        <SimpleSideToolbarEditor
+          raw={raw}
+          renderData={(html, raw) => {
+            setHtml(html);
+            setRaw(raw);
+          }}
+        />
+        <p dangerouslySetInnerHTML={{ __html: html }}></p>
         <Button className="w-full m-0 bg-transparent font-bold !bg-primary !text-white">Đăng</Button>
       </Modal>
     </div>

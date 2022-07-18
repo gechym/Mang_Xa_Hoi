@@ -1,14 +1,9 @@
 import '../../../node_modules/@draft-js-plugins/inline-toolbar/lib/plugin.css';
-import '../../../node_modules/@draft-js-plugins/side-toolbar/lib/plugin.css';
 import '../../../node_modules/@draft-js-plugins/emoji/lib/plugin.css';
 import '../../../node_modules/@draft-js-plugins/hashtag/lib/plugin.css';
 import '../../../node_modules/@draft-js-plugins/alignment/lib/plugin.css';
 
 import './style/emoje-plugin.css';
-
-import buttonStyles from './theme/side/buttonStyles.module.css';
-import toolbarStyles from './theme/side/toolbarStyles.module.css';
-import blockTypeSelectStyles from './theme/side/blockTypeSelectStyles.module.css';
 
 import buttonStyleInline from './theme/inlineToolbar/buttonStyles.module.css';
 import toolbarStyleInline from './theme/inlineToolbar/toolbarStyles.module.css';
@@ -20,7 +15,6 @@ import hashtagPluginTheme from './theme/hashtagStyles.module.css';
 import React, { Component } from 'react';
 import Editor, { createEditorStateWithText, composeDecorators } from '@draft-js-plugins/editor';
 
-import createSideToolbarPlugin from '@draft-js-plugins/side-toolbar';
 import createInlineToolbarPlugin, { Separator } from '@draft-js-plugins/inline-toolbar';
 import createEmojiPlugin from '@draft-js-plugins/emoji';
 import createHashtagPlugin from '@draft-js-plugins/hashtag';
@@ -30,20 +24,22 @@ import createFocusPlugin from '@draft-js-plugins/focus';
 import createResizeablePlugin from '@draft-js-plugins/resizeable';
 import createBlockDndPlugin from '@draft-js-plugins/drag-n-drop';
 
+import { fromJS } from 'immutable';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
-import { convertToRaw, convertFromRaw, EditorState } from 'draft-js';
+import { convertToRaw, convertFromRaw, EditorState, AtomicBlockUtils } from 'draft-js';
 
 import {
   ItalicButton,
   BoldButton,
   UnderlineButton,
-  HeadlineOneButton,
+  // HeadlineOneButton,
   HeadlineTwoButton,
   HeadlineThreeButton,
   UnorderedListButton,
   OrderedListButton,
   CodeBlockButton,
+  CodeButton,
   BlockquoteButton,
 } from '@draft-js-plugins/buttons';
 
@@ -54,12 +50,6 @@ const inlineToolbarPlugin = createInlineToolbarPlugin({
   theme: { buttonStyles: buttonStyleInline, toolbarStyles: toolbarStyleInline },
 });
 const { InlineToolbar } = inlineToolbarPlugin;
-
-const sideToolbarPlugin = createSideToolbarPlugin({
-  position: 'right',
-  theme: { buttonStyles, toolbarStyles, blockTypeSelectStyles },
-});
-const { SideToolbar } = sideToolbarPlugin;
 
 const hashtagPlugin = createHashtagPlugin({
   theme: hashtagPluginTheme,
@@ -85,7 +75,6 @@ const plugins = [
   focusPlugin,
   resizeablePlugin,
   alignmentPlugin,
-  sideToolbarPlugin,
   inlineToolbarPlugin,
   emojiPlugin,
   hashtagPlugin,
@@ -141,23 +130,40 @@ const initialState = {
 
 export default class SimpleSideToolbarEditor extends Component {
   state = {
-    editorState: EditorState.createWithContent(convertFromRaw(initialState)),
+    editorState: EditorState.createWithContent(convertFromRaw(this.props.raw) || convertFromRaw(initialState)),
   };
 
   componentDidMount() {
     this.setState({
-      editorState: EditorState.createWithContent(convertFromRaw(initialState)),
+      editorState: EditorState.createWithContent(convertFromRaw(this.props.raw) || convertFromRaw(initialState)),
     });
   }
 
   onChange = (editorState) => {
-    // const html = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-    // const raw = convertToRaw(editorState.getCurrentContent());
-    // cb(html, raw);
-
+    const html = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+    const raw = convertToRaw(editorState.getCurrentContent());
+    this.props.renderData(html, raw);
+    // console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+    // console.log(convertToRaw(editorState.getCurrentContent()));
+    console.log(raw);
     this.setState({
       editorState,
     });
+  };
+
+  insertImage = (url) => {
+    const contentState = this.state.editorState.getCurrentContent();
+    const contentStateWithEntity = contentState.createEntity('IMAGE', 'IMMUTABLE', { src: url });
+    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+    const state = this.state.editorState;
+    const newEditorState = EditorState.set(state, { currentContent: contentStateWithEntity });
+    return AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, '');
+  };
+
+  handlePastedFiles = (url) => {
+    this.setState({
+      editorState: this.insertImage('https://picsum.photos/id/586/2000/1000/'),
+    }); //created below
   };
 
   focus = () => {
@@ -173,13 +179,13 @@ export default class SimpleSideToolbarEditor extends Component {
             editorState={this.state.editorState}
             onChange={this.onChange}
             plugins={plugins}
+            handlePastedFiles={this.handlePastedFiles}
             ref={(element) => {
               this.editor = element;
             }}
           ></Editor>
           <AlignmentTool />
           <EmojiSuggestions />
-          <SideToolbar />
           <InlineToolbar>
             {(externalProps) => (
               <div>
@@ -188,11 +194,12 @@ export default class SimpleSideToolbarEditor extends Component {
                 <UnderlineButton {...externalProps} />
                 <HeadlineTwoButton {...externalProps} />
                 <HeadlineThreeButton {...externalProps} />
-                <HeadlineOneButton {...externalProps} />
+                {/* <HeadlineOneButton {...externalProps} /> */}
                 <UnorderedListButton {...externalProps} />
                 <OrderedListButton {...externalProps} />
                 <CodeBlockButton {...externalProps} />
                 <BlockquoteButton {...externalProps} />
+                <CodeButton {...externalProps} />
               </div>
             )}
           </InlineToolbar>

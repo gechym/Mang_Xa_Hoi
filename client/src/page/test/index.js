@@ -80,7 +80,6 @@ function TestComponent() {
 
       {renderUiUpload()}
       <Modal isOpen={isOpen} setIsOpen={setIsOpen} titel=""></Modal>
-      <SimpleSideToolbarEditor />
       <GalleryImage isOpen={isOpen} setIsOpen={setIsOpen} title="Nguyễn Đức Bảo" caption="hình ảnh đẹp " />
     </div>
   );

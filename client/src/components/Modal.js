@@ -36,12 +36,7 @@ const Modal = ({ isOpen, setIsOpen, children, className, titel = 'titel' }) => {
               <div className="fixed inset-0 flex items-center justify-center p-4 ">
                 <div className="flex min-h-full items-center justify-center">
                   <Dialog.Panel
-                    className={`
-                        transform overflow-hidden rounded-md
-                        ${getClassBgTheme()}
-                        p-4 text-left align-middle transition-all
-                        shadow-lg
-                        ring-1 ring-opacity-90 ${getClassRingTheme()}`}
+                    className={`transform overflow-hidden rounded-md ${getClassBgTheme()} px-4 pb-4 text-left align-middle transition-all shadow-lg ring-1 ring-opacity-90 ${getClassRingTheme()}`}
                   >
                     <Dialog.Title className="!my-2 p-0 text-base text-center font-medium leading-6 text-gray-900">
                       {titel}
