@@ -102,7 +102,7 @@ const CreatePost = () => {
             setRaw(raw);
           }}
         />
-        <p dangerouslySetInnerHTML={{ __html: html }}></p>
+        {/* <p dangerouslySetInnerHTML={{ __html: html }}></p> */}
         <Button className="w-full m-0 bg-transparent font-bold !bg-primary !text-white">Đăng</Button>
       </Modal>
     </div>

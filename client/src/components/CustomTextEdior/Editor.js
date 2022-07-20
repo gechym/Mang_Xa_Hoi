@@ -173,7 +173,12 @@ export default class SimpleSideToolbarEditor extends Component {
   render() {
     return (
       <>
+        <div className="flex justify-end">
+          <EmojiSelect />
+        </div>
         <div className={`w-full h-800px max-h-[60vh] overflow-x-auto ${editorStyles.editor}`} onClick={this.focus}>
+          <EmojiSuggestions />
+
           <Editor
             placeholder="Write your story here..."
             editorState={this.state.editorState}
@@ -185,7 +190,6 @@ export default class SimpleSideToolbarEditor extends Component {
             }}
           ></Editor>
           <AlignmentTool />
-          <EmojiSuggestions />
           <InlineToolbar>
             {(externalProps) => (
               <div>
@@ -204,7 +208,6 @@ export default class SimpleSideToolbarEditor extends Component {
             )}
           </InlineToolbar>
         </div>
-        <EmojiSelect />
       </>
     );
   }

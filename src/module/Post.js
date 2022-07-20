@@ -16,6 +16,7 @@ const Post = sequelize.define('tb_posts', {
     type: Sequelize.DataTypes.STRING(567),
     allowNull: false,
   },
+
   images: {
     type: Sequelize.DataTypes.JSON,
     allowNull: true,
